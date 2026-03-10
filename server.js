@@ -7,7 +7,8 @@ const mongoose = require('mongoose');
 const session = require('express-session');
 const passport = require('passport');
 const GoogleStrategy = require('passport-google-oauth20').Strategy;
-const MongoStore = require('connect-mongo');
+const MongoStoreRaw = require('connect-mongo');
+const MongoStore = MongoStoreRaw.default || MongoStoreRaw;
 
 // Fix for MongoDB SRV DNS lookup issues
 dns.setServers(['8.8.8.8', '8.8.4.4']);
@@ -73,11 +74,9 @@ app.use(session({
     secret: process.env.SESSION_SECRET || 'namma_seva_secret',
     resave: false,
     saveUninitialized: false,
-    store: MongoStore.create({
-        mongoUrl: mongoURI,
-        collectionName: 'sessions',
-        ttl: 14 * 24 * 60 * 60 // 14 days
-    }),
+    store: (typeof MongoStore.create === 'function')
+        ? MongoStore.create({ mongoUrl: mongoURI, collectionName: 'sessions', ttl: 14 * 24 * 60 * 60 })
+        : new MongoStore({ mongoUrl: mongoURI, collectionName: 'sessions', ttl: 14 * 24 * 60 * 60 }),
     cookie: {
         maxAge: 14 * 24 * 60 * 60 * 1000,
         httpOnly: true,
