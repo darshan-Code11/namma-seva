@@ -852,6 +852,44 @@
         gap: 20px;
       }
     }
+
+    /* Language Toggle */
+    .lang-toggle {
+      display: flex;
+      align-items: center;
+      gap: 0;
+      background: rgba(255, 255, 255, 0.12);
+      border: 1.5px solid rgba(245, 160, 32, 0.4);
+      border-radius: 22px;
+      padding: 3px;
+      cursor: pointer;
+      transition: all 0.3s;
+      margin-left: 8px;
+      overflow: hidden;
+    }
+
+    .lang-toggle:hover {
+      border-color: #F5A020;
+      background: rgba(245, 160, 32, 0.15);
+    }
+
+    .lang-opt {
+      padding: 5px 11px;
+      border-radius: 18px;
+      font-size: 12px;
+      font-weight: 800;
+      font-family: 'Sora', sans-serif;
+      color: rgba(255, 255, 255, 0.55);
+      transition: all 0.25s;
+      white-space: nowrap;
+      user-select: none;
+    }
+
+    .lang-opt.active {
+      background: linear-gradient(135deg, #F5A020, #F7C040);
+      color: #3B0000;
+      box-shadow: 0 2px 8px rgba(245, 160, 32, 0.45);
+    }
   </style>
 </head>
 
@@ -1221,7 +1259,8 @@
                 📁</div>
             </div>
             <h3 style="font-size:18px;font-weight:800;color:#6B0C0C;margin:0 0 8px;font-family:'Sora',sans-serif;">
-              Connecting to DigiLocker</h3>
+              <span id="dl-connecting">${t("Connecting to DigiLocker")}</span>
+            </h3>
             <p id="digi-loader-msg" style="font-size:14px;color:#7A6050;margin-bottom:28px;min-height:20px;"></p>
             <div id="digi-steps" style="display:flex;flex-direction:column;gap:10px;text-align:left;"></div>
           </div>
@@ -1232,13 +1271,16 @@
               style="width:80px;height:80px;border-radius:50%;background:linear-gradient(135deg,#22C55E,#16A34A);margin:0 auto 20px;display:flex;align-items:center;justify-content:center;font-size:36px;box-shadow:0 8px 24px rgba(34,197,94,0.35);">
               ✓</div>
             <h3 style="font-size:20px;font-weight:900;color:#6B0C0C;margin:0 0 8px;font-family:'Sora',sans-serif;">
-              DigiLocker Verified!</h3>
-            <p style="font-size:14px;color:#7A6050;margin-bottom:24px;">Identity confirmed. Logging you in...</p>
+              <span id="dl-verified">${t("DigiLocker Verified!")}</span>
+            </h3>
+            <p style="font-size:14px;color:#7A6050;margin-bottom:24px;" id="dl-identity">${t("Identity confirmed.
+              Logging you in...")}</p>
             <div style="background:#F0FDF4;border:1px solid #86EFAC;border-radius:12px;padding:16px;">
-              <div style="font-size:13px;color:#15803D;font-weight:700;margin-bottom:10px;">✅ Documents Fetched</div>
-              <div style="font-size:13px;color:#166534;margin-bottom:4px;">• Aadhaar Card ✓</div>
-              <div style="font-size:13px;color:#166534;margin-bottom:4px;">• PAN Card ✓</div>
-              <div style="font-size:13px;color:#166534;">• Driving Licence ✓</div>
+              <div style="font-size:13px;color:#15803D;font-weight:700;margin-bottom:10px;" id="dl-docs-fetched">✅
+                ${t("Documents Fetched")}</div>
+              <div style="font-size:13px;color:#166534;margin-bottom:4px;">• ${t("Aadhaar Card")} ✓</div>
+              <div style="font-size:13px;color:#166534;margin-bottom:4px;">• ${t("PAN Card")} ✓</div>
+              <div style="font-size:13px;color:#166534;">• ${t("Driving Licence")} ✓</div>
             </div>
           </div>
         </div>
@@ -1282,7 +1324,7 @@
               <div
                 style="font-family:'Sora',sans-serif;font-weight:900;font-size:18px;color:white;letter-spacing:-0.5px;">
                 NAMMA SEVA</div>
-              <div
+              <div id="header-subtitle"
                 style="font-size:10px;color:rgba(245,160,32,0.7);letter-spacing:2px;font-weight:700;text-transform:uppercase;">
                 ನಮ್ಮ ಸೇವಾ • Bengaluru Civic</div>
             </div>
@@ -1294,6 +1336,11 @@
             <button id="nav-track" class="nav-btn" onclick="navigate('track')">Track App.</button>
             <div id="app-count-badge"
               style="display:none;margin-left:8px;background:#A91B1B;color:white;border-radius:20px;padding:4px 10px;font-size:12px;font-weight:800;font-family:'Sora',sans-serif;">
+            </div>
+            <!-- Language Toggle -->
+            <div class="lang-toggle" onclick="toggleLang()" title="Switch Language / ಭಾಷೆ ಬದಲಾಯಿಸಿ">
+              <span id="lang-en" class="lang-opt active">EN</span>
+              <span id="lang-kn" class="lang-opt">ಕನ್ನಡ</span>
             </div>
           </nav>
         </div>
@@ -1330,18 +1377,19 @@
                   Bengaluru Civic Navigator</div>
               </div>
             </div>
-            <p style="font-size:13px;line-height:1.6;margin:0 0 16px;">Empowering citizens with seamless access to 12+
+            <p id="footer-desc" style="font-size:13px;line-height:1.6;margin:0 0 16px;">Empowering citizens with
+              seamless access to 12+
               government services. Avoid the queues and middlemen.</p>
-            <div
+            <div id="footer-disclaimer"
               style="font-size:11px;font-weight:600;color:#F5A020;padding:6px 12px;background:rgba(245,160,32,0.1);border-radius:6px;display:inline-block;">
               Not an official government portal.</div>
           </div>
 
           <div style="flex:1;min-width:200px;">
-            <h4
+            <h4 id="footer-quick-title"
               style="font-family:'Sora',sans-serif;font-size:13px;font-weight:800;color:white;margin:0 0 16px;letter-spacing:1px;">
               QUICK LINKS</h4>
-            <div style="display:flex;flex-direction:column;gap:10px;">
+            <div id="footer-quick-links" style="display:flex;flex-direction:column;gap:10px;">
               <a href="#" onclick="navigate('home');return false;"
                 style="color:rgba(255,255,255,0.7);text-decoration:none;font-size:13px;transition:color 0.2s;"
                 onmouseover="this.style.color='white'" onmouseout="this.style.color='rgba(255,255,255,0.7)'">Home</a>
@@ -1361,17 +1409,18 @@
           </div>
 
           <div style="flex:1;min-width:200px;">
-            <h4
+            <h4 id="footer-helpline-title"
               style="font-family:'Sora',sans-serif;font-size:13px;font-weight:800;color:white;margin:0 0 16px;letter-spacing:1px;">
               OFFICIAL HELPLINES</h4>
             <div style="display:flex;flex-direction:column;gap:12px;">
               <div>
-                <div style="font-size:11px;color:rgba(255,255,255,0.5);">BBMP Citizen Helpline</div>
+                <div id="footer-helpline1" style="font-size:11px;color:rgba(255,255,255,0.5);">BBMP Citizen Helpline
+                </div>
                 <div style="font-size:14px;font-weight:700;color:white;font-family:'Sora',sans-serif;">080-22221188
                 </div>
               </div>
               <div>
-                <div style="font-size:11px;color:rgba(255,255,255,0.5);">Seva Sindhu Support</div>
+                <div id="footer-helpline2" style="font-size:11px;color:rgba(255,255,255,0.5);">Seva Sindhu Support</div>
                 <div style="font-size:14px;font-weight:700;color:white;font-family:'Sora',sans-serif;">080-44554455
                 </div>
               </div>
@@ -1434,13 +1483,290 @@ RULES:
 8. Never ask for personal sensitive data`;
 
     // ══════════════════════════════════════════════════════════════
+    // LANGUAGE
+    // ══════════════════════════════════════════════════════════════
+    let currentLang = 'en';
+
+    const TRANSLATIONS = {
+      en: {
+        // Nav
+        navHome: 'Home', navServices: 'Services', navChat: 'AI Help', navTrack: 'Track App.',
+        // User bar
+        loggedInAs: 'Logged in as', logout: 'Logout',
+        // Header subtitle
+        headerSubtitle: 'ನಮ್ಮ ಸೇವಾ • Bengaluru Civic',
+        // Home hero
+        heroTitle: 'Your government.', heroHighlight: 'At your fingertips.',
+        heroSubtitle: 'Apply for 12+ government services — Khata, Scholarships, Certificates — with no middlemen and zero queues.',
+        heroBtn1: '🚀 Explore Services', heroBtn2: '🤖 Ask AI Help',
+        statLabel1: 'Services', statLabel2: 'Avg Processing Time',
+        statLabel3: 'No Hidden Fees', statLabel4: 'AI Assistance', statLabel5: 'Citizens Served',
+        // Section titles
+        servicesTitle: 'Government Services', servicesSubtitle: 'Click any service to see full requirements, documents & step-by-step guide',
+        howTitle: 'How It Works', howSubtitle: 'Three simple steps to get any government service delivered',
+        step1Title: 'Choose & Apply', step1Desc: 'Pick your service, fill the smart form with auto-filled Aadhaar data, and upload documents.',
+        step2Title: 'Track & Pay', step2Desc: 'Pay government fees securely online. Get a reference number and track your application in real-time.',
+        step3Title: 'Collect Certificate', step3Desc: 'Receive your certificate at your address or download it digitally from the portal.',
+        // Services page
+        allServicesTitle: 'All Government Services',
+        filterAll: 'All', filterBBMP: 'BBMP', filterSeva: 'Seva Sindhu', filterSSP: 'SSP', filterOther: 'Other',
+        applyNow: 'Apply Now →',
+        // Track page
+        trackTitle: 'Track Applications', trackSubtitle: 'Monitor the status of your submitted applications',
+        trackPlaceholder: 'Search by reference number (e.g. NM12345678)',
+        noAppsTitle: 'No Applications Yet', noAppsSubtitle: 'Applications you submit will appear here with real-time status updates.',
+        // Chat page
+        chatOnline: 'Online — Responds instantly',
+        chatPlaceholder: 'Ask anything about government services...',
+        chatQuick1: 'How to apply for Khata transfer?', chatQuick2: 'What docs for income certificate?',
+        chatQuick3: 'Birth certificate for newborn', chatQuick4: 'Trade license process',
+        // Login
+        loginWelcome: 'Welcome to NAMMA SEVA', loginSubtitle: 'Sign in to access government services',
+        loginDigiLocker: 'Continue with DigiLocker', loginGoogle: 'Continue with Google',
+        loginOtp: 'Login with OTP',
+        // Footer
+        footerCopy: '© 2026 Namma Seva. All rights reserved.',
+        // Toast
+        logoutMsg: 'Logging you out safely...',
+        // Static Text
+        footerDesc: 'Empowering citizens with seamless access to 12+ government services. Avoid the queues and middlemen.',
+        footerDisclaimer: 'Not an official government portal.',
+        footerQuickTitle: 'QUICK LINKS',
+        footerHelplineTitle: 'OFFICIAL HELPLINES',
+        footerHelpline1: 'BBMP Citizen Helpline',
+        footerHelpline2: 'Seva Sindhu Support',
+        // Service Detail
+        backToServices: '← Back to Services', getHelp: '💬 Get Help',
+        aboutService: 'About This Service', stepsProcess: 'Step-by-Step Process',
+        rejectionReasons: '⚠️ Common Rejection Reasons', quickInfo: 'QUICK INFO', reqDocuments: 'REQUIRED DOCUMENTS',
+        chatInitialGreeting: "ನಮಸ್ಕಾರ! 🙏 Welcome! I'm NAMMA SEVA, your personal guide for Bengaluru government services.\n\nI know all about BBMP and Seva Sindhu — tell me what you need help with. I'll guide you step by step, in simple language.\n\nWhat would you like help with today?",
+        "Voice recognition not supported": "Voice recognition not supported in this browser.", "Microphone access denied": "Microphone access denied.",
+      },
+      kn: {
+        // Nav
+        navHome: 'ಮುಖಪುಟ', navServices: 'ಸೇವೆಗಳು', navChat: 'AI ಸಹಾಯ', navTrack: 'ಅರ್ಜಿ ಸ್ಥಿತಿ',
+        // User bar
+        loggedInAs: 'ಲಾಗಿನ್ ಆದವರು', logout: 'ಲಾಗ್ ಔಟ್',
+        // Header subtitle
+        headerSubtitle: 'ನಮ್ಮ ಸೇವಾ • ಬೆಂಗಳೂರು ನಾಗರಿಕ',
+        // Home hero
+        heroTitle: 'ನಿಮ್ಮ ಸರ್ಕಾರ.', heroHighlight: 'ನಿಮ್ಮ ಬೆರಳ ತುದಿಯಲ್ಲಿ.',
+        heroSubtitle: '೧೨+ ಸರ್ಕಾರಿ ಸೇವೆಗಳಿಗೆ ಅರ್ಜಿ ಸಲ್ಲಿಸಿ — ಖಾತಾ, ವಿದ್ಯಾರ್ಥಿವೇತನ, ಪ್ರಮಾಣಪತ್ರಗಳು — ಮಧ್ಯವರ್ತಿಗಳಿಲ್ಲ, ಸರತಿ ಸಾಲುಗಳಿಲ್ಲ.',
+        heroBtn1: '🚀 ಸೇವೆಗಳನ್ನು ಅನ್ವೇಷಿಸಿ', heroBtn2: '🤖 AI ಸಹಾಯ ಕೇಳಿ',
+        statLabel1: 'ಸೇವೆಗಳು', statLabel2: 'ಸರಾಸರಿ ಪ್ರಕ್ರಿಯೆ ಸಮಯ', statLabel3: 'ಸೇವೆಯಲ್ಲಿರುವ ನಾಗರಿಕರು',
+        // Section titles
+        servicesTitle: 'ಸರ್ಕಾರಿ ಸೇವೆಗಳು', servicesSubtitle: 'ಸಂಪೂರ್ಣ ಮಾಹಿತಿ ಮತ್ತು ಹಂತ-ಹಂತದ ಮಾರ್ಗದರ್ಶನಕ್ಕಾಗಿ ಯಾವುದೇ ಸೇವೆಯನ್ನು ಕ್ಲಿಕ್ ಮಾಡಿ',
+        howTitle: 'ಇದು ಹೇಗೆ ಕಾರ್ಯನಿರ್ವಹಿಸುತ್ತದೆ', howSubtitle: 'ಸರ್ಕಾರಿ ಸೇವೆಗಳನ್ನು ಸುಲಭವಾಗಿ ಪಡೆಯಲು ಮೂರು ಸರಳ ಹಂತಗಳು',
+        step1Title: 'ಆಯ್ಕೆ ಮತ್ತು ಅರ್ಜಿ', step1Desc: 'ನಿಮ್ಮ ಸೇವೆಯನ್ನು ಆರಿಸಿ, ಆಧಾರ್ ಡೇಟಾದೊಂದಿಗೆ ಫಾರ್ಮ್ ಭರ್ತಿ ಮಾಡಿ ಮತ್ತು ದಾಖಲೆಗಳನ್ನು ಅಪ್ಲೋಡ್ ಮಾಡಿ.',
+        step2Title: 'ಸ್ಥಿತಿ ಪರಿಶೀಲನೆ ಮತ್ತು ಪಾವತಿ', step2Desc: 'ಆನ್ಲೈನ್ ಮೂಲಕ ಸರ್ಕಾರಿ ಶುಲ್ಕ ಪಾವತಿಸಿ. ರೆಫರೆನ್ಸ್ ಸಂಖ್ಯೆ ಪಡೆದು ತಕ್ಷಣದ ಸ್ಥಿತಿ ಪರಿಶೀಲಿಸಿ.',
+        step3Title: 'ಪ್ರಮಾಣಪತ್ರ ಪಡೆಯಿರಿ', step3Desc: 'ನಿಮ್ಮ ವಿಳಾಸಕ್ಕೆ ಅಥವಾ ಪೋರ್ಟಲ್ ಮೂಲಕ ಡಿಜಿಟಲ್ ಪ್ರಮಾಣಪತ್ರವನ್ನು ಪಡೆಯಿರಿ.',
+        // Services page
+        allServicesTitle: 'ಎಲ್ಲಾ ಸರ್ಕಾರಿ ಸೇವೆಗಳು',
+        filterAll: 'ಎಲ್ಲಾ', filterBBMP: 'ಬಿಬಿಎಂಪಿ', filterSeva: 'ಸೇವಾ ಸಿಂಧು', filterSSP: 'ಎಸ್ ಎಸ್ ಪಿ', filterOther: 'ಇತರೆ',
+        applyNow: 'ಈಗಲೇ ಅರ್ಜಿ ಸಲ್ಲಿಸಿ →',
+        // Track page
+        trackTitle: 'ಅರ್ಜಿ ಸ್ಥಿತಿ ಪರಿಶೀಲನೆ', trackSubtitle: 'ನೀವು ಸಲ್ಲಿಸಿದ ಅರ್ಜಿಗಳ ಪ್ರಸ್ತುತ ಹಂತವನ್ನು ವೀಕ್ಷಿಸಿ',
+        trackPlaceholder: 'ಅರ್ಜಿ ರೆಫರೆನ್ಸ್ ಸಂಖ್ಯೆಯಿಂದ ಹುಡುಕಿ (ಉದಾ: NM12345678)',
+        noAppsTitle: 'ಯಾವುದೇ ಅರ್ಜಿಗಳಿಲ್ಲ', noAppsSubtitle: 'ನೀವು ಸಲ್ಲಿಸುವ ಅರ್ಜಿಗಳ ನೈಜ-ಸಮಯದ ಸ್ಥಿತಿಯು ಇಲ್ಲಿ ಕಾಣಿಸುತ್ತದೆ.',
+        // Chat page
+        chatOnline: 'ಆನ್ಲೈನ್ — ತಕ್ಷಣ ಪ್ರತಿಕ್ರಿಯಿಸುತ್ತದೆ',
+        chatPlaceholder: 'ಸರ್ಕಾರಿ ಸೇವೆಗಳ ಬಗ್ಗೆ ಏನಾದರೂ ಕೇಳಿ...',
+        chatQuick1: 'ಖಾತಾ ವರ್ಗಾವಣೆಗೆ ಅರ್ಜಿ ಹೇಗೆ?', chatQuick2: 'ಆದಾಯ ಪ್ರಮಾಣಪತ್ರಕ್ಕೆ ಯಾವ ದಾಖಲೆ ಬೇಕು?',
+        chatQuick3: 'ಮಗುವಿಗೆ ಜನನ ಪ್ರಮಾಣಪತ್ರ', chatQuick4: 'ಉದ್ದಿಮೆ ಪರವಾನಗಿ ಪಡೆಯುವ ವಿಧಾನ',
+        // Login
+        loginWelcome: 'ನಮ್ಮ ಸೇವಾಗೆ ಸ್ವಾಗತ', loginSubtitle: 'ಸರ್ಕಾರಿ ಸೇವೆಗಳನ್ನು ಪ್ರವೇಶಿಸಲು ಲಾಗಿನ್ ಮಾಡಿ',
+        loginDigiLocker: 'DigiLocker ಮೂಲಕ ಮುಂದುವರಿಯಿರಿ', loginGoogle: 'Google ಮೂಲಕ ಮುಂದುವರಿಯಿರಿ',
+        loginOtp: 'OTP ನಿಂದ ಲಾಗಿನ್',
+        // Footer
+        footerLinks: 'ತ್ವರಿತ ಕೊಂಡಿಗಳು', footerHelplines: 'ಅಧಿಕೃತ ಸಹಾಯವಾಣಿಗಳು',
+        footerCopy: '© ೨೦೨೬ ನಮ್ಮ ಸೇವ. ಎಲ್ಲ ಹಕ್ಕುಗಳನ್ನು ಕಾಯ್ದಿರಿಸಲಾಗಿದೆ.',
+        // Toast
+        logoutMsg: 'ಸುರಕ್ಷಿತವಾಗಿ ಲಾಗ್ ಔಟ್ ಮಾಡಲಾಗುತ್ತಿದೆ...',
+        // Service Detail
+        backToServices: '← ಸೇವೆಗಳಿಗೆ ಹಿಂತಿರುಗಿ', getHelp: '💬 ಸಹಾಯ ಪಡೆಯಿರಿ',
+        aboutService: 'ಈ ಸೇವೆಯ ಬಗ್ಗೆ', stepsProcess: 'ಹಂತ-ಹಂತದ ಪ್ರಕ್ರಿಯೆ',
+        rejectionReasons: '⚠️ ಸಾಮಾನ್ಯ ತಿರಸ್ಕಾರ ಕಾರಣಗಳು', quickInfo: 'ತ್ವರಿತ ಮಾಹಿತಿ', reqDocuments: 'ಅಗತ್ಯ ದಾಖಲೆಗಳು',
+        // App Forms
+        "Application Details": "ಅರ್ಜಿ ವಿವರಗಳು", "Upload Documents": "ದಾಖಲೆಗಳನ್ನು ಲಗತ್ತಿಸಿ", "Review & Submit": "ಪರಿಶೀಲಿಸಿ ಮತ್ತು ಸಲ್ಲಿಸಿ",
+        "← Back to": "← ಹಿಂದಕ್ಕೆ", "Apply:": "ಅರ್ಜಿ ಸಲ್ಲಿಸಿ:", "Ref:": "ಉಲ್ಲೇಖ:", "Start Application →": "ಅರ್ಜಿ ಪ್ರಾರಂಭಿಸಿ →",
+        "required filled": "ಅಗತ್ಯ ಭರ್ತಿಮಾಡಲಾಗಿದೆ", "Select...": "ಆಯ್ಕೆಮಾಡಿ...", "Cancel": "ರದ್ದುಮಾಡಿ", "Save & Continue →": "ಉಳಿಸಿ & ಮುಂದುವರೆಯಿರಿ →",
+        "Upload scanned copies (JPG/PNG/PDF). Max 2MB per file.": "ಸ್ಕ್ಯಾನ್ ಮಾಡಿದ ಪ್ರತಿಗಳನ್ನು ಲಗತ್ತಿಸಿ (JPG/PNG/PDF). ಗರಿಷ್ಠ 2MB.",
+        "✓ Replace": "✓ ಬದಲಾಯಿಸಿ", "+ Upload": "+ ಅಪ್ಲೋಡ್ ಮಾಡಿ", "← Back": "← ಹಿಂದೆ", "Review Application →": "ಅರ್ಜಿ ಪರಿಶೀಲಿಸಿ →",
+        "Review & Confirm": "ಪರಿಶೀಲಿಸಿ ಮತ್ತು ಖಚಿತಪಡಿಸಿ", "APPLICATION DETAILS": "ಅರ್ಜಿ ವಿವರಗಳು", "UPLOADED DOCUMENTS": "ಲಗತ್ತಿಸಲಾದ ದಾಖಲೆಗಳು",
+        "Uploaded": "ಲಗತ್ತಾಗಿದೆ", "Government Processing Fee": "ಸರ್ಕಾರಿ ಪ್ರಕ್ರಿಯೆ ಶುಲ್ಕ",
+        "This service is provided free of charge.": "ಈ ಸೇವೆಯನ್ನು ಉಚಿತವಾಗಿ ಒದಗಿಸಲಾಗಿದೆ.",
+        "Paid via RazorPay Government Gateway after submission": "ಸಲ್ಲಿಸಿದ ನಂತರ ರೇಜರ್ ಪೇ ಮೂಲಕ ಪಾವತಿಸಲಾಗುತ್ತದೆ",
+        "🚀 Confirm & Submit": "🚀 ಖಚಿತಪಡಿಸಿ ಮತ್ತು ಸಲ್ಲಿಸಿ", "🔒 Pay & Submit": "🔒 ಪಾವತಿಸಿ ಮತ್ತು ಸಲ್ಲಿಸಿ",
+        "Tip: Ensure all scanned copies are clear and legible. Blurry documents are the #1 reason for rejection.": "ಸುಳಿವು: ಎಲ್ಲಾ ಪ್ರತಿಗಳು ಸ್ಪಷ್ಟವಾಗಿವೆ ಎಂದು ಖಚಿತಪಡಿಸಿಕೊಳ್ಳಿ. ಮಸುಕಾದ ದಾಖಲೆಗಳು ತಿರಸ್ಕಾರಕ್ಕೆ ಪ್ರಮುಖ ಕಾರಣ.",
+        // Field Labels common
+        "Applicant Full Name": "ಅರ್ಜಿದಾರರ ಪೂರ್ಣ ಹೆಸರು", "Aadhaar Number": "ಆಧಾರ್ ಸಂಖ್ಯೆ", "Mobile Number": "ಮೊಬೈಲ್ ಸಂಖ್ಯೆ",
+        "Email Address": "ಇಮೇಲ್ ವಿಳಾಸ", "Property Address": "ಆಸ್ತಿ ವಿಳಾಸ", "Property Size (sq ft)": "ಆಸ್ತಿ ವಿಸ್ತೀರ್ಣ (ಚದರ ಅಡಿ)",
+        "Sale / Market Value (₹)": "ಮಾರಾಟ / ಮಾರುಕಟ್ಟೆ ಮೌಲ್ಯ (₹)", "Previous Owner Name": "ಹಿಂದಿನ ಮಾಲೀಕರ ಹೆಸರು", "Ward Name / Number": "ವಾರ್ಡ್ ಹೆಸರು / ಸಂಖ್ಯೆ",
+        "As per Aadhaar": "ಆಧಾರ್ ಪ್ರಕಾರ", "Optional but recommended": "ಐಚ್ಛಿಕ (ಸೂಕ್ತ)", "Full address with ward details": "ವಾರ್ಡ್ ವಿವರಗಳೊಂದಿಗೆ ಪೂರ್ಣ ವಿಳಾಸ",
+        "e.g. 1200": "ಉದಾ. 1200", "As per sale deed": "ಮಾರಾಟ ಪತ್ರದ ಪ್ರಕಾರ", "As per previous Khata": "ಹಿಂದಿನ ಖಾತಾ ಪ್ರಕಾರ",
+        // Success Page
+        "Application Submitted!": "ಅರ್ಜಿ ಸಲ್ಲಿಸಲಾಗಿದೆ!", "YOUR REFERENCE NUMBER": "ನಿಮ್ಮ ಉಲ್ಲೇಖ ಸಂಖ್ಯೆ",
+        "Save this number to track your application": "ನಿಮ್ಮ ಅರ್ಜಿಯನ್ನು ಟ್ರ್ಯಾಕ್ ಮಾಡಲು ಈ ಸಂಖ್ಯೆಯನ್ನು ಉಳಿಸಿಕೊಳ್ಳಿ",
+        "What's Next?": "ಮುಂದೇನು?", "You'll receive an SMS on your registered mobile. Expected processing time:": "ನಿಮ್ಮ ನೋಂದಾಯಿತ ಮೊಬೈಲ್‌ಗೆ ಎಸ್‌ಎಂಎಸ್ ಬರುತ್ತದೆ. ನಿರೀಕ್ಷಿತ ಪ್ರಕ್ರಿಯೆ ಸಮಯ:",
+        "Track your status using reference": "ಈ ಉಲ್ಲೇಖ ಸಂಖ್ಯೆ ಬಳಸಿ ಸ್ಥಿತಿ ಪರಿಶೀಲಿಸಿ:", "Track Application": "ಅರ್ಜಿ ಸ್ಥಿತಿ ಪರಿಶೀಲಿಸಿ", "Back to Home": "ಮುಖಪುಟಕ್ಕೆ ಹಿಂತಿರುಗಿ",
+        // Dropdown fields fallback translation (Wards and common options)
+        "Shivajinagar (76)": "ಶಿವಾಜಿನಗರ (76)", "Rajajinagar (9)": "ರಾಜಾಜಿನಗರ (9)", "Jayanagar (68)": "ಜಯನಗರ (68)", "Koramangala (151)": "ಕೋರಮಂಗಲ (151)",
+        "Whitefield (198)": "ವೈಟ್ ಫೀಲ್ಡ್ (198)", "HSR Layout (174)": "ಎಚ್ಎಸ್ಆರ್ ಲೇಔಟ್ (174)", "Indiranagar (81)": "ಇಂದಿರಾನಗರ (81)", "Malleshwaram (17)": "ಮಲ್ಲೇಶ್ವರಂ (17)",
+        "Male": "ಪುರುಷ", "Female": "ಮಹಿಳೆ", "Other": "ಇತರೆ",
+        // Services dynamic keys
+        "Khata Transfer": "ಖಾತಾ ವರ್ಗಾವಣೆ", "Property ownership transfer": "ಆಸ್ತಿ ಮಾಲೀಕತ್ವ ವರ್ಗಾವಣೆ",
+        "Birth Certificate": "ಜನನ ಪ್ರಮಾಣಪತ್ರ", "Official birth registration": "ಅಧಿಕೃತ ಜನನ ನೋಂದಣಿ",
+        "Income Certificate": "ಆದಾಯ ಪ್ರಮಾಣಪತ್ರ", "Annual income proof for schemes": "ಯೋಜನೆಗಳಿಗೆ ವಾರ್ಷಿಕ ಆದಾಯದ ಪುರಾವೆ",
+        "Caste Certificate": "ಜಾತಿ ಪ್ರಮಾಣಪತ್ರ", "SC / ST / OBC category proof": "SC / ST / OBC ವರ್ಗದ ಪುರಾವೆ",
+        "Trade License": "ವ್ಯಾಪಾರ ಪರವಾನಗಿ", "License for shops & businesses": "ಅಂಗಡಿಗಳು ಮತ್ತು ವ್ಯವಹಾರಗಳಿಗೆ ಪರವಾನಗಿ",
+        "Pension Scheme": "ಪಿಂಚಣಿ ಯೋಜನೆ", "Old age / widow / disability": "ವೃದ್ಧಾಪ್ಯ / ವಿಧವೆ / ಅಂಗವೈಕಲ್ಯ",
+        "SSP Post-Matric Scholarship": "ಎಸ್.ಎಸ್.ಪಿ ಪೋಸ್ಟ್-ಮೆಟ್ರಿಕ್ ವಿದ್ಯಾರ್ಥಿವೇತನ", "State Scholarship Portal for SC/ST/OBC": "SC/ST/OBC ಗಾಗಿ ರಾಜ್ಯ ವಿದ್ಯಾರ್ಥಿವೇತನ ಪೋರ್ಟಲ್",
+        "Death Certificate": "ಮರಣ ಪ್ರಮಾಣಪತ್ರ", "Official death registration record": "ಅಧಿಕೃತ ಮರಣ ನೋಂದಣಿ ದಾಖಲೆ",
+        "Residence Certificate": "ವಾಸಸ್ಥಳ ಪ್ರಮಾಣಪತ್ರ", "Domicile / address proof for Karnataka": "ಕರ್ನಾಟಕದ ವಾಸಸ್ಥಳ / ವಿಳಾಸ ಪುರಾವೆ",
+        "Ration Card": "ಪಡಿತರ ಚೀಟಿ", "New application or updation": "ಹೊಸ ಅರ್ಜಿ ಅಥವಾ ನವೀಕರಣ",
+        "Marriage Certificate": "ವಿವಾಹ ಪ್ರಮಾಣಪತ್ರ", "Official registration of marriage": "ವಿವಾಹದ ಅಧಿಕೃತ ನೋಂದಣಿ",
+        "Learner's Driving License": "ಕಲಿಯುವವರ ಚಾಲನಾ ಪರವಾನಗಿ", "First step to get a driving licence": "ಚಾಲನಾ ಪರವಾನಗಿ ಪಡೆಯಲು ಮೊದಲ ಹೆಜ್ಜೆ",
+        "15–30 Working Days": "15-30 ಕೆಲಸದ ದಿನಗಳು", "3 Working Days": "3 ಕೆಲಸದ ದಿನಗಳು", "15 Working Days": "15 ಕೆಲಸದ ದಿನಗಳು",
+        "21 Working Days": "21 ಕೆಲಸದ ದಿನಗಳು", "30 Working Days": "30 ಕೆಲಸದ ದಿನಗಳು", "45 Working Days": "45 ಕೆಲಸದ ದಿನಗಳು",
+        "60 Working Days": "60 ಕೆಲಸದ ದಿನಗಳು", "7 Working Days": "7 ಕೆಲಸದ ದಿನಗಳು", "6–15 Working Days": "6-15 ಕೆಲಸದ ದಿನಗಳು",
+        "1–7 Working Days": "1-7 ಕೆಲಸದ ದಿನಗಳು",
+        "₹ 125 + 2% of Stamp Duty": "₹ 125 + ಮುದ್ರಾಂಕ ಶುಲ್ಕದ 2%", "₹ 58 (₹50 BBMP + ₹8 portal)": "₹ 58 (₹50 BBMP + ₹8 ಪೋರ್ಟಲ್)",
+        "₹ 55 (₹25 app + ₹30 service)": "₹ 55 (₹25 ಅರ್ಜಿ + ₹30 ಸೇವೆ)", "₹ 1,000 – ₹ 10,000+": "₹ 1,000 – ₹ 10,000+",
+        "Free": "ಉಚಿತ", "Free (BPL/AAY) / ₹ 17 (APL)": "ಉಚಿತ (ಬಿಪಿಎಲ್/ಎಎವೈ) / ₹ 17 (ಎಪಿಎಲ್)",
+        "Free (Hindu) / ₹ 10–25 (Special Act)": "ಉಚಿತ (ಹಿಂದೂ) / ₹ 10–25 (ವಿಶೇಷ ಕಾಯ್ದೆ)", "₹ 200 per vehicle class": "ಪ್ರತಿ ವಾಹನ ವರ್ಗಕ್ಕೆ ₹ 200",
+        "FEE": "ಶುಲ್ಕ", "TIME": "ಸಮಯ", "DOCS": "ದಾಖಲೆಗಳು", "req.": "ಅಗತ್ಯ", "docs": "ದಾಖಲೆಗಳು",
+        "View Details & Apply <span>→</span>": "ವಿವರಗಳನ್ನು ವೀಕ್ಷಿಸಿ ಮತ್ತು ಅರ್ಜಿ ಸಲ್ಲಿಸಿ <span>→</span>",
+        "Transfer the Khata (property register entry) to your name after purchasing or inheriting a property in Bengaluru.": "ಬೆಂಗಳೂರಿನಲ್ಲಿ ಆಸ್ತಿಯನ್ನು ಖರೀದಿಸಿದ ಅಥವಾ ಅನುವಂಶಿಕವಾಗಿ ಪಡೆದ ನಂತರ ಖಾತಾವನ್ನು (ಆಸ್ತಿ ನೋಂದಣಿ ನಮೂದು) ನಿಮ್ಮ ಹೆಸರಿಗೆ ವರ್ಗಾಯಿಸಿ.",
+        "Apply for a birth certificate or correct errors in an existing one. Required for school admissions, passports, and government schemes.": "ಜನನ ಪ್ರಮಾಣಪತ್ರಕ್ಕಾಗಿ ಅರ್ಜಿ ಸಲ್ಲಿಸಿ ಅಥವಾ ಅಸ್ತಿತ್ವದಲ್ಲಿರುವ ಪ್ರಮಾಣಪತ್ರದಲ್ಲಿನ ದೋಷಗಳನ್ನು ಸರಿಪಡಿಸಿ. ಶಾಲಾ ಪ್ರವೇಶ, ಪಾಸ್‌ಪೋರ್ಟ್ ಮತ್ತು ಸರ್ಕಾರಿ ಯೋಜನೆಗಳಿಗೆ ಅಗತ್ಯವಿದೆ.",
+        "Officially certify your annual household income for scholarships, reservations, government schemes, and loan applications.": "ವಿದ್ಯಾರ್ಥಿವೇತನ, ಮೀಸಲಾತಿ, ಸರ್ಕಾರಿ ಯೋಜನೆಗಳು ಮತ್ತು ಸಾಲದ ಅರ್ಜಿಗಳಿಗಾಗಿ ನಿಮ್ಮ ವಾರ್ಷಿಕ ಕುಟುಂಬದ ಆದಾಯವನ್ನು ಅಧಿಕೃತವಾಗಿ ಪ್ರಮಾಣೀಕರಿಸಿ.",
+        "Obtain an official caste certificate for educational reservations, government jobs, scholarships, and welfare schemes.": "ಶೈಕ್ಷಣಿಕ ಮೀಸಲಾತಿ, ಸರ್ಕಾರಿ ಉದ್ಯೋಗಗಳು, ವಿದ್ಯಾರ್ಥಿವೇತನಗಳು ಮತ್ತು ಕಲ್ಯಾಣ ಯೋಜನೆಗಳಿಗಾಗಿ ಅಧಿಕೃತ ಜಾತಿ ಪ್ರಮಾಣಪತ್ರವನ್ನು ಪಡೆಯಿರಿ.",
+        "Obtain a trade license to legally operate your shop, business, or commercial establishment in Bengaluru.": "ಬೆಂಗಳೂರಿನಲ್ಲಿ ನಿಮ್ಮ ಅಂಗಡಿ, ವ್ಯಾಪಾರ ಅಥವಾ ವಾಣಿಜ್ಯ ಸಂಸ್ಥೆಯನ್ನು ಕಾನೂನುಬದ್ಧವಾಗಿ ನಡೆಸಲು ವ್ಯಾಪಾರ ಪರವಾನಗಿಯನ್ನು ಪಡೆಯಿರಿ.",
+        "Apply for Sandhya Suraksha (old age), widow, or disability pension schemes provided by Karnataka government.": "ಕರ್ನಾಟಕ ಸರ್ಕಾರವು ಒದಗಿಸುವ ಸಂಧ್ಯಾ ಸುರಕ್ಷಾ (ವೃದ್ಧಾಪ್ಯ), ವಿಧವೆ ಅಥವಾ ಅಂಗವೈಕಲ್ಯ ಪಿಂಚಣಿ ಯೋಜನೆಗಳಿಗೆ ಅರ್ಜಿ ಸಲ್ಲಿಸಿ.",
+        "Apply for Post-Matric Scholarship for SC/ST/OBC/Minority students pursuing education after Class 10 in Karnataka.": "ಕರ್ನಾಟಕದಲ್ಲಿ 10 ನೇ ತರಗತಿಯ ನಂತರ ಶಿಕ್ಷಣ ಪಡೆಯುತ್ತಿರುವ SC/ST/OBC/ಅಲ್ಪಸಂಖ್ಯಾತ ವಿದ್ಯಾರ್ಥಿಗಳಿಗೆ ಪೋಸ್ಟ್-ಮೆಟ್ರಿಕ್ ವಿದ್ಯಾರ್ಥಿವೇತನಕ್ಕಾಗಿ ಅರ್ಜಿ ಸಲ್ಲಿಸಿ.",
+        "Register a death and obtain an official death certificate required for legal, insurance, and inheritance proceedings.": "ಮರಣವನ್ನು ನೋಂದಾಯಿಸಿ ಮತ್ತು ಕಾನೂನು, ವಿಮೆ ಮತ್ತು ಉತ್ತರಾಧಿಕಾರ ಪ್ರಕ್ರಿಯೆಗಳಿಗೆ ಅಗತ್ಯವಾದ ಅಧಿಕೃತ ಮರಣ ಪ್ರಮಾಣಪತ್ರವನ್ನು ಪಡೆಯಿರಿ.",
+        "Obtain official proof that you are a resident of Karnataka — required for jobs, admissions, and government schemes.": "ನೀವು ಕರ್ನಾಟಕದ ನಿವಾಸಿ ಎಂದು ಅಧಿಕೃತ ಪುರಾವೆ ಪಡೆಯಿರಿ - ಉದ್ಯೋಗಗಳು, ಪ್ರವೇಶಾತಿಗಳು ಮತ್ತು ಸರ್ಕಾರಿ ಯೋಜನೆಗಳಿಗೆ ಇದು ಅಗತ್ಯವಿದೆ.",
+        "Apply for a new ration card or update existing card details — add/remove members, change address, or upgrade category.": "ಹೊಸ ಪಡಿತರ ಚೀಟಿಗಾಗಿ ಅರ್ಜಿ ಸಲ್ಲಿಸಿ ಅಥವಾ ಅಸ್ತಿತ್ವದಲ್ಲಿರುವ ಕಾರ್ಡ್ ವಿವರಗಳನ್ನು ನವೀಕರಿಸಿ - ಸದಸ್ಯರನ್ನು ಸೇರಿಸಿ/ತೆಗೆದುಹಾಕಿ, ವಿಳಾಸವನ್ನು ಬದಲಾಯಿಸಿ ಅಥವಾ ವರ್ಗವನ್ನು ನವೀಕರಿಸಿ.",
+        "Register your marriage under the Hindu Marriage Act or Special Marriage Act and obtain an official marriage certificate.": "ಹಿಂದೂ ವಿವಾಹ ಕಾಯ್ದೆ ಅಥವಾ ವಿಶೇಷ ವಿವಾಹ ಕಾಯ್ದೆಯಡಿ ನಿಮ್ಮ ವಿವಾಹವನ್ನು ನೋಂದಾಯಿಸಿ ಮತ್ತು ವಿವಾಹ ಪ್ರಮಾಣಪತ್ರವನ್ನು ಪಡೆಯಿರಿ.",
+        "Apply online for a Learner's Licence (LL) for two-wheelers, four-wheelers, or commercial vehicles through Sarathi portal.": "ಸಾರಥಿ ಪೋರ್ಟಲ್ ಮೂಲಕ ದ್ವಿಚಕ್ರ, ನಾಲ್ಕು ಚಕ್ರದ ವಾಹನಗಳು ಅಥವಾ ವಾಣಿಜ್ಯ ವಾಹನಗಳಿಗೆ ಕಲಿಯುವವರ ಪರವಾನಗಿಗಾಗಿ (LL) ಆನ್‌ಲೈನ್‌ನಲ್ಲಿ ಅರ್ಜಿ ಸಲ್ಲಿಸಿ.",
+        // Payment & Tracker keys
+        "SECURE SUBMISSION GATEWAY": "ಸುರಕ್ಷಿತ ಸಲ್ಲಿಕೆ ಗೇಟ್‌ವೇ", "SECURE PAYMENT GATEWAY": "ಸುರಕ್ಷಿತ ಪಾವತಿ ಗೇಟ್‌ವೇ",
+        "Confirm Submission": "ಸಲ್ಲಿಕೆ ಖಚಿತಪಡಿಸಿ", "Complete Payment": "ಪಾವತಿ ಪೂರ್ಣಗೊಳಿಸಿ",
+        "TOTAL AMOUNT DUE": "ಬಾಕಿ ಇರುವ ಒಟ್ಟು ಮೊತ್ತ", "256-bit SSL Secured": "256-ಬಿಟ್ ಎಸ್ಎಸ್ಎಲ್ ಭದ್ರತೆ",
+        "SELECT PAYMENT METHOD": "ಪಾವತಿ ವಿಧಾನ ಆಯ್ಕೆಮಾಡಿ", "UPI Payment": "ಯುಪಿಐ ಪಾವತಿ",
+        "Debit / Credit Card": "ಡೆಬಿಟ್ / ಕ್ರೆಡಿಟ್ ಕಾರ್ಡ್", "Net Banking": "ನೆಟ್ ಬ್ಯಾಂಕಿಂಗ್", "Mobile Wallet": "ಮೊಬೈಲ್ ವಾಲೆಟ್",
+        "Zero Fee Application": "ಶೂನ್ಯ ಶುಲ್ಕದ ಅರ್ಜಿ", "This scholarship program is provided free of cost by the Department of Social Welfare. No payment is required.": "ಈ ಕಾರ್ಯಕ್ರಮವನ್ನು ಉಚಿತವಾಗಿ ಒದಗಿಸಲಾಗುತ್ತದೆ. ಯಾವುದೇ ಪಾವತಿ ಅಗತ್ಯವಿಲ್ಲ.",
+        "Submit Application Now": "ಈಗ ಅರ್ಜಿ ಸಲ್ಲಿಸಿ", "Pay & Submit Application": "ಪಾವತಿಸಿ & ಅರ್ಜಿ ಸಲ್ಲಿಸಿ",
+        "Secured by RazorPay Government Gateway": "ರೇಜರ್‌ಪೇ ಸರ್ಕಾರಿ ಗೇಟ್‌ವೇಯಿಂದ ಭದ್ರತೆ",
+        "Processing...": "ಪ್ರಕ್ರಿಯೆಗೊಳಿಸಲಾಗುತ್ತಿದೆ...", "Failed to submit application: ": "ಅರ್ಜಿ ಸಲ್ಲಿಕೆ ವಿಫಲವಾಗಿದೆ: ",
+        "Submitted": "ಸಲ್ಲಿಸಲಾಗಿದೆ", "Under Review": "ಪರಿಶೀಲನೆಯಲ್ಲಿದೆ", "Verification": "ಪರಿಶೀಲನೆ", "Approved": "ಅನುಮೋದಿಸಲಾಗಿದೆ", "Ready to Collect": "ಪಡೆಯಲು ಸಿದ್ಧವಾಗಿದೆ",
+        "Submitted today • Expected by:": "ಇಂದು ಸಲ್ಲಿಸಲಾಗಿದೆ • ನಿರೀಕ್ಷೆ:", "from submission": "ಸಲ್ಲಿಕೆಯಿಂದ",
+        "UPI ID": "ಯುಪಿಐ ಐಡಿ", "CARD NUMBER": "ಕಾರ್ಡ್ ಸಂಖ್ಯೆ", "EXPIRY": "ಮುಕ್ತಾಯ", "CVV": "ಸಿವಿವಿ", "SELECT YOUR BANK": "ನಿಮ್ಮ ಬ್ಯಾಂಕ್ ಆಯ್ಕೆಮಾಡಿ", "REGISTERED MOBILE NUMBER": "ನೋಂದಾಯಿತ ಮೊಬೈಲ್ ಸಂಖ್ಯೆ",
+        "Track Application": "ಅರ್ಜಿ ಟ್ರ್ಯಾಕ್ ಮಾಡಿ", "Check the current status of your submitted application": "ನೀವು ಸಲ್ಲಿಸಿದ ಅರ್ಜಿಯ ಪ್ರಸ್ತುತ ಸ್ಥಿತಿಯನ್ನು ಪರಿಶೀಲಿಸಿ",
+        "Enter Reference Number (e.g., NS-2410-A1B2)": "ಉಲ್ಲೇಖ ಸಂಖ್ಯೆಯನ್ನು ನಮೂದಿಸಿ (ಉದಾಹರಣೆಗೆ: NS-2410-A1B2)", "No Active Applications": "ಯಾವುದೇ ಸಕ್ರಿಯ ಅರ್ಜಿಗಳಿಲ್ಲ",
+        "You haven't submitted any applications yet, or no matches found.": "ನೀವು ಇನ್ನೂ ಯಾವುದೇ ಅರ್ಜಿಗಳನ್ನು ಸಲ್ಲಿಸಿಲ್ಲ, ಅಥವಾ ಹೊಂದಾಣಿಕೆ ಕಂಡುಬಂದಿಲ್ಲ.", "NAMMA SEVA AI": "ನಮ್ಮ ಸೇವಾ AI",
+        "Online": "ಆನ್‌ಲೈನ್", "How can I help you today?": "ನಾನು ನಿಮಗೆ ಹೇಗೆ ಸಹಾಯ ಮಾಡಬಹುದು?",
+        "Required Documents": "ಅಗತ್ಯ ದಾಖಲೆಗಳು", "Birth Certificate": "ಜನನ ಪ್ರಮಾಣಪತ್ರ", "Trade License": "ಉದ್ದಿಮೆ ಪರವಾನಗಿ", "Khata Transfer": "ಖಾತಾ ವರ್ಗಾವಣೆ",
+        "chatInitialGreeting": "ನಮಸ್ಕಾರ! 🙏 ಸ್ವಾಗತ! ನಾನು ನಮ್ಮ ಸೇವಾ, ಬೆಂಗಳೂರು ಸರ್ಕಾರಿ ಸೇವೆಗಳಿಗಾಗಿ ನಿಮ್ಮ ವೈಯಕ್ತಿಕ ಮಾರ್ಗದರ್ಶಿ.\n\nಬಿಬಿಎಂಪಿ ಮತ್ತು ಸೇವಾ ಸಿಂಧು ಬಗ್ಗೆ ನನಗೆ ಎಲ್ಲವೂ ತಿಳಿದಿದೆ — ನಿಮಗೆ ಏನು ಸಹಾಯ ಬೇಕು ಎಂದು ಹೇಳಿ. ನಾನು ಸರಳ ಭಾಷೆಯಲ್ಲಿ ಹಂತ-ಹಂತವಾಗಿ ಮಾರ್ಗದರ್ಶನ ನೀಡುತ್ತೇನೆ.\n\nಇಂದು ನಾನು ನಿಮಗೆ ಹೇಗೆ ಸಹಾಯ ಮಾಡಲಿ?",
+        "statLabel3": "ಗುಪ್ತ ಶುಲ್ಕಗಳಿಲ್ಲ", "statLabel4": "ಎಐ ಸಹಾಯ",
+        "Welcome back": "ಮರಳಿ ಸ್ವಾಗತ", "Application submitted! Ref:": "ಅರ್ಜಿ ಸಲ್ಲಿಸಲಾಗಿದೆ! ಉಲ್ಲೇಖ:",
+        "Incorrect OTP. Try 123456 for demo.": "ತಪ್ಪಾದ OTP. ಡೆಮೊಗಾಗಿ 123456 ಪ್ರಯತ್ನಿಸಿ.", "Connection error. Please try again or call 080-22221188.": "ಸಂಪರ್ಕ ದೋಷ. ದಯವಿಟ್ಟು ಮತ್ತೆ ಪ್ರಯತ್ನಿಸಿ ಅಥವಾ 080-22221188 ಗೆ ಕರೆ ಮಾಡಿ.",
+        "Connecting to DigiLocker": "ಡಿಜಿಲಾಕರ್‌ಗೆ ಸಂಪರ್ಕಿಸಲಾಗುತ್ತಿದೆ", "DigiLocker Verified!": "ಡಿಜಿಲಾಕರ್ ದೃಢೀಕರಿಸಲಾಗಿದೆ!",
+        "Identity confirmed. Logging you in...": "ಗುರುತು ಖಚಿತಪಡಿಸಲಾಗಿದೆ. ಲಾಗಿನ್ ಮಾಡಲಾಗುತ್ತಿದೆ...", "Documents Fetched": "ದಾಖಲೆಗಳನ್ನು ಪಡೆಯಲಾಗಿದೆ",
+        "Aadhaar Card": "ಆಧಾರ್ ಕಾರ್ಡ್", "PAN Card": "ಪ್ಯಾನ್ ಕಾರ್ಡ್", "Driving Licence": "ಚಾಲನಾ ಪರವಾನಗಿ",
+        "Connect to DigiLocker": "ಡಿಜಿಲಾಕರ್‌ಗೆ ಸಂಪರ್ಕಿಸಿ", "Verify Aadhaar identity": "ಆಧಾರ್ ಗುರುತು ಪರಿಶೀಲಿಸಿ", "Fetch documents": "ದಾಖಲೆಗಳನ್ನು ಪಡೆಯಿರಿ", "Load profile": "ಪ್ರೊಫೈಲ್ ಲೋಡ್ ಮಾಡಿ", "Secure session": "ಸುರಕ್ಷಿತ ಅಧಿವೇಶನ",
+        "Connecting to DigiLocker servers...": "ಡಿಜಿಲಾಕರ್ ಸರ್ವರ್‌ಗಳಿಗೆ ಸಂಪರ್ಕಿಸಲಾಗುತ್ತಿದೆ...", "Authenticating your Aadhaar identity...": "ನಿಮ್ಮ ಆಧಾರ್ ಗುರುತನ್ನು ದೃಢೀಕರಿಸಲಾಗುತ್ತಿದೆ...", "Fetching your verified documents...": "ನಿಮ್ಮ ಪರಿಶೀಲಿಸಿದ ದಾಖಲೆಗಳನ್ನು ಪಡೆಯಲಾಗುತ್ತಿದೆ...", "Retrieving profile information...": "ಪ್ರೊಫೈಲ್ ಮಾಹಿತಿಯನ್ನು ಹಿಂಪಡೆಯಲಾಗುತ್ತಿದೆ...", "Securing your session...": "ನಿಮ್ಮ ಅಧಿವೇಶನವನ್ನು ಭದ್ರಪಡಿಸಲಾಗುತ್ತಿದೆ...",
+        "Voice recognition not supported": "ಬ್ರೌಸರ್‌ನಲ್ಲಿ ಧ್ವನಿ ಗುರುತಿಸುವಿಕೆ ಬೆಂಬಲಿತವಾಗಿಲ್ಲ.", "Microphone access denied": "ಮೈಕ್ರೊಫೋನ್ ಪ್ರವೇಶವನ್ನು ನಿರಾಕರಿಸಲಾಗಿದೆ.",
+        "Toggle Voice Response": "ಧ್ವನಿ ಪ್ರತಿಕ್ರಿಯೆಯನ್ನು ಬದಲಾಯಿಸಿ"
+      }
+    };
+
+    function t(key) {
+      return (TRANSLATIONS[currentLang] || TRANSLATIONS.en)[key] || TRANSLATIONS.en[key] || key;
+    }
+
+    function toggleLang() {
+      currentLang = currentLang === 'en' ? 'kn' : 'en';
+      // Update toggle UI
+      document.getElementById('lang-en').classList.toggle('active', currentLang === 'en');
+      document.getElementById('lang-kn').classList.toggle('active', currentLang === 'kn');
+      // Save preference
+      localStorage.setItem('nsLang', currentLang);
+      // Update nav buttons
+      applyLangToNav();
+      // Update user bar
+      applyLangToUserBar();
+      // Re-render current page
+      renderPage(currentPage);
+      // Re-render login page visible text
+      applyLangToLogin();
+    }
+
+    function applyLangToNav() {
+      const nbHome = document.getElementById('nav-home');
+      const nbSvc = document.getElementById('nav-services');
+      const nbChat = document.getElementById('nav-chat');
+      const nbTrack = document.getElementById('nav-track');
+      if (nbHome) nbHome.textContent = t('navHome');
+      if (nbSvc) nbSvc.textContent = t('navServices');
+      if (nbChat) nbChat.textContent = t('navChat');
+      if (nbTrack) nbTrack.textContent = t('navTrack');
+
+      // Static header and footer
+      if (document.getElementById('header-subtitle')) document.getElementById('header-subtitle').textContent = t('headerSubtitle');
+      if (document.getElementById('footer-desc')) document.getElementById('footer-desc').textContent = t('footerDesc');
+      if (document.getElementById('footer-disclaimer')) document.getElementById('footer-disclaimer').textContent = t('footerDisclaimer');
+      if (document.getElementById('footer-quick-title')) document.getElementById('footer-quick-title').textContent = t('footerQuickTitle');
+      if (document.getElementById('footer-helpline-title')) document.getElementById('footer-helpline-title').textContent = t('footerHelplineTitle');
+      if (document.getElementById('footer-helpline1')) document.getElementById('footer-helpline1').textContent = t('footerHelpline1');
+      if (document.getElementById('footer-helpline2')) document.getElementById('footer-helpline2').textContent = t('footerHelpline2');
+
+      const flinks = document.querySelectorAll('#footer-quick-links a');
+      if (flinks && flinks.length === 4) {
+        flinks[0].textContent = t('navHome');
+        flinks[1].textContent = t('allServicesTitle');
+        flinks[2].textContent = t('trackTitle');
+        flinks[3].textContent = t('navChat');
+      }
+    }
+
+    function applyLangToUserBar() {
+      // 'Logged in as' label
+      const ub = document.getElementById('user-bar');
+      if (ub) {
+        const span = ub.querySelector('span:first-child');
+        if (span) span.textContent = t('loggedInAs');
+      }
+      // Logout button
+      const logoutBtn = document.querySelector('#user-bar button');
+      if (logoutBtn) logoutBtn.textContent = t('logout');
+    }
+
+    function applyLangToLogin() {
+      const welcomeEl = document.querySelector('#auth-select h2');
+      const subtitleEl = document.querySelector('#auth-select p');
+      if (welcomeEl) welcomeEl.textContent = t('loginWelcome');
+      if (subtitleEl) subtitleEl.textContent = t('loginSubtitle');
+
+      if (document.getElementById('dl-connecting')) document.getElementById('dl-connecting').textContent = t('Connecting to DigiLocker');
+      if (document.getElementById('dl-verified')) document.getElementById('dl-verified').textContent = t('DigiLocker Verified!');
+      if (document.getElementById('dl-identity')) document.getElementById('dl-identity').textContent = t('Identity confirmed. Logging you in...');
+      if (document.getElementById('dl-docs-fetched')) document.getElementById('dl-docs-fetched').textContent = '✅ ' + t('Documents Fetched');
+
+      // Update mobile and aadhaar input labels
+      const mobLabel = document.querySelector('#input-mobile label');
+      const aadLabel = document.querySelector('#input-aadhaar label');
+      if (mobLabel) mobLabel.textContent = t('Mobile Number');
+      if (aadLabel) aadLabel.textContent = t('Aadhaar Number');
+    }
+
+    // ══════════════════════════════════════════════════════════════
     // STATE
     // ══════════════════════════════════════════════════════════════
     let currentUser = null;
     let currentPage = 'home';
     let selectedService = null;
     let applications = [];
-    let chatMessages = [{ role: 'assistant', content: "ನಮಸ್ಕಾರ! 🙏 Welcome! I'm NAMMA SEVA, your personal guide for Bengaluru government services.\n\nI know all about BBMP and Seva Sindhu — tell me what you need help with. I'll guide you step by step, in simple language.\n\nWhat would you like help with today?" }];
+    let chatMessages = [];
     let selectedPaymentMethod = '';
 
     // Auth state
@@ -1617,7 +1943,7 @@ RULES:
         loginUser(user);
       } else {
         const errEl = document.getElementById('otp-error');
-        errEl.textContent = 'Incorrect OTP. Try 123456 for demo.';
+        errEl.textContent = t('Incorrect OTP. Try 123456 for demo.');
         errEl.style.display = 'block';
         const container = document.getElementById('otp-boxes');
         container.style.animation = 'shake 0.5s ease-in-out';
@@ -1653,8 +1979,8 @@ RULES:
 
     function simulateDigiLocker() {
       showAuth('digilocker-fetching');
-      const steps = ["Connect to DigiLocker", "Verify Aadhaar identity", "Fetch documents", "Load profile", "Secure session"];
-      const msgs = ["Connecting to DigiLocker servers...", "Authenticating your Aadhaar identity...", "Fetching your verified documents...", "Retrieving profile information...", "Securing your session..."];
+      const steps = [t("Connect to DigiLocker"), t("Verify Aadhaar identity"), t("Fetch documents"), t("Load profile"), t("Secure session")];
+      const msgs = [t("Connecting to DigiLocker servers..."), t("Authenticating your Aadhaar identity..."), t("Fetching your verified documents..."), t("Retrieving profile information..."), t("Securing your session...")];
       digiStep = 0;
       document.getElementById('digi-loader-msg').textContent = msgs[0];
       renderDigiSteps(steps, 0);
@@ -1779,16 +2105,16 @@ RULES:
       <div style="position:absolute;inset:0;background-image:radial-gradient(ellipse at 20% 60%,rgba(245,160,32,0.14) 0%,transparent 50%),radial-gradient(ellipse at 80% 40%,rgba(255,255,255,0.06) 0%,transparent 50%);pointer-events:none;z-index:2;"></div>
       <div style="position:relative;z-index:3;max-width:720px;margin:0 auto;">
         <h1 style="font-family:'Sora',sans-serif;font-size:clamp(32px,5vw,52px);font-weight:900;color:#FFFFFF;margin:0 0 20px;line-height:1.1;letter-spacing:-1.5px;animation:slideUp 0.6s ease-out 0.1s both;text-shadow:0 2px 20px rgba(0,0,0,0.7),0 4px 40px rgba(0,0,0,0.4);">
-          Government Services,<br/>
-          <span style="color:#F5A020;">Without the Confusion</span>
+          ${t('heroTitle')}<br/>
+          <span style="color:#F5A020;">${t('heroHighlight')}</span>
         </h1>
-        <p style="font-size:18px;color:rgba(255,255,255,0.8);line-height:1.7;margin:0 0 36px;animation:slideUp 0.6s ease-out 0.2s both;">ನಮ್ಮ ಸೇವಾ — Apply for Khata transfers, certificates & licenses online — no middlemen, no queue, no rejections.</p>
+        <p style="font-size:18px;color:rgba(255,255,255,0.8);line-height:1.7;margin:0 0 36px;animation:slideUp 0.6s ease-out 0.2s both;">${t('heroSubtitle')}</p>
         <div class="hero-btns" style="display:flex;gap:14px;justify-content:center;flex-wrap:wrap;animation:slideUp 0.6s ease-out 0.3s both;">
-          <button class="btn-primary ripple-btn" onclick="navigate('services');addRipple(event,this)">Browse All Services →</button>
-          <button class="btn-ghost" onclick="navigate('chat')">💬 Ask AI Guide</button>
+          <button class="btn-primary ripple-btn" onclick="navigate('services');addRipple(event,this)">${t('heroBtn1')}</button>
+          <button class="btn-ghost" onclick="navigate('chat')">${t('heroBtn2')}</button>
         </div>
         <div class="stats-row" style="display:flex;gap:40px;justify-content:center;margin-top:52px;flex-wrap:wrap;animation:slideUp 0.6s ease-out 0.4s both;">
-          ${[["12+", "Services Available"], ["3 Weeks", "Avg. Processing Time"], ["₹0", "No Hidden Fees"], ["24/7", "AI Assistance"]].map(([num, label]) => `
+          ${[["12+", t('statLabel1')], ["3 Weeks", t('statLabel2')], ["₹0", t('statLabel3')], ["24/7", t('statLabel4')]].map(([num, label]) => `
             <div style="text-align:center;">
               <div style="font-family:'Sora',sans-serif;font-size:28px;font-weight:900;color:#F5A020;text-shadow:0 2px 8px rgba(245,160,32,0.3);">${num}</div>
               <div style="font-size:12px;color:rgba(255,255,255,0.9);font-weight:700;letter-spacing:0.5px;text-shadow:0 1px 6px rgba(0,0,0,0.5);">${label}</div>
@@ -1803,7 +2129,7 @@ RULES:
       <div style="max-width:1100px;margin:0 auto;">
         <div style="text-align:center;margin-bottom:48px;">
           <div style="font-size:12px;color:#A01818;font-weight:800;letter-spacing:2px;font-family:'Sora',sans-serif;margin-bottom:10px;">OUR SERVICES</div>
-          <h2 style="font-family:'Sora',sans-serif;font-size:34px;font-weight:900;color:#6B0C0C;margin:0;letter-spacing:-1px;">What can we help you with?</h2>
+          <h2 style="font-family:'Sora',sans-serif;font-size:34px;font-weight:900;color:#6B0C0C;margin:0;letter-spacing:-1px;">${t('servicesTitle')}</h2>
         </div>
         <div class="services-grid">
           ${featuredServices.map(s => `
@@ -1814,17 +2140,17 @@ RULES:
                 <div style="width:54px;height:54px;border-radius:14px;background:${s.portalBg};display:flex;align-items:center;justify-content:center;font-size:26px;">${s.icon}</div>
                 <span style="background:${s.portalBg};color:${s.portalColor};border-radius:8px;padding:4px 10px;font-size:11px;font-weight:800;font-family:'Sora',sans-serif;">${s.portal}</span>
               </div>
-              <h3 style="font-family:'Sora',sans-serif;font-size:19px;font-weight:800;color:#6B0C0C;margin:0 0 6px;">${s.title}</h3>
-              <p style="font-size:13px;color:#7A6050;margin:0 0 20px;line-height:1.6;">${s.desc}</p>
+              <h3 style="font-family:'Sora',sans-serif;font-size:19px;font-weight:800;color:#6B0C0C;margin:0 0 6px;">${t(s.title)}</h3>
+              <p style="font-size:13px;color:#7A6050;margin:0 0 20px;line-height:1.6;">${t(s.desc)}</p>
               <div style="display:flex;gap:16px;margin-bottom:20px;">
-                <div><div style="font-size:10px;color:#B0906A;font-weight:700;letter-spacing:0.5px;margin-bottom:2px;">FEE</div><div style="font-size:14px;color:#6B0C0C;font-weight:800;font-family:'Sora',sans-serif;">${s.fee}</div></div>
+                <div><div style="font-size:10px;color:#B0906A;font-weight:700;letter-spacing:0.5px;margin-bottom:2px;">${t('FEE')}</div><div style="font-size:14px;color:#6B0C0C;font-weight:800;font-family:'Sora',sans-serif;">${t(s.fee)}</div></div>
                 <div style="width:1px;background:#E8D5C0;"></div>
-                <div><div style="font-size:10px;color:#B0906A;font-weight:700;letter-spacing:0.5px;margin-bottom:2px;">TIME</div><div style="font-size:14px;color:#6B0C0C;font-weight:800;font-family:'Sora',sans-serif;">${s.time}</div></div>
+                <div><div style="font-size:10px;color:#B0906A;font-weight:700;letter-spacing:0.5px;margin-bottom:2px;">${t('TIME')}</div><div style="font-size:14px;color:#6B0C0C;font-weight:800;font-family:'Sora',sans-serif;">${t(s.time)}</div></div>
                 <div style="width:1px;background:#E8D5C0;"></div>
-                <div><div style="font-size:10px;color:#B0906A;font-weight:700;letter-spacing:0.5px;margin-bottom:2px;">DOCS</div><div style="font-size:14px;color:#6B0C0C;font-weight:800;font-family:'Sora',sans-serif;">${s.documents.length} req.</div></div>
+                <div><div style="font-size:10px;color:#B0906A;font-weight:700;letter-spacing:0.5px;margin-bottom:2px;">${t('DOCS')}</div><div style="font-size:14px;color:#6B0C0C;font-weight:800;font-family:'Sora',sans-serif;">${s.documents.length} ${t('req.')}</div></div>
               </div>
               <div style="display:flex;align-items:center;gap:8px;color:#B0906A;font-size:13px;font-weight:700;font-family:'Sora',sans-serif;">
-                View Details & Apply <span>→</span>
+                ${t('View Details & Apply <span>→</span>')}
               </div>
             </div>
           `).join('')}
@@ -1836,9 +2162,9 @@ RULES:
     <div style="background:white;padding:64px 28px;">
       <div style="max-width:1100px;margin:0 auto;text-align:center;">
         <div style="font-size:12px;color:#A01818;font-weight:800;letter-spacing:2px;font-family:'Sora',sans-serif;margin-bottom:10px;">HOW IT WORKS</div>
-        <h2 style="font-family:'Sora',sans-serif;font-size:34px;font-weight:900;color:#6B0C0C;margin:0 0 48px;letter-spacing:-1px;">3 Simple Steps</h2>
+        <h2 style="font-family:'Sora',sans-serif;font-size:34px;font-weight:900;color:#6B0C0C;margin:0 0 48px;letter-spacing:-1px;">${t('howTitle')}</h2>
         <div class="steps-grid">
-          ${[{ num: "01", icon: "🔍", title: "Choose Service", desc: "Pick from 12+ government services — BBMP or Seva Sindhu" }, { num: "02", icon: "📝", title: "Fill Application", desc: "Complete the guided form — we tell you exactly what to submit" }, { num: "03", icon: "📱", title: "Track & Collect", desc: "Get SMS updates. Download or collect your certificate when ready" }].map(step => `
+          ${[{ num: "01", icon: "🔍", title: t('step1Title'), desc: t('step1Desc') }, { num: "02", icon: "📝", title: t('step2Title'), desc: t('step2Desc') }, { num: "03", icon: "📱", title: t('step3Title'), desc: t('step3Desc') }].map(step => `
             <div style="text-align:center;">
               <div style="width:72px;height:72px;border-radius:50%;margin:0 auto 20px;background:linear-gradient(135deg,#6B0C0C,#A01818);display:flex;align-items:center;justify-content:center;font-size:28px;box-shadow:0 8px 24px rgba(169,27,27,0.25);">${step.icon}</div>
               <div style="font-family:'Sora',sans-serif;font-size:11px;color:#A01818;font-weight:800;letter-spacing:2px;margin-bottom:8px;">STEP ${step.num}</div>
@@ -1861,10 +2187,15 @@ RULES:
       return `
     <div style="background:#FFF8F0;min-height:80vh;padding:40px 28px;">
       <div style="max-width:1100px;margin:0 auto;">
-        <h1 style="font-family:'Sora',sans-serif;font-size:30px;font-weight:900;color:#6B0C0C;margin:0 0 6px;">All Services</h1>
-        <p style="color:#7A6050;margin:0 0 28px;">Select a service to view details and start your application</p>
+        <h1 style="font-family:'Sora',sans-serif;font-size:30px;font-weight:900;color:#6B0C0C;margin:0 0 6px;">${t('allServicesTitle')}</h1>
+        <p style="color:#7A6050;margin:0 0 28px;">${t('servicesSubtitle')}</p>
         <div style="display:flex;gap:10px;flex-wrap:wrap;margin-bottom:32px;">
-          ${portals.map(p => `<button class="filter-btn ${serviceFilter === p ? 'active' : ''}" onclick="setServiceFilter('${p}')">${p}</button>`).join('')}
+          <button class="filter-btn ${serviceFilter === 'All' ? 'active' : ''}" onclick="setServiceFilter('All')">${t('filterAll')}</button>
+          <button class="filter-btn ${serviceFilter === 'BBMP' ? 'active' : ''}" onclick="setServiceFilter('BBMP')">${t('filterBBMP')}</button>
+          <button class="filter-btn ${serviceFilter === 'Seva Sindhu' ? 'active' : ''}" onclick="setServiceFilter('Seva Sindhu')">${t('filterSeva')}</button>
+          <button class="filter-btn ${serviceFilter === 'SSP Karnataka' ? 'active' : ''}" onclick="setServiceFilter('SSP Karnataka')">${t('filterSSP')}</button>
+          <button class="filter-btn ${serviceFilter === 'Ahara Karnataka' ? 'active' : ''}" onclick="setServiceFilter('Ahara Karnataka')">${t('filterOther')}</button>
+          <button class="filter-btn ${serviceFilter === 'Sarathi Parivahan' ? 'active' : ''}" onclick="setServiceFilter('Sarathi Parivahan')">${t('filterOther')}</button>
         </div>
         <div class="services-grid">
           ${filtered.map(s => `
@@ -1875,11 +2206,11 @@ RULES:
                 <span style="font-size:40px;">${s.icon}</span>
                 <span style="background:${s.portalBg};color:${s.portalColor};border-radius:8px;padding:4px 10px;font-size:11px;font-weight:800;font-family:'Sora',sans-serif;">${s.portal}</span>
               </div>
-              <h3 style="font-family:'Sora',sans-serif;font-size:18px;font-weight:800;color:#6B0C0C;margin:0 0 8px;">${s.title}</h3>
-              <p style="font-size:13px;color:#7A6050;margin:0 0 20px;line-height:1.6;">${s.desc}</p>
+              <h3 style="font-family:'Sora',sans-serif;font-size:18px;font-weight:800;color:#6B0C0C;margin:0 0 8px;">${t(s.title)}</h3>
+              <p style="font-size:13px;color:#7A6050;margin:0 0 20px;line-height:1.6;">${t(s.desc)}</p>
               <div style="display:flex;gap:20px;">
-                <div><div style="font-size:10px;color:#B0906A;font-weight:700;">FEE</div><div style="font-weight:800;font-size:13px;color:#6B0C0C;font-family:'Sora',sans-serif;">${s.fee}</div></div>
-                <div><div style="font-size:10px;color:#B0906A;font-weight:700;">TIME</div><div style="font-weight:800;font-size:13px;color:#6B0C0C;font-family:'Sora',sans-serif;">${s.time}</div></div>
+                <div><div style="font-size:10px;color:#B0906A;font-weight:700;">${t('FEE')}</div><div style="font-weight:800;font-size:13px;color:#6B0C0C;font-family:'Sora',sans-serif;">${t(s.fee)}</div></div>
+                <div><div style="font-size:10px;color:#B0906A;font-weight:700;">${t('TIME')}</div><div style="font-weight:800;font-size:13px;color:#6B0C0C;font-family:'Sora',sans-serif;">${t(s.time)}</div></div>
               </div>
             </div>
           `).join('')}
@@ -1906,19 +2237,19 @@ RULES:
       <div style="background:linear-gradient(135deg,#6B0C0C 0%,#A01818 40%,${s.portalColor} 100%);padding:48px 28px;position:relative;overflow:hidden;">
         <div style="position:absolute;top:-60px;right:-60px;width:300px;height:300px;border-radius:50%;background:rgba(255,255,255,0.04);"></div>
         <div style="max-width:1100px;margin:0 auto;">
-          <button onclick="navigate('services')" style="background:rgba(255,255,255,0.12);border:1px solid rgba(255,255,255,0.2);border-radius:8px;padding:7px 14px;color:rgba(255,255,255,0.8);font-size:13px;cursor:pointer;font-family:'Sora',sans-serif;font-weight:600;margin-bottom:24px;display:inline-flex;align-items:center;gap:6px;">← Back to Services</button>
+          <button onclick="navigate('services')" style="background:rgba(255,255,255,0.12);border:1px solid rgba(255,255,255,0.2);border-radius:8px;padding:7px 14px;color:rgba(255,255,255,0.8);font-size:13px;cursor:pointer;font-family:'Sora',sans-serif;font-weight:600;margin-bottom:24px;display:inline-flex;align-items:center;gap:6px;">${t('backToServices')}</button>
           <div style="display:flex;align-items:center;gap:20px;flex-wrap:wrap;">
             <div style="width:72px;height:72px;border-radius:18px;font-size:36px;background:rgba(255,255,255,0.15);display:flex;align-items:center;justify-content:center;backdrop-filter:blur(10px);border:2px solid rgba(255,255,255,0.2);">${s.icon}</div>
             <div>
               <div style="display:flex;align-items:center;gap:10px;margin-bottom:8px;">
                 <span style="background:${s.portalBg};color:${s.portalColor};padding:4px 12px;border-radius:8px;font-size:11px;font-weight:800;font-family:'Sora',sans-serif;">${s.portal}</span>
               </div>
-              <h1 style="font-family:'Sora',sans-serif;font-size:34px;font-weight:900;color:white;margin:0 0 6px;letter-spacing:-1px;">${s.title}</h1>
-              <p style="font-size:16px;color:rgba(255,255,255,0.7);margin:0;">${s.subtitle}</p>
+              <h1 style="font-family:'Sora',sans-serif;font-size:34px;font-weight:900;color:white;margin:0 0 6px;letter-spacing:-1px;">${t(s.title)}</h1>
+              <p style="font-size:16px;color:rgba(255,255,255,0.7);margin:0;">${t(s.subtitle)}</p>
             </div>
             <div style="margin-left:auto;display:flex;gap:14px;flex-wrap:wrap;">
-              <button class="btn-primary" onclick="navigate('apply',selectedService)">Apply Now →</button>
-              <button class="btn-ghost" onclick="navigate('chat')">💬 Get Help</button>
+              <button class="btn-primary" onclick="navigate('apply',selectedService)">${t('applyNow')}</button>
+              <button class="btn-ghost" onclick="navigate('chat')">${t('getHelp')}</button>
             </div>
           </div>
         </div>
@@ -1930,28 +2261,28 @@ RULES:
           <!-- Main -->
           <div style="display:flex;flex-direction:column;gap:24px;">
             <div style="background:white;border-radius:16px;padding:28px;box-shadow:0 4px 15px rgba(0,0,0,0.06);">
-              <h2 style="font-family:'Sora',sans-serif;font-size:18px;font-weight:800;color:#6B0C0C;margin:0 0 14px;">About This Service</h2>
-              <p style="color:#5A4030;line-height:1.8;margin:0;font-size:15px;">${s.longDesc}</p>
+              <h2 style="font-family:'Sora',sans-serif;font-size:18px;font-weight:800;color:#6B0C0C;margin:0 0 14px;">${t('aboutService')}</h2>
+              <p style="color:#5A4030;line-height:1.8;margin:0;font-size:15px;">${t(s.longDesc)}</p>
             </div>
             <div style="background:white;border-radius:16px;padding:28px;box-shadow:0 4px 15px rgba(0,0,0,0.06);">
-              <h2 style="font-family:'Sora',sans-serif;font-size:18px;font-weight:800;color:#6B0C0C;margin:0 0 20px;">Step-by-Step Process</h2>
+              <h2 style="font-family:'Sora',sans-serif;font-size:18px;font-weight:800;color:#6B0C0C;margin:0 0 20px;">${t('stepsProcess')}</h2>
               <div style="display:flex;flex-direction:column;gap:0;">
                 ${s.steps.map((step, i) => `
                   <div style="display:flex;gap:16px;padding-bottom:${i < s.steps.length - 1 ? 20 : 0}px;position:relative;">
                     ${i < s.steps.length - 1 ? `<div style="position:absolute;left:16px;top:34px;bottom:0;width:2px;background:#E8D5C0;"></div>` : ''}
                     <div style="width:34px;height:34px;border-radius:50%;flex-shrink:0;background:linear-gradient(135deg,${s.portalColor},${s.portalColor}cc);display:flex;align-items:center;justify-content:center;color:white;font-size:13px;font-weight:800;font-family:'Sora',sans-serif;z-index:1;">${i + 1}</div>
-                    <div style="padding-top:6px;"><p style="margin:0;font-size:14px;color:#4A3020;line-height:1.6;">${step}</p></div>
+                    <div style="padding-top:6px;"><p style="margin:0;font-size:14px;color:#4A3020;line-height:1.6;">${t(step)}</p></div>
                   </div>
                 `).join('')}
               </div>
             </div>
             <div style="background:#FFF7ED;border:2px solid #FED7AA;border-radius:16px;padding:24px;">
-              <h2 style="font-family:'Sora',sans-serif;font-size:16px;font-weight:800;color:#92400E;margin:0 0 14px;display:flex;gap:8px;align-items:center;">⚠️ Common Rejection Reasons</h2>
+              <h2 style="font-family:'Sora',sans-serif;font-size:16px;font-weight:800;color:#92400E;margin:0 0 14px;display:flex;gap:8px;align-items:center;">${t('rejectionReasons')}</h2>
               <div style="display:flex;flex-direction:column;gap:10px;">
                 ${s.commonMistakes.map(m => `
                   <div style="display:flex;gap:10px;align-items:flex-start;">
                     <span style="color:#EF4444;font-size:16px;line-height:1.4;">✗</span>
-                    <span style="font-size:14px;color:#7C2D12;line-height:1.5;">${m}</span>
+                    <span style="font-size:14px;color:#7C2D12;line-height:1.5;">${t(m)}</span>
                   </div>
                 `).join('')}
               </div>
@@ -1960,8 +2291,8 @@ RULES:
           <!-- Sidebar -->
           <div style="display:flex;flex-direction:column;gap:20px;">
             <div style="background:white;border-radius:16px;padding:24px;box-shadow:0 4px 15px rgba(0,0,0,0.06);">
-              <h3 style="font-family:'Sora',sans-serif;font-size:14px;font-weight:800;color:#6B0C0C;margin:0 0 16px;letter-spacing:0.5px;">QUICK INFO</h3>
-              ${[{ label: "Government Fee", value: s.fee, icon: "💰" }, { label: "Processing Time", value: s.time, icon: "⏱️" }, { label: "Documents Required", value: `${s.documents.length} documents`, icon: "📋" }, { label: "Portal", value: s.portal, icon: "🌐" }].map(info => `
+              <h3 style="font-family:'Sora',sans-serif;font-size:14px;font-weight:800;color:#6B0C0C;margin:0 0 16px;letter-spacing:0.5px;">${t('quickInfo')}</h3>
+              ${[{ label: "Fee/ಶುಲ್ಕ", value: t(s.fee), icon: "💰" }, { label: "Processing Time/ಸಮಯ", value: t(s.time), icon: "⏱️" }, { label: "Documents", value: `${s.documents.length} ${t('docs')}`, icon: "📋" }, { label: "Portal", value: s.portal, icon: "🌐" }].map(info => `
                 <div style="display:flex;align-items:center;gap:12px;padding:12px 0;border-bottom:1px solid #FFF8F0;">
                   <span style="font-size:18px;">${info.icon}</span>
                   <div>
@@ -1972,19 +2303,19 @@ RULES:
               `).join('')}
             </div>
             <div style="background:white;border-radius:16px;padding:24px;box-shadow:0 4px 15px rgba(0,0,0,0.06);">
-              <h3 style="font-family:'Sora',sans-serif;font-size:14px;font-weight:800;color:#6B0C0C;margin:0 0 16px;letter-spacing:0.5px;">REQUIRED DOCUMENTS</h3>
+              <h3 style="font-family:'Sora',sans-serif;font-size:14px;font-weight:800;color:#6B0C0C;margin:0 0 16px;letter-spacing:0.5px;">${t('reqDocuments')}</h3>
               <div style="display:flex;flex-direction:column;gap:10px;">
                 ${s.documents.map(doc => `
                   <div style="display:flex;gap:10px;align-items:flex-start;">
                     <div style="width:20px;height:20px;border-radius:4px;flex-shrink:0;margin-top:1px;background:${s.portalBg};border:2px solid ${s.portalColor};display:flex;align-items:center;justify-content:center;">
                       <div style="width:8px;height:8px;border-radius:1px;background:${s.portalColor};"></div>
                     </div>
-                    <span style="font-size:13px;color:#5A4030;line-height:1.5;">${doc}</span>
+                    <span style="font-size:13px;color:#5A4030;line-height:1.5;">${t(doc)}</span>
                   </div>
                 `).join('')}
               </div>
             </div>
-            <button class="btn-primary" onclick="navigate('apply',selectedService)" style="width:100%;padding:16px;border-radius:14px;font-size:15px;">Start Application →</button>
+            <button class="btn-primary" onclick="navigate('apply',selectedService)" style="width:100%;padding:16px;border-radius:14px;font-size:15px;">${t('Start Application →')}</button>
           </div>
         </div>
       </div>
@@ -1998,7 +2329,7 @@ RULES:
     function renderApply() {
       const s = selectedService;
       if (!s) return '';
-      const steps = ["Application Details", "Upload Documents", "Review & Submit"];
+      const steps = [t("Application Details"), t("Upload Documents"), t("Review & Submit")];
 
       if (appStep === 4) return renderAppSuccess();
 
@@ -2027,12 +2358,12 @@ RULES:
     <div style="background:#FFF8F0;min-height:80vh;padding:40px 28px;">
       <div style="max-width:800px;margin:0 auto;">
         <div style="margin-bottom:32px;">
-          <button onclick="navigate('service',selectedService)" style="background:transparent;border:none;color:#7A6050;font-size:14px;cursor:pointer;display:flex;gap:6px;align-items:center;font-family:'Sora',sans-serif;font-weight:600;margin-bottom:16px;padding:0;">← Back to ${s.title}</button>
+          <button onclick="navigate('service',selectedService)" style="background:transparent;border:none;color:#7A6050;font-size:14px;cursor:pointer;display:flex;gap:6px;align-items:center;font-family:'Sora',sans-serif;font-weight:600;margin-bottom:16px;padding:0;">${t('← Back to')} ${s.title}</button>
           <div style="display:flex;align-items:center;gap:14px;">
             <div style="width:48px;height:48px;border-radius:12px;font-size:24px;background:${s.portalBg};display:flex;align-items:center;justify-content:center;">${s.icon}</div>
             <div>
-              <h1 style="font-family:'Sora',sans-serif;font-size:24px;font-weight:900;color:#6B0C0C;margin:0;">Apply: ${s.title}</h1>
-              <p style="margin:0;font-size:13px;color:#7A6050;">Ref: <strong>${refNumber}</strong> • ${s.portal}</p>
+              <h1 style="font-family:'Sora',sans-serif;font-size:24px;font-weight:900;color:#6B0C0C;margin:0;">${t('Apply:')} ${t(s.title)}</h1>
+              <p style="margin:0;font-size:13px;color:#7A6050;">${t('Ref:')} <strong>${refNumber}</strong> • ${s.portal}</p>
             </div>
           </div>
         </div>
@@ -2050,9 +2381,9 @@ RULES:
       return `
     <div style="background:white;border-radius:20px;padding:36px;box-shadow:0 4px 15px rgba(0,0,0,0.06);">
       <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:28px;">
-        <h2 style="font-family:'Sora',sans-serif;font-size:20px;font-weight:800;color:#6B0C0C;margin:0;">Application Details</h2>
+        <h2 style="font-family:'Sora',sans-serif;font-size:20px;font-weight:800;color:#6B0C0C;margin:0;">${t('Application Details')}</h2>
         <div style="text-align:right;">
-          <div style="font-size:12px;color:#7A6050;font-weight:600;margin-bottom:6px;">${filledReq}/${totalReq} required filled</div>
+          <div style="font-size:12px;color:#7A6050;font-weight:600;margin-bottom:6px;">${filledReq}/${totalReq} ${t('required filled')}</div>
           <div style="width:100px;height:6px;background:#E8D5C0;border-radius:3px;overflow:hidden;">
             <div style="width:${progress}%;height:100%;background:#22C55E;transition:width 0.3s;border-radius:3px;"></div>
           </div>
@@ -2062,24 +2393,24 @@ RULES:
         ${s.fields.map(field => `
           <div style="grid-column:${field.type === 'textarea' ? 'span 2' : 'span 1'};">
             <label style="display:block;font-size:13px;font-weight:700;color:#374151;margin-bottom:7px;font-family:'Sora',sans-serif;">
-              ${field.label} ${field.required ? '<span style="color:#EF4444;">*</span>' : ''}
+              ${t(field.label)} ${field.required ? '<span style="color:#EF4444;">*</span>' : ''}
             </label>
             ${field.type === 'textarea'
-          ? `<textarea class="form-textarea" rows="3" placeholder="${field.placeholder || ''}" onchange="formData['${field.name}']=this.value;refreshApplyProgress()">${formData[field.name] || ''}</textarea>`
+          ? `<textarea class="form-textarea" rows="3" placeholder="${t(field.placeholder || '')}" onchange="formData['${field.name}']=this.value;refreshApplyProgress()">${formData[field.name] || ''}</textarea>`
           : field.type === 'select'
             ? `<select class="form-select" onchange="formData['${field.name}']=this.value;refreshApplyProgress()">
-                  <option value="">Select...</option>
-                  ${field.options.map(opt => `<option value="${opt}" ${formData[field.name] === opt ? 'selected' : ''}>${opt}</option>`).join('')}
+                  <option value="">${t('Select...')}</option>
+                  ${field.options.map(opt => `<option value="${opt}" ${formData[field.name] === opt ? 'selected' : ''}>${t(opt)}</option>`).join('')}
                 </select>`
-            : `<input type="${field.type}" class="form-input" value="${formData[field.name] || ''}" placeholder="${field.placeholder || ''}" ${field.maxLength ? `maxlength="${field.maxLength}"` : ''}
+            : `<input type="${field.type}" class="form-input" value="${formData[field.name] || ''}" placeholder="${t(field.placeholder || '')}" ${field.maxLength ? `maxlength="${field.maxLength}"` : ''}
                   onchange="formData['${field.name}']=this.value;refreshApplyProgress()" />`
         }
           </div>
         `).join('')}
       </div>
       <div style="margin-top:32px;display:flex;justify-content:flex-end;gap:14px;">
-        <button class="btn-outline" onclick="navigate('service',selectedService)">Cancel</button>
-        <button class="btn-dark" onclick="goToAppStep(2)">Save & Continue →</button>
+        <button class="btn-outline" onclick="navigate('service',selectedService)">${t('Cancel')}</button>
+        <button class="btn-dark" onclick="goToAppStep(2)">${t('Save & Continue →')}</button>
       </div>
     </div>
   `;
@@ -2088,8 +2419,8 @@ RULES:
     function renderAppStep2(s) {
       return `
     <div style="background:white;border-radius:20px;padding:36px;box-shadow:0 4px 15px rgba(0,0,0,0.06);">
-      <h2 style="font-family:'Sora',sans-serif;font-size:20px;font-weight:800;color:#6B0C0C;margin:0 0 8px;">Upload Documents</h2>
-      <p style="color:#7A6050;font-size:14px;margin:0 0 28px;">Upload scanned copies (JPG/PNG/PDF). Max 2MB per file.</p>
+      <h2 style="font-family:'Sora',sans-serif;font-size:20px;font-weight:800;color:#6B0C0C;margin:0 0 8px;">${t('Upload Documents')}</h2>
+      <p style="color:#7A6050;font-size:14px;margin:0 0 28px;">${t('Upload scanned copies (JPG/PNG/PDF). Max 2MB per file.')}</p>
       <input type="file" id="file-upload-input" accept=".jpg,.jpeg,.png,.pdf" style="display:none;" onchange="handleFileUpload(this)"/>
       <div style="display:flex;flex-direction:column;gap:12px;">
         ${s.documents.map((doc, i) => `
@@ -2097,22 +2428,22 @@ RULES:
             <div style="display:flex;align-items:center;gap:12px;">
               <div style="width:38px;height:38px;border-radius:10px;font-size:18px;background:${uploadedDocs[doc] ? '#DCFCE7' : '#EFF6FF'};display:flex;align-items:center;justify-content:center;">${uploadedDocs[doc] ? '✅' : '📄'}</div>
               <div>
-                <div style="font-size:14px;font-weight:700;color:#1a0000;">${doc}</div>
+                <div style="font-size:14px;font-weight:700;color:#1a0000;">${t(doc)}</div>
                 ${uploadedDocs[doc] ? `<div style="font-size:12px;color:#16A34A;font-weight:500;margin-top:2px;">${uploadedDocs[doc]}</div>` : ''}
               </div>
             </div>
             <button onclick="triggerDocUpload('${doc.replace(/'/g, "\\'")}')" style="background:${uploadedDocs[doc] ? 'transparent' : 'linear-gradient(135deg,#6B0C0C,#A91B1B)'};border:${uploadedDocs[doc] ? '2px solid #22C55E' : 'none'};border-radius:8px;padding:8px 16px;color:${uploadedDocs[doc] ? '#16A34A' : 'white'};font-size:12px;font-weight:700;cursor:pointer;font-family:'Sora',sans-serif;">
-              ${uploadedDocs[doc] ? '✓ Replace' : '+ Upload'}
+              ${uploadedDocs[doc] ? t('✓ Replace') : t('+ Upload')}
             </button>
           </div>
         `).join('')}
       </div>
       <div style="margin-top:12px;padding:12px 16px;background:#FFF7ED;border-radius:10px;border:1px solid #FED7AA;">
-        <p style="margin:0;font-size:12px;color:#92400E;">💡 <strong>Tip:</strong> Ensure all scanned copies are clear and legible. Blurry documents are the #1 reason for rejection.</p>
+        <p style="margin:0;font-size:12px;color:#92400E;">💡 <strong>Tip:</strong> ${t('Tip: Ensure all scanned copies are clear and legible. Blurry documents are the #1 reason for rejection.')}</p>
       </div>
       <div style="margin-top:28px;display:flex;justify-content:space-between;">
-        <button class="btn-outline" onclick="goToAppStep(1)">← Back</button>
-        <button class="btn-dark" onclick="goToAppStep(3)">Review Application →</button>
+        <button class="btn-outline" onclick="goToAppStep(1)">${t('← Back')}</button>
+        <button class="btn-dark" onclick="goToAppStep(3)">${t('Review Application →')}</button>
       </div>
     </div>
   `;
@@ -2121,13 +2452,13 @@ RULES:
     function renderAppStep3(s) {
       return `
     <div style="background:white;border-radius:20px;padding:36px;box-shadow:0 4px 15px rgba(0,0,0,0.06);">
-      <h2 style="font-family:'Sora',sans-serif;font-size:20px;font-weight:800;color:#6B0C0C;margin:0 0 24px;">Review & Confirm</h2>
+      <h2 style="font-family:'Sora',sans-serif;font-size:20px;font-weight:800;color:#6B0C0C;margin:0 0 24px;">${t('Review & Confirm')}</h2>
       <div style="background:#FFF8F0;border-radius:14px;padding:20px;margin-bottom:20px;">
-        <div style="font-size:12px;color:#7A6050;font-weight:700;letter-spacing:1px;font-family:'Sora',sans-serif;margin-bottom:14px;">APPLICATION DETAILS</div>
+        <div style="font-size:12px;color:#7A6050;font-weight:700;letter-spacing:1px;font-family:'Sora',sans-serif;margin-bottom:14px;">${t('APPLICATION DETAILS')}</div>
         <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px;">
           ${s.fields.slice(0, 6).filter(f => formData[f.name]).map(f => `
             <div>
-              <div style="font-size:11px;color:#B0906A;font-weight:600;margin-bottom:3px;">${f.label}</div>
+              <div style="font-size:11px;color:#B0906A;font-weight:600;margin-bottom:3px;">${t(f.label)}</div>
               <div style="font-size:14px;color:#1a0000;font-weight:700;">${formData[f.name]}</div>
             </div>
           `).join('')}
@@ -2135,23 +2466,23 @@ RULES:
       </div>
       <div style="background:#F0FDF4;border-radius:14px;padding:20px;margin-bottom:20px;">
         <div style="font-size:12px;color:#A05010;font-weight:700;letter-spacing:1px;font-family:'Sora',sans-serif;margin-bottom:14px;">
-          UPLOADED DOCUMENTS (${Object.keys(uploadedDocs).length}/${s.documents.length})
+          ${t('UPLOADED DOCUMENTS')} (${Object.keys(uploadedDocs).length}/${s.documents.length})
         </div>
         ${s.documents.map(doc => `
           <div style="display:flex;gap:10px;align-items:center;margin-bottom:8px;">
             <span style="color:${uploadedDocs[doc] ? '#22C55E' : '#F59E0B'};">${uploadedDocs[doc] ? '✓' : '⚠'}</span>
-            <span style="font-size:13px;color:#4A3020;">${doc}</span>
-            ${uploadedDocs[doc] ? `<span style="font-size:12px;color:#7A6050;margin-left:auto;">✅ Uploaded</span>` : ''}
+            <span style="font-size:13px;color:#4A3020;">${t(doc)}</span>
+            ${uploadedDocs[doc] ? `<span style="font-size:12px;color:#7A6050;margin-left:auto;">✅ ${t('Uploaded')}</span>` : ''}
           </div>
         `).join('')}
       </div>
       <div style="background:${s.fee.toLowerCase().includes('free') ? '#F0FDF4' : '#FFF0F0'};border:2px solid ${s.fee.toLowerCase().includes('free') ? '#BBF7D0' : '#FFCCCC'};border-radius:14px;padding:20px;margin-bottom:28px;">
         <div style="display:flex;justify-content:space-between;align-items:center;">
           <div>
-            <div style="font-family:'Sora',sans-serif;font-weight:800;color:${s.fee.toLowerCase().includes('free') ? '#15803D' : '#6B0C0C'};">Government Processing Fee</div>
-            <div style="font-size:12px;color:${s.fee.toLowerCase().includes('free') ? '#166534' : '#A91B1B'};margin-top:4px;">${s.fee.toLowerCase().includes('free') ? 'This service is provided free of charge.' : 'Paid via RazorPay Government Gateway after submission'}</div>
+            <div style="font-family:'Sora',sans-serif;font-weight:800;color:${s.fee.toLowerCase().includes('free') ? '#15803D' : '#6B0C0C'};">${t('Government Processing Fee')}</div>
+            <div style="font-size:12px;color:${s.fee.toLowerCase().includes('free') ? '#166534' : '#A91B1B'};margin-top:4px;">${s.fee.toLowerCase().includes('free') ? t('This service is provided free of charge.') : t('Paid via RazorPay Government Gateway after submission')}</div>
           </div>
-          <span style="font-family:'Sora',sans-serif;font-size:24px;font-weight:900;color:${s.fee.toLowerCase().includes('free') ? '#15803D' : '#A91B1B'};">${s.fee}</span>
+          <span style="font-family:'Sora',sans-serif;font-size:24px;font-weight:900;color:${s.fee.toLowerCase().includes('free') ? '#15803D' : '#A91B1B'};">${t(s.fee)}</span>
         </div>
         ${!s.fee.toLowerCase().includes('free') ? `
         <div style="margin-top:12px;display:flex;gap:8px;flex-wrap:wrap;">
@@ -2160,9 +2491,9 @@ RULES:
         ` : ''}
       </div>
       <div style="display:flex;justify-content:space-between;">
-        <button class="btn-outline" onclick="goToAppStep(2)">← Back</button>
+        <button class="btn-outline" onclick="goToAppStep(2)">${t('← Back')}</button>
         <button style="background:linear-gradient(135deg,${s.fee.toLowerCase().includes('free') ? '#15803D,#16A34A' : '#A91B1B,#C03020'});border:none;border-radius:14px;padding:15px 40px;color:white;font-size:15px;font-weight:800;cursor:pointer;font-family:'Sora',sans-serif;box-shadow:0 8px 24px ${s.fee.toLowerCase().includes('free') ? 'rgba(21,128,61,0.3)' : 'rgba(169,27,27,0.4)'};transition:all 0.2s;display:flex;align-items:center;gap:8px;" onclick="submitApplication()" onmouseover="this.style.transform='translateY(-2px)'" onmouseout="this.style.transform='translateY(0)'">
-          ${s.fee.toLowerCase().includes('free') ? '🚀 Confirm & Submit' : '🔒 Pay & Submit'}
+          ${s.fee.toLowerCase().includes('free') ? t('🚀 Confirm & Submit') : t('🔒 Pay & Submit')}
         </button>
       </div>
     </div>
@@ -2176,19 +2507,19 @@ RULES:
       <!-- Karnataka stripe at top -->
       <div style="position:absolute;top:0;left:0;right:0;height:5px;background:linear-gradient(90deg,#A91B1B,#A91B1B 50%,#F5A020 50%,#F5A020);"></div>
       <div style="width:96px;height:96px;border-radius:50%;background:linear-gradient(135deg,#22C55E,#16A34A);margin:0 auto 28px;display:flex;align-items:center;justify-content:center;font-size:44px;box-shadow:0 16px 40px rgba(34,197,94,0.4);animation:popIn 0.6s cubic-bezier(0.34,1.56,0.64,1);">✓</div>
-      <h2 style="font-family:'Sora',sans-serif;font-size:30px;font-weight:900;color:#6B0C0C;margin:0 0 12px;">Application Submitted!</h2>
-      <p style="color:#7A6050;font-size:16px;margin:0 0 36px;">Your ${s.title} application has been received & payment confirmed.</p>
+      <h2 style="font-family:'Sora',sans-serif;font-size:30px;font-weight:900;color:#6B0C0C;margin:0 0 12px;">${t('Application Submitted!')}</h2>
+      <p style="color:#7A6050;font-size:16px;margin:0 0 36px;">${currentLang === 'kn' ? `ನಿಮ್ಮ ${s.title} ಅರ್ಜಿಯನ್ನು ಸ್ವೀಕರಿಸಲಾಗಿದೆ & ಪಾವತಿ ಖಚಿತಪಡಿಸಲಾಗಿದೆ.` : `Your ${s.title} application has been received & payment confirmed.`}</p>
       <div style="background:linear-gradient(135deg,#FFF0F0,#FFFDE0);border:2px solid rgba(169,27,27,0.15);border-radius:20px;padding:28px;margin-bottom:32px;display:inline-block;min-width:320px;">
-        <div style="font-size:11px;color:#B0906A;font-weight:700;letter-spacing:1.5px;font-family:'Sora',sans-serif;margin-bottom:12px;">YOUR REFERENCE NUMBER</div>
+        <div style="font-size:11px;color:#B0906A;font-weight:700;letter-spacing:1.5px;font-family:'Sora',sans-serif;margin-bottom:12px;">${t('YOUR REFERENCE NUMBER')}</div>
         <div style="font-family:'Sora',sans-serif;font-size:30px;font-weight:900;color:#A91B1B;letter-spacing:3px;">${refNumber}</div>
-        <p style="margin:10px 0 0;font-size:12px;color:#B0906A;">Save this number to track your application</p>
+        <p style="margin:10px 0 0;font-size:12px;color:#B0906A;">${t('Save this number to track your application')}</p>
       </div>
       <div style="background:#FFFDE0;border:1px solid #F5A020;border-radius:14px;padding:18px;margin-bottom:36px;text-align:left;">
-        <p style="margin:0;font-size:14px;color:#8B6914;line-height:1.6;">📱 <strong>What's Next?</strong> You'll receive an SMS on your registered mobile. Expected processing time: <strong>${s.time}</strong>. Track your status using reference <strong style="color:#A91B1B;">${refNumber}</strong>.</p>
+        <p style="margin:0;font-size:14px;color:#8B6914;line-height:1.6;">📱 <strong>${t("What's Next?")}</strong> ${t("You'll receive an SMS on your registered mobile. Expected processing time:")} <strong>${t(s.time)}</strong>. ${t("Track your status using reference")} <strong style="color:#A91B1B;">${refNumber}</strong>.</p>
       </div>
       <div style="display:flex;gap:14px;justify-content:center;">
-        <button class="btn-dark" onclick="navigate('track')" style="border-radius:12px;padding:14px 28px;">Track Application</button>
-        <button class="btn-outline" onclick="navigate('home')" style="border-radius:12px;padding:14px 28px;">Back to Home</button>
+        <button class="btn-dark" onclick="navigate('track')" style="border-radius:12px;padding:14px 28px;">${t('Track Application')}</button>
+        <button class="btn-outline" onclick="navigate('home')" style="border-radius:12px;padding:14px 28px;">${t('Back to Home')}</button>
       </div>
     </div>
   `;
@@ -2244,21 +2575,21 @@ RULES:
         <div style="position:absolute;top:-30px;right:-30px;width:120px;height:120px;border-radius:50%;background:rgba(245,160,32,0.1);"></div>
         <div style="display:flex;justify-content:space-between;align-items:flex-start;position:relative;">
           <div>
-            <div style="font-size:11px;color:rgba(245,160,32,0.8);font-weight:700;letter-spacing:2px;font-family:'Sora',sans-serif;margin-bottom:6px;">SECURE ${isFree ? 'SUBMISSION' : 'PAYMENT'} GATEWAY</div>
-            <h2 style="font-family:'Sora',sans-serif;font-size:22px;font-weight:900;color:white;margin:0;">${isFree ? 'Confirm Submission' : 'Complete Payment'}</h2>
-            <p style="font-size:13px;color:rgba(255,255,255,0.7);margin:4px 0 0;">${s.title}</p>
+            <div style="font-size:11px;color:rgba(245,160,32,0.8);font-weight:700;letter-spacing:2px;font-family:'Sora',sans-serif;margin-bottom:6px;">${isFree ? t('SECURE SUBMISSION GATEWAY') : t('SECURE PAYMENT GATEWAY')}</div>
+            <h2 style="font-family:'Sora',sans-serif;font-size:22px;font-weight:900;color:white;margin:0;">${isFree ? t('Confirm Submission') : t('Complete Payment')}</h2>
+            <p style="font-size:13px;color:rgba(255,255,255,0.7);margin:4px 0 0;">${t(s.title)}</p>
           </div>
           <button onclick="document.getElementById('payment-modal').remove()" style="background:rgba(255,255,255,0.15);border:none;border-radius:50%;width:36px;height:36px;color:white;font-size:18px;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:all 0.2s;" onmouseover="this.style.background='rgba(255,255,255,0.25)'" onmouseout="this.style.background='rgba(255,255,255,0.15)'">✕</button>
         </div>
         <!-- Fee display -->
         <div style="margin-top:20px;background:rgba(245,160,32,0.15);border:1px solid rgba(255,215,0,0.3);border-radius:12px;padding:14px 18px;display:flex;justify-content:space-between;align-items:center;">
           <div>
-            <div style="font-size:11px;color:rgba(245,160,32,0.7);font-weight:700;letter-spacing:1px;">TOTAL AMOUNT DUE</div>
-            <div style="font-family:'Sora',sans-serif;font-size:26px;font-weight:900;color:#F5A020;">${feeText}</div>
+            <div style="font-size:11px;color:rgba(245,160,32,0.7);font-weight:700;letter-spacing:1px;">${t('TOTAL AMOUNT DUE')}</div>
+            <div style="font-family:'Sora',sans-serif;font-size:26px;font-weight:900;color:#F5A020;">${t(feeText)}</div>
           </div>
           <div style="text-align:right;">
-            <div style="font-size:11px;color:rgba(255,255,255,0.5);">Ref: <strong style="color:rgba(245,160,32,0.8);">${refNumber}</strong></div>
-            <div style="font-size:11px;color:rgba(255,255,255,0.5);margin-top:2px;">🔒 256-bit SSL Secured</div>
+            <div style="font-size:11px;color:rgba(255,255,255,0.5);">${t('Ref:')} <strong style="color:rgba(245,160,32,0.8);">${refNumber}</strong></div>
+            <div style="font-size:11px;color:rgba(255,255,255,0.5);margin-top:2px;">🔒 ${t('256-bit SSL Secured')}</div>
           </div>
         </div>
       </div>
@@ -2266,12 +2597,12 @@ RULES:
       <!-- Body -->
       <div style="padding:28px 32px;">
         ${!isFree ? `
-        <div style="font-size:12px;font-weight:800;color:#6B0C0C;letter-spacing:1.5px;font-family:'Sora',sans-serif;margin-bottom:16px;">SELECT PAYMENT METHOD</div>
+        <div style="font-size:12px;font-weight:800;color:#6B0C0C;letter-spacing:1.5px;font-family:'Sora',sans-serif;margin-bottom:16px;">${t('SELECT PAYMENT METHOD')}</div>
 
         <button class="payment-method-btn" id="pm-upi" onclick="selectPayment('upi')">
           <div style="width:44px;height:44px;border-radius:10px;background:linear-gradient(135deg,#5C2D91,#7C3AED);display:flex;align-items:center;justify-content:center;font-size:20px;">🔷</div>
           <div style="flex:1;text-align:left;">
-            <div style="font-size:14px;font-weight:800;color:#1a0000;font-family:'Sora',sans-serif;">UPI Payment</div>
+            <div style="font-size:14px;font-weight:800;color:#1a0000;font-family:'Sora',sans-serif;">${t('UPI Payment')}</div>
             <div style="font-size:12px;color:#7A6050;margin-top:2px;">Google Pay · PhonePe · BHIM · Paytm</div>
           </div>
           <div id="pm-upi-check" style="width:22px;height:22px;border-radius:50%;border:2px solid #E8D5C0;display:flex;align-items:center;justify-content:center;transition:all 0.2s;"></div>
@@ -2280,7 +2611,7 @@ RULES:
         <button class="payment-method-btn" id="pm-card" onclick="selectPayment('card')">
           <div style="width:44px;height:44px;border-radius:10px;background:linear-gradient(135deg,#1a5276,#2980B9);display:flex;align-items:center;justify-content:center;font-size:20px;">💳</div>
           <div style="flex:1;text-align:left;">
-            <div style="font-size:14px;font-weight:800;color:#1a0000;font-family:'Sora',sans-serif;">Debit / Credit Card</div>
+            <div style="font-size:14px;font-weight:800;color:#1a0000;font-family:'Sora',sans-serif;">${t('Debit / Credit Card')}</div>
             <div style="font-size:12px;color:#7A6050;margin-top:2px;">Visa · Mastercard · RuPay · Amex</div>
           </div>
           <div id="pm-card-check" style="width:22px;height:22px;border-radius:50%;border:2px solid #E8D5C0;display:flex;align-items:center;justify-content:center;transition:all 0.2s;"></div>
@@ -2289,7 +2620,7 @@ RULES:
         <button class="payment-method-btn" id="pm-netbanking" onclick="selectPayment('netbanking')">
           <div style="width:44px;height:44px;border-radius:10px;background:linear-gradient(135deg,#1B6F00,#28A745);display:flex;align-items:center;justify-content:center;font-size:20px;">🏦</div>
           <div style="flex:1;text-align:left;">
-            <div style="font-size:14px;font-weight:800;color:#1a0000;font-family:'Sora',sans-serif;">Net Banking</div>
+            <div style="font-size:14px;font-weight:800;color:#1a0000;font-family:'Sora',sans-serif;">${t('Net Banking')}</div>
             <div style="font-size:12px;color:#7A6050;margin-top:2px;">SBI · HDFC · ICICI · Axis · Canara · KGB</div>
           </div>
           <div id="pm-netbanking-check" style="width:22px;height:22px;border-radius:50%;border:2px solid #E8D5C0;display:flex;align-items:center;justify-content:center;transition:all 0.2s;"></div>
@@ -2298,7 +2629,7 @@ RULES:
         <button class="payment-method-btn" id="pm-wallet" onclick="selectPayment('wallet')">
           <div style="width:44px;height:44px;border-radius:10px;background:linear-gradient(135deg,#CC5500,#A91B1B);display:flex;align-items:center;justify-content:center;font-size:20px;">👛</div>
           <div style="flex:1;text-align:left;">
-            <div style="font-size:14px;font-weight:800;color:#1a0000;font-family:'Sora',sans-serif;">Mobile Wallet</div>
+            <div style="font-size:14px;font-weight:800;color:#1a0000;font-family:'Sora',sans-serif;">${t('Mobile Wallet')}</div>
             <div style="font-size:12px;color:#7A6050;margin-top:2px;">Paytm · Amazon Pay · Mobikwik · Freecharge</div>
           </div>
           <div id="pm-wallet-check" style="width:22px;height:22px;border-radius:50%;border:2px solid #E8D5C0;display:flex;align-items:center;justify-content:center;transition:all 0.2s;"></div>
@@ -2306,8 +2637,8 @@ RULES:
         ` : `
         <div style="background:#F0FDF4;border:2px solid #BBF7D0;border-radius:16px;padding:24px;text-align:center;margin-bottom:24px;">
           <div style="font-size:48px;margin-bottom:12px;">✅</div>
-          <h3 style="font-family:'Sora',sans-serif;font-weight:800;color:#15803D;margin:0 0 8px;">Zero Fee Application</h3>
-          <p style="font-size:14px;color:#166534;margin:0;line-height:1.5;">This scholarship program is provided free of cost by the Department of Social Welfare. No payment is required.</p>
+          <h3 style="font-family:'Sora',sans-serif;font-weight:800;color:#15803D;margin:0 0 8px;">${t('Zero Fee Application')}</h3>
+          <p style="font-size:14px;color:#166534;margin:0;line-height:1.5;">${t('This scholarship program is provided free of cost by the Department of Social Welfare. No payment is required.')}</p>
         </div>
         `}
 
@@ -2316,7 +2647,7 @@ RULES:
 
         <!-- Pay button -->
         <button id="pay-now-btn" onclick="processPayment()" style="width:100%;padding:16px;border-radius:14px;border:none;background:${isFree ? 'linear-gradient(135deg,#15803D,#16A34A)' : '#E8D5C0'};color:${isFree ? 'white' : '#B0906A'};font-size:16px;font-weight:900;cursor:pointer;transition:all 0.3s;font-family:'Sora',sans-serif;display:flex;align-items:center;justify-content:center;gap:10px;box-shadow:${isFree ? '0 8px 20px rgba(21,128,61,0.3)' : 'none'}" ${isFree ? '' : 'disabled'}>
-          <span>${isFree ? '🚀' : '🔒'}</span> ${isFree ? 'Submit Application Now' : 'Pay & Submit Application'}
+          <span>${isFree ? '🚀' : '🔒'}</span> ${isFree ? t('Submit Application Now') : t('Pay & Submit Application')}
         </button>
 
         <div style="display:flex;justify-content:center;gap:12px;margin-top:20px;flex-wrap:wrap;align-items:center;">
@@ -2326,7 +2657,7 @@ RULES:
           <span style="font-size:10px;color:#B0906A;font-weight:700;background:#F5EAD8;padding:4px 10px;border-radius:20px;white-space:nowrap;">RuPay</span>
           <span style="font-size:10px;color:#B0906A;font-weight:700;background:#F5EAD8;padding:4px 10px;border-radius:20px;white-space:nowrap;">Visa</span>
         </div>
-        <p style="text-align:center;font-size:11px;color:#B0906A;margin-top:14px;opacity:0.8;">🔒 Secured by RazorPay Government Gateway</p>
+        <p style="text-align:center;font-size:11px;color:#B0906A;margin-top:14px;opacity:0.8;">🔒 ${t('Secured by RazorPay Government Gateway')}</p>
       </div>
     </div>
   `;
@@ -2355,36 +2686,32 @@ RULES:
       if (method === 'upi') {
         area.innerHTML = `
       <div style="background:#F5EAD8;border-radius:12px;padding:16px;border:2px solid #E8D5C0;">
-        <label style="font-size:12px;font-weight:700;color:#6B0C0C;display:block;margin-bottom:8px;font-family:'Sora',sans-serif;">UPI ID</label>
+        <label style="font-size:12px;font-weight:700;color:#6B0C0C;display:block;margin-bottom:8px;font-family:'Sora',sans-serif;">${t('UPI ID')}</label>
         <input type="text" placeholder="yourname@okaxis / phone@paytm" style="width:100%;border:2px solid #E8D5C0;border-radius:10px;padding:12px 14px;font-size:14px;outline:none;font-family:'Noto Sans',sans-serif;background:white;color:#1a0000;transition:border-color 0.2s;" onfocus="this.style.borderColor='#A91B1B'" onblur="this.style.borderColor='#E8D5C0'" oninput="checkPayReady()" id="upi-input" />
-        <p style="font-size:11px;color:#B0906A;margin-top:6px;">Demo: enter any text like <strong>demo@upi</strong></p>
       </div>`;
       } else if (method === 'card') {
         area.innerHTML = `
       <div style="background:#F5EAD8;border-radius:12px;padding:16px;border:2px solid #E8D5C0;">
-        <label style="font-size:12px;font-weight:700;color:#6B0C0C;display:block;margin-bottom:8px;font-family:'Sora',sans-serif;">CARD NUMBER</label>
-        <input type="text" placeholder="4111 1111 1111 1111" maxlength="19" style="width:100%;border:2px solid #E8D5C0;border-radius:10px;padding:12px 14px;font-size:16px;outline:none;letter-spacing:2px;font-family:'Sora',sans-serif;background:white;color:#1a0000;margin-bottom:10px;" onfocus="this.style.borderColor='#A91B1B'" onblur="this.style.borderColor='#E8D5C0'" oninput="this.value=this.value.replace(/\D/g,'').replace(/(\d{4})/g,'$1 ').trim();checkPayReady()" id="card-input" />
+        <label style="font-size:12px;font-weight:700;color:#6B0C0C;display:block;margin-bottom:8px;font-family:'Sora',sans-serif;">${t('CARD NUMBER')}</label>
+        <input type="text" placeholder="4111 1111 1111 1111" maxlength="19" style="width:100%;border:2px solid #E8D5C0;border-radius:10px;padding:12px 14px;font-size:16px;outline:none;letter-spacing:2px;font-family:'Sora',sans-serif;background:white;color:#1a0000;margin-bottom:10px;" onfocus="this.style.borderColor='#A91B1B'" onblur="this.style.borderColor='#E8D5C0'" oninput="this.value=this.value.replace(/\\D/g,'').replace(/(\\d{4})/g,'$1 ').trim();checkPayReady()" id="card-input" />
         <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;">
-          <div><label style="font-size:11px;font-weight:700;color:#6B0C0C;display:block;margin-bottom:6px;">EXPIRY</label><input type="text" placeholder="MM/YY" maxlength="5" style="width:100%;border:2px solid #E8D5C0;border-radius:8px;padding:10px 12px;font-size:14px;outline:none;font-family:'Sora',sans-serif;background:white;" onfocus="this.style.borderColor='#A91B1B'" onblur="this.style.borderColor='#E8D5C0'" /></div>
-          <div><label style="font-size:11px;font-weight:700;color:#6B0C0C;display:block;margin-bottom:6px;">CVV</label><input type="password" placeholder="•••" maxlength="3" style="width:100%;border:2px solid #E8D5C0;border-radius:8px;padding:10px 12px;font-size:14px;outline:none;font-family:'Sora',sans-serif;background:white;" onfocus="this.style.borderColor='#A91B1B'" onblur="this.style.borderColor='#E8D5C0'" /></div>
+          <div><label style="font-size:11px;font-weight:700;color:#6B0C0C;display:block;margin-bottom:6px;">${t('EXPIRY')}</label><input type="text" placeholder="MM/YY" maxlength="5" style="width:100%;border:2px solid #E8D5C0;border-radius:8px;padding:10px 12px;font-size:14px;outline:none;font-family:'Sora',sans-serif;background:white;" onfocus="this.style.borderColor='#A91B1B'" onblur="this.style.borderColor='#E8D5C0'" /></div>
+          <div><label style="font-size:11px;font-weight:700;color:#6B0C0C;display:block;margin-bottom:6px;">${t('CVV')}</label><input type="password" placeholder="•••" maxlength="3" style="width:100%;border:2px solid #E8D5C0;border-radius:8px;padding:10px 12px;font-size:14px;outline:none;font-family:'Sora',sans-serif;background:white;" onfocus="this.style.borderColor='#A91B1B'" onblur="this.style.borderColor='#E8D5C0'" /></div>
         </div>
-        <p style="font-size:11px;color:#B0906A;margin-top:8px;">Demo: use any 16-digit card number</p>
       </div>`;
       } else if (method === 'netbanking') {
         area.innerHTML = `
       <div style="background:#F5EAD8;border-radius:12px;padding:16px;border:2px solid #E8D5C0;">
-        <label style="font-size:12px;font-weight:700;color:#6B0C0C;display:block;margin-bottom:8px;font-family:'Sora',sans-serif;">SELECT YOUR BANK</label>
+        <label style="font-size:12px;font-weight:700;color:#6B0C0C;display:block;margin-bottom:8px;font-family:'Sora',sans-serif;">${t('SELECT YOUR BANK')}</label>
         <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-bottom:10px;" id="bank-grid">
           ${["SBI", "HDFC", "ICICI", "Axis", "Canara", "KGB"].map(b => `<button onclick="document.querySelectorAll('#bank-grid button').forEach(x=>x.style.background='white');this.style.background='#FFE8E8';this.style.borderColor='#A91B1B';checkPayReady()" style="padding:8px;border:2px solid #E8D5C0;border-radius:8px;font-size:12px;font-weight:700;cursor:pointer;background:white;color:#5A4030;font-family:'Sora',sans-serif;transition:all 0.2s;">${b}</button>`).join('')}
         </div>
-        <p style="font-size:11px;color:#B0906A;">Demo: click any bank to proceed</p>
       </div>`;
       } else if (method === 'wallet') {
         area.innerHTML = `
       <div style="background:#F5EAD8;border-radius:12px;padding:16px;border:2px solid #E8D5C0;">
-        <label style="font-size:12px;font-weight:700;color:#6B0C0C;display:block;margin-bottom:8px;font-family:'Sora',sans-serif;">REGISTERED MOBILE NUMBER</label>
+        <label style="font-size:12px;font-weight:700;color:#6B0C0C;display:block;margin-bottom:8px;font-family:'Sora',sans-serif;">${t('REGISTERED MOBILE NUMBER')}</label>
         <input type="tel" placeholder="+91 98765 43210" style="width:100%;border:2px solid #E8D5C0;border-radius:10px;padding:12px 14px;font-size:16px;outline:none;font-family:'Sora',sans-serif;background:white;color:#1a0000;" onfocus="this.style.borderColor='#A91B1B'" onblur="this.style.borderColor='#E8D5C0'" oninput="checkPayReady()" id="wallet-input" />
-        <p style="font-size:11px;color:#B0906A;margin-top:6px;">A wallet prompt will be sent to this number</p>
       </div>`;
       }
 
@@ -2407,7 +2734,7 @@ RULES:
       if (!btn || btn.disabled) return;
 
       // Simulate payment processing
-      btn.innerHTML = `<div class="spinner" style="width:22px;height:22px;"></div> Processing...`;
+      btn.innerHTML = `<div class="spinner" style="width:22px;height:22px;"></div> ${t('Processing...')}`;
       btn.disabled = true;
       btn.style.background = 'linear-gradient(135deg,#C08020,#F5A020)';
 
@@ -2472,7 +2799,7 @@ RULES:
       }
 
       // Toast notification
-      showToast(`✅ Application submitted! Ref: <strong>${refNumber}</strong>`);
+      showToast(`✅ ${t('Application submitted! Ref:')} <strong>${refNumber}</strong>`);
     }
 
     function addRipple(e, btn) {
@@ -2494,11 +2821,11 @@ RULES:
       return `
     <div style="background:#FFF8F0;min-height:80vh;padding:40px 28px;">
       <div style="max-width:900px;margin:0 auto;">
-        <h1 style="font-family:'Sora',sans-serif;font-size:30px;font-weight:900;color:#6B0C0C;margin:0 0 6px;">Track Applications</h1>
-        <p style="color:#7A6050;margin:0 0 32px;">Monitor the status of your submitted applications</p>
+        <h1 style="font-family:'Sora',sans-serif;font-size:30px;font-weight:900;color:#6B0C0C;margin:0 0 6px;">${t('Track Application')}</h1>
+        <p style="color:#7A6050;margin:0 0 32px;">${t('Check the current status of your submitted application')}</p>
         <div style="background:white;border-radius:14px;padding:16px 20px;margin-bottom:28px;display:flex;gap:14px;align-items:center;box-shadow:0 4px 15px rgba(0,0,0,0.06);">
           <span style="font-size:18px;">🔍</span>
-          <input id="track-search" placeholder="Search by reference number (e.g. NM12345678)" oninput="filterTrack(this.value)" style="flex:1;border:none;outline:none;font-size:15px;font-family:'Noto Sans',sans-serif;color:#1a0000;background:transparent;" />
+          <input id="track-search" placeholder="${t('Enter Reference Number (e.g., NS-2410-A1B2)')}" oninput="filterTrack(this.value)" style="flex:1;border:none;outline:none;font-size:15px;font-family:'Noto Sans',sans-serif;color:#1a0000;background:transparent;" />
         </div>
         <div id="track-results">
           ${renderTrackResults('')}
@@ -2509,7 +2836,7 @@ RULES:
     }
 
     function renderTrackResults(query) {
-      const statusSteps = ["Submitted", "Under Review", "Verification", "Approved", "Ready to Collect"];
+      const statusSteps = [t("Submitted"), t("Under Review"), t("Verification"), t("Approved"), t("Ready to Collect")];
       const currentStatus = 1;
       const filtered = query ? applications.filter(a => a.refNumber.toLowerCase().includes(query.toLowerCase())) : applications;
 
@@ -2517,8 +2844,8 @@ RULES:
         return `
       <div style="background:white;border-radius:20px;padding:60px;text-align:center;box-shadow:0 4px 15px rgba(0,0,0,0.06);">
         <div style="font-size:56px;margin-bottom:20px;">📋</div>
-        <h3 style="font-family:'Sora',sans-serif;font-size:20px;color:#6B0C0C;margin:0 0 10px;">No Applications Yet</h3>
-        <p style="color:#7A6050;margin:0;">Applications you submit will appear here with real-time status updates.</p>
+        <h3 style="font-family:'Sora',sans-serif;font-size:20px;color:#6B0C0C;margin:0 0 10px;">${t('No Active Applications')}</h3>
+        <p style="color:#7A6050;margin:0;">${t("You haven't submitted any applications yet, or no matches found.")}</p>
       </div>
     `;
       }
@@ -2529,11 +2856,11 @@ RULES:
         <div style="display:flex;gap:14px;align-items:center;">
           <div style="width:48px;height:48px;border-radius:12px;font-size:24px;background:#FFF8F0;display:flex;align-items:center;justify-content:center;">${app.service.icon}</div>
           <div>
-            <h3 style="font-family:'Sora',sans-serif;font-size:18px;font-weight:800;color:#6B0C0C;margin:0 0 4px;">${app.service.title}</h3>
-            <div style="font-size:13px;color:#7A6050;">Ref: <strong style="color:#A91B1B;">${app.refNumber}</strong> • ${app.service.portal}</div>
+            <h3 style="font-family:'Sora',sans-serif;font-size:18px;font-weight:800;color:#6B0C0C;margin:0 0 4px;">${t(app.service.title)}</h3>
+            <div style="font-size:13px;color:#7A6050;">${t('Ref:')} <strong style="color:#A91B1B;">${app.refNumber}</strong> • ${app.service.portal}</div>
           </div>
         </div>
-        <div style="background:#FFF7ED;border:1px solid #FED7AA;border-radius:8px;padding:6px 14px;font-size:12px;font-weight:800;color:#B45309;font-family:'Sora',sans-serif;">Under Review</div>
+        <div style="background:#FFF7ED;border:1px solid #FED7AA;border-radius:8px;padding:6px 14px;font-size:12px;font-weight:800;color:#B45309;font-family:'Sora',sans-serif;">${t('Under Review')}</div>
       </div>
       <div style="position:relative;">
         <div style="display:flex;justify-content:space-between;margin-bottom:6px;">
@@ -2549,7 +2876,7 @@ RULES:
         </div>
       </div>
       <div style="margin-top:20px;padding:12px 16px;background:#FFF8F0;border-radius:10px;font-size:13px;color:#7A6050;">
-        📅 Submitted today • Expected by: <strong>${app.service.time}</strong> from submission
+        ${t('Submitted today • Expected by:')} <strong>${t(app.service.time)}</strong> ${t('from submission')}
       </div>
     </div>
   `).join('');
@@ -2563,21 +2890,25 @@ RULES:
     // CHAT PAGE
     // ══════════════════════════════════════════════════════════════
     function renderChat() {
+      if (chatMessages.length === 0) {
+        chatMessages = [{ role: 'assistant', content: t('chatInitialGreeting') }];
+      }
       return `
     <div style="background:#FFF8F0;min-height:80vh;padding:40px 28px;">
       <div style="max-width:800px;margin:0 auto;">
         <div style="display:flex;align-items:center;gap:16px;margin-bottom:28px;">
           <div style="width:56px;height:56px;border-radius:14px;background:linear-gradient(135deg,#6B0C0C,#A01818);display:flex;align-items:center;justify-content:center;font-size:26px;box-shadow:0 8px 20px rgba(169,27,27,0.3);">🏛️</div>
           <div>
-            <h1 style="font-family:'Sora',sans-serif;font-size:24px;font-weight:900;color:#6B0C0C;margin:0;">NAMMA SEVA AI</h1>
+            <h1 style="font-family:'Sora',sans-serif;font-size:24px;font-weight:900;color:#6B0C0C;margin:0;">${t('NAMMA SEVA AI')}</h1>
             <div style="display:flex;align-items:center;gap:6px;margin-top:4px;">
               <div style="width:8px;height:8px;border-radius:50%;background:#22C55E;"></div>
-              <span style="font-size:13px;color:#7A6050;font-weight:600;">Online — Responds instantly</span>
+              <span style="font-size:13px;color:#7A6050;font-weight:600;">${t('Online')}</span>
+              <button id="tts-toggle-btn" onclick="toggleTTS()" style="background:transparent;border:none;cursor:pointer;font-size:16px;padding:0;margin-left:8px;transition:transform 0.2s;" title="${t('Toggle Voice Response')}" onmouseover="this.style.transform='scale(1.2)'" onmouseout="this.style.transform='scale(1)'">${voiceEnabled ? '🔊' : '🔇'}</button>
             </div>
           </div>
         </div>
         <div style="display:flex;gap:8px;flex-wrap:wrap;margin-bottom:20px;">
-          ${["How to apply for Khata transfer?", "What docs for income certificate?", "Birth certificate for newborn", "Trade license process"].map(q => `
+          ${[t('Birth Certificate'), t('Trade License'), t('Khata Transfer'), t('Required Documents')].map(q => `
             <button class="quick-chip" onclick="sendChat('${q}')">${q}</button>
           `).join('')}
         </div>
@@ -2586,7 +2917,8 @@ RULES:
             ${renderChatMessages()}
           </div>
           <div style="padding:14px 16px;border-top:2px solid #FFF8F0;display:flex;gap:10px;align-items:flex-end;">
-            <textarea id="chat-input" placeholder="Ask anything about government services..." rows="2"
+            <button id="chat-mic-btn" onclick="startVoiceRecognition()" title="Speak" style="width:46px;height:46px;border-radius:50%;border:none;cursor:pointer;background:#E8D5C0;font-size:20px;display:flex;align-items:center;justify-content:center;transition:all 0.2s;flex-shrink:0;">🎤</button>
+            <textarea id="chat-input" placeholder="${t('How can I help you today?')}" rows="2"
               onkeydown="if(event.key==='Enter'&&!event.shiftKey){event.preventDefault();sendChat()}"
               onfocus="this.style.borderColor='#A91B1B'" onblur="this.style.borderColor='#E8D5C0'"
               style="flex:1;border:2px solid #E8D5C0;border-radius:12px;padding:10px 14px;font-size:14px;resize:none;outline:none;background:#FFF8F0;font-family:'Noto Sans',sans-serif;"></textarea>
@@ -2595,7 +2927,11 @@ RULES:
         </div>
       </div>
     </div>
-    <style>@keyframes bounce{0%,60%,100%{transform:translateY(0);opacity:.4}30%{transform:translateY(-6px);opacity:1}}</style>
+    <style>
+      @keyframes bounce{0%,60%,100%{transform:translateY(0);opacity:.4}30%{transform:translateY(-6px);opacity:1}}
+      @keyframes micPulse{0%{transform:scale(1);box-shadow:0 0 0 0 rgba(169,27,27,0.7)}70%{transform:scale(1.1);box-shadow:0 0 0 10px rgba(169,27,27,0)}100%{transform:scale(1);box-shadow:0 0 0 0 rgba(169,27,27,0)}}
+      .pulse-anim { animation: micPulse 1.5s infinite; }
+    </style>
   `;
     }
 
@@ -2614,6 +2950,25 @@ RULES:
     }
 
     let chatLoading = false;
+    let voiceEnabled = false;
+
+    function toggleTTS() {
+      voiceEnabled = !voiceEnabled;
+      if (!voiceEnabled && window.speechSynthesis) window.speechSynthesis.cancel();
+      const btn = document.getElementById('tts-toggle-btn');
+      if (btn) btn.innerHTML = voiceEnabled ? '🔊' : '🔇';
+    }
+
+    function speakText(text) {
+      if (!voiceEnabled || !window.speechSynthesis) return;
+      window.speechSynthesis.cancel();
+      // Remove emojis and special markdown chars for better TTS reading
+      const cleanText = text.replace(/([#*_~`]|:\\w+:|<[^>]+>)/g, '').replace(/[^\p{L}\p{N}\p{P}\p{Z}]/gu, '');
+      const utterance = new SpeechSynthesisUtterance(cleanText);
+      utterance.lang = currentLang === 'kn' ? 'kn-IN' : 'en-IN';
+      utterance.rate = 1.0;
+      window.speechSynthesis.speak(utterance);
+    }
 
     async function sendChat(text) {
       const input = document.getElementById('chat-input');
@@ -2641,27 +2996,34 @@ RULES:
       if (sendBtn) sendBtn.style.background = '#E8D5C0';
 
       try {
-        // Simulated mock AI response for the demo
-        await new Promise(r => setTimeout(r, 1500));
+        const messagesToSend = [
+          { role: 'system', content: SYSTEM_PROMPT },
+          ...chatMessages.map(m => ({ role: m.role, content: m.content }))
+        ];
 
-        let reply = "I can definitely help you with that! Which specific service from BBMP or Seva Sindhu are you looking for today?";
-        const lowerMsg = msg.toLowerCase();
+        const response = await fetch("/api/chat", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            messages: messagesToSend
+          })
+        });
 
-        if (lowerMsg.includes("khata")) {
-          reply = "For a Khata transfer, you'll need your Registered Sale Deed, Previous Khata Extract, Latest Property Tax Receipt, and EC for the last 15 years. The fee is ₹125 + 2% stamp duty. Would you like me to guide you to the application?";
-        } else if (lowerMsg.includes("income")) {
-          reply = "To get an Income Certificate via Seva Sindhu, you need your Aadhaar, Ration Card, recent Salary Slips (or Form 16), and an Address Proof. It costs ₹55. Should we begin applying?";
-        } else if (lowerMsg.includes("birth")) {
-          reply = "For a Birth Certificate from BBMP, the registration must be done within 21 days. You'll need the Hospital Discharge Summary and both parents' Aadhaar cards. Shall I pull up the form?";
-        } else if (lowerMsg.includes("trade")) {
-          reply = "A Trade License requires your business address proof, latest property tax receipt, and an NOC from the property owner if rented. Do you want to start the application now?";
-        } else if (lowerMsg.includes("status") || lowerMsg.includes("track")) {
-          reply = "You can track your applications by clicking the 'Track App.' link in the top menu and entering your reference number (e.g. NM12345678).";
+        if (!response.ok) {
+          throw new Error('API request failed: ' + response.status);
         }
 
+        const data = await response.json();
+        const reply = data.choices[0].message.content;
+
         chatMessages.push({ role: 'assistant', content: reply });
+        speakText(reply);
       } catch (e) {
-        chatMessages.push({ role: 'assistant', content: "Connection error. Please try again or call 080-22221188." });
+        const errorMsg = t("Connection error. Please try again or call 080-22221188.");
+        chatMessages.push({ role: 'assistant', content: errorMsg });
+        speakText(errorMsg);
       }
       chatLoading = false;
 
@@ -2669,6 +3031,59 @@ RULES:
         chatEl.innerHTML = renderChatMessages();
         chatEl.scrollTop = chatEl.scrollHeight;
       }
+    }
+
+    function startVoiceRecognition() {
+      const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+      if (!SpeechRecognition) {
+        showToast(t("Voice recognition not supported"));
+        return;
+      }
+
+      const recognition = new SpeechRecognition();
+      recognition.lang = currentLang === 'kn' ? 'kn-IN' : 'en-IN';
+      recognition.interimResults = false;
+      recognition.maxAlternatives = 1;
+
+      const micBtn = document.getElementById('chat-mic-btn');
+      if (micBtn) {
+        micBtn.style.background = '#A91B1B';
+        micBtn.style.color = '#FFF';
+        micBtn.classList.add('pulse-anim');
+      }
+
+      recognition.start();
+
+      recognition.onresult = function (event) {
+        const speechResult = event.results[0][0].transcript;
+        const input = document.getElementById('chat-input');
+        if (input) {
+          input.value = speechResult;
+        }
+        setTimeout(() => sendChat(), 200);
+      };
+
+      recognition.onspeechend = function () {
+        recognition.stop();
+      };
+
+      recognition.onend = function () {
+        if (micBtn) {
+          micBtn.style.background = '#E8D5C0';
+          micBtn.style.color = 'inherit';
+          micBtn.classList.remove('pulse-anim');
+        }
+      };
+
+      recognition.onerror = function (event) {
+        if (micBtn) {
+          micBtn.style.background = '#E8D5C0';
+          micBtn.style.color = 'inherit';
+          micBtn.classList.remove('pulse-anim');
+        }
+        console.error('Speech recognition error: ' + event.error);
+        if (event.error === 'not-allowed') showToast(t("Microphone access denied"));
+      };
     }
 
     async function checkUserSession() {
@@ -2686,7 +3101,7 @@ RULES:
           // Clean up URL query params
           if (window.location.search.includes('auth=')) {
             window.history.replaceState({}, document.title, window.location.pathname);
-            showToast(`Welcome back, ${data.user.name.split(' ')[0]}!`);
+            showToast(`${t('Welcome back')}, ${data.user.name.split(' ')[0]}!`);
           }
           // Ensure we're at the top
           window.scrollTo(0, 0);
@@ -2709,6 +3124,17 @@ RULES:
 
     showAuth('select');
     checkUserSession();
+
+    // Load language preference
+    const savedLang = localStorage.getItem('nsLang');
+    if (savedLang && savedLang === 'kn') {
+      currentLang = 'kn';
+      document.getElementById('lang-en').classList.remove('active');
+      document.getElementById('lang-kn').classList.add('active');
+      applyLangToNav();
+      applyLangToUserBar();
+      applyLangToLogin();
+    }
   </script>
 </body>
 
