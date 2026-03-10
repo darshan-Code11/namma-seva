@@ -21,8 +21,12 @@ app.use(express.static(__dirname));
 // DATABASE CONNECTION
 // ═══════════════════════════════════════════════════════════
 // Explicitly target the 'namaseva' database
-const mongoURI = process.env.MONGODB_URI.replace(/\/+$/, '') + '/namaseva';
+const baseUri = process.env.MONGODB_URI || 'mongodb://localhost:27017';
+const mongoURI = baseUri.replace(/\/+$/, '') + '/namaseva';
 
+if (!process.env.MONGODB_URI) {
+    console.warn("⚠️  WARNING: MONGODB_URI environment variable is missing!");
+}
 // Override TLS to allow connections from machines with SSL inspection / older certs
 process.env.NODE_TLS_REJECT_UNAUTHORIZED = '0';
 
