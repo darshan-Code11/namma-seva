@@ -10,8 +10,7 @@ const GoogleStrategy = require('passport-google-oauth20').Strategy;
 const MongoStoreRaw = require('connect-mongo');
 const MongoStore = MongoStoreRaw.default || MongoStoreRaw;
 
-// Fix for MongoDB SRV DNS lookup issues
-dns.setServers(['8.8.8.8', '8.8.4.4']);
+// dns.setServers(['8.8.8.8', '8.8.4.4']); // Commented out to avoid cloud networking interference
 
 const app = express();
 app.set('trust proxy', 1); // Trust first proxy (Render) for secure cookies
@@ -28,8 +27,6 @@ const mongoURI = process.env.MONGODB_URI || 'mongodb://localhost:27017/namaseva'
 if (!process.env.MONGODB_URI) {
     console.warn("⚠️  WARNING: MONGODB_URI environment variable is missing!");
 }
-// Override TLS to allow connections from machines with SSL inspection / older certs
-process.env.NODE_TLS_REJECT_UNAUTHORIZED = '0';
 
 mongoose.connect(mongoURI, {
     serverSelectionTimeoutMS: 15000,
@@ -227,10 +224,21 @@ app.get('/', (req, res) => {
     res.sendFile(path.join(__dirname, 'namma-seva.html'));
 });
 
-// Global Error Handler — catches all unhandled errors and logs them
+// Global Error Handler
 app.use((err, req, res, next) => {
     console.error('🔥 Global Error:', err.message);
-    console.error(err.stack);
+    if (err.message.includes('SSL') || err.message.includes('handshake')) {
+        return res.status(500).send(`
+            <h1>Database Connection Error</h1>
+            <p><strong>Error:</strong> ${err.message}</p>
+            <hr/>
+            <p><strong>Common Solutions:</strong></p>
+            <ul>
+                <li><strong>IP Whitelist:</strong> In MongoDB Atlas, go to "Network Access" and click "+ ADD IP ADDRESS". Select <strong>"ALLOW ACCESS FROM ANYWHERE" (0.0.0.0/0)</strong>. This is required for Render because their server IPs change frequently.</li>
+                <li><strong>Database URI:</strong> Check your MONGODB_URI on Render. Ensure there are no extra spaces or special characters in the password that aren't URL encoded.</li>
+            </ul>
+        `);
+    }
     res.status(500).send(`Internal Server Error: ${err.message}`);
 });
 
