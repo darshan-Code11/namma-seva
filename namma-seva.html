@@ -1,0 +1,2715 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>NAMMA SEVA — Bengaluru Civic Navigator</title>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Noto+Sans:wght@400;500;600;700&family=Sora:wght@400;600;700;800;900&display=swap"
+    rel="stylesheet" />
+  <style>
+    :root {
+      /* Exact colors from screenshot */
+      --bg-deep: #6B0C0C;
+      /* darkest corner crimson */
+      --bg-mid: #A91B1B;
+      /* mid crimson */
+      --bg-light: #D04040;
+      /* lighter warm red */
+      --bg-orange: #C85020;
+      /* orange-red right edge */
+
+      --hero-orange: #F5A020;
+      /* "At your fingertips." orange */
+      --hero-yellow: #F7B733;
+      /* lighter yellow-orange */
+
+      --icon-bg: #E07840;
+      /* warm orange icon tile */
+      --icon-bg-dark: #C05820;
+
+      --digi-btn: #1C2331;
+      /* dark charcoal DigiLocker button */
+      --digi-btn-hover: #2A3345;
+
+      --accent-gold: #FFD060;
+      /* gold for badges/nav active */
+      --accent-yellow: #F5A020;
+
+      --text-main: #1A0A00;
+      --text-muted: #7A5540;
+      --border-warm: #E0C8A8;
+
+      --surface: #FFFFFF;
+      --surface-warm: #FFF9F4;
+
+      /* Karnataka Theme Aliases */
+      --karnataka-red: #A91B1B;
+      --karnataka-red-dark: #6B0C0C;
+      --karnataka-yellow: #F5A020;
+    }
+
+    *,
+    *::before,
+    *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: 'Noto Sans', sans-serif;
+      background: var(--surface-warm);
+    }
+
+    button {
+      font-family: inherit;
+      cursor: pointer;
+    }
+
+    input,
+    textarea,
+    select {
+      font-family: inherit;
+    }
+
+    ::-webkit-scrollbar {
+      width: 6px;
+    }
+
+    ::-webkit-scrollbar-thumb {
+      background: #A91B1B66;
+      border-radius: 3px;
+    }
+
+    ::-webkit-scrollbar-track {
+      background: #FFF9F4;
+    }
+
+    @keyframes fadeIn {
+      from {
+        opacity: 0;
+        transform: translateY(16px)
+      }
+
+      to {
+        opacity: 1;
+        transform: translateY(0)
+      }
+    }
+
+    @keyframes slideUp {
+      from {
+        opacity: 0;
+        transform: translateY(28px)
+      }
+
+      to {
+        opacity: 1;
+        transform: translateY(0)
+      }
+    }
+
+    @keyframes slideIn {
+      from {
+        opacity: 0;
+        transform: translateX(-24px)
+      }
+
+      to {
+        opacity: 1;
+        transform: translateX(0)
+      }
+    }
+
+    @keyframes float {
+
+      0%,
+      100% {
+        transform: translateY(0) rotate(0deg)
+      }
+
+      50% {
+        transform: translateY(-18px) rotate(3deg)
+      }
+    }
+
+    @keyframes float2 {
+
+      0%,
+      100% {
+        transform: translateY(0) rotate(0deg)
+      }
+
+      50% {
+        transform: translateY(14px) rotate(-2deg)
+      }
+    }
+
+    @keyframes pulse-glow {
+
+      0%,
+      100% {
+        box-shadow: 0 0 0 0 rgba(169, 27, 27, 0.5)
+      }
+
+      50% {
+        box-shadow: 0 0 0 18px rgba(169, 27, 27, 0)
+      }
+    }
+
+    @keyframes pulse-gold {
+
+      0%,
+      100% {
+        box-shadow: 0 0 0 0 rgba(245, 160, 32, 0.6)
+      }
+
+      50% {
+        box-shadow: 0 0 0 14px rgba(245, 160, 32, 0)
+      }
+    }
+
+    @keyframes shake {
+
+      0%,
+      100% {
+        transform: translateX(0)
+      }
+
+      20% {
+        transform: translateX(-8px)
+      }
+
+      40% {
+        transform: translateX(8px)
+      }
+
+      60% {
+        transform: translateX(-6px)
+      }
+
+      80% {
+        transform: translateX(6px)
+      }
+    }
+
+    @keyframes spin {
+      from {
+        transform: rotate(0deg)
+      }
+
+      to {
+        transform: rotate(360deg)
+      }
+    }
+
+    @keyframes bounce {
+
+      0%,
+      60%,
+      100% {
+        transform: translateY(0);
+        opacity: .4
+      }
+
+      30% {
+        transform: translateY(-6px);
+        opacity: 1
+      }
+    }
+
+    @keyframes ticker {
+
+      0%,
+      100% {
+        opacity: 1
+      }
+
+      50% {
+        opacity: 0.3
+      }
+    }
+
+    @keyframes shimmer {
+      0% {
+        background-position: -200% 0
+      }
+
+      100% {
+        background-position: 200% 0
+      }
+    }
+
+    @keyframes popIn {
+      0% {
+        transform: scale(0.7);
+        opacity: 0
+      }
+
+      70% {
+        transform: scale(1.08)
+      }
+
+      100% {
+        transform: scale(1);
+        opacity: 1
+      }
+    }
+
+    @keyframes confetti {
+      0% {
+        transform: translateY(-10px) rotate(0deg);
+        opacity: 1
+      }
+
+      100% {
+        transform: translateY(60px) rotate(720deg);
+        opacity: 0
+      }
+    }
+
+    @keyframes modalIn {
+      from {
+        opacity: 0;
+        transform: translateY(40px) scale(0.95)
+      }
+
+      to {
+        opacity: 1;
+        transform: translateY(0) scale(1)
+      }
+    }
+
+    @keyframes cardHover {
+      from {
+        transform: translateY(0)
+      }
+
+      to {
+        transform: translateY(-8px)
+      }
+    }
+
+    @keyframes borderPulse {
+
+      0%,
+      100% {
+        border-color: rgba(169, 27, 27, 0.3)
+      }
+
+      50% {
+        border-color: rgba(245, 160, 32, 0.8)
+      }
+    }
+
+    @keyframes gradientShift {
+      0% {
+        background-position: 0% 50%
+      }
+
+      50% {
+        background-position: 100% 50%
+      }
+
+      100% {
+        background-position: 0% 50%
+      }
+    }
+
+    @keyframes ripple {
+      0% {
+        transform: scale(0);
+        opacity: 1
+      }
+
+      100% {
+        transform: scale(4);
+        opacity: 0
+      }
+    }
+
+    .page {
+      display: none;
+      animation: fadeIn 0.4s ease-out;
+    }
+
+    .page.active {
+      display: block;
+    }
+
+    .sora {
+      font-family: 'Sora', sans-serif;
+    }
+
+    /* Karnataka stripe accent */
+    .karnataka-stripe {
+      background: linear-gradient(90deg, #E07840 0%, #E07840 50%, #A01818 50%, #A01818 100%);
+      height: 4px;
+    }
+
+    /* Buttons */
+    .btn-primary {
+      background: linear-gradient(135deg, var(--karnataka-red), #EE2020);
+      border: none;
+      border-radius: 14px;
+      padding: 15px 32px;
+      color: white;
+      font-size: 15px;
+      font-weight: 800;
+      font-family: 'Sora', sans-serif;
+      transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+      box-shadow: 0 8px 24px rgba(169, 27, 27, 0.4);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .btn-primary::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(135deg, rgba(245, 160, 32, 0.15), transparent);
+      opacity: 0;
+      transition: opacity 0.3s;
+    }
+
+    .btn-primary:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 16px 40px rgba(169, 27, 27, 0.5);
+    }
+
+    .btn-primary:hover::after {
+      opacity: 1;
+    }
+
+    .btn-primary:active {
+      transform: translateY(-1px);
+    }
+
+    .btn-ghost {
+      background: rgba(255, 255, 255, 0.12);
+      border: 2px solid rgba(245, 160, 32, 0.5);
+      border-radius: 14px;
+      padding: 15px 32px;
+      color: #F5A020;
+      font-size: 15px;
+      font-weight: 700;
+      font-family: 'Sora', sans-serif;
+      transition: all 0.25s;
+    }
+
+    .btn-ghost:hover {
+      background: rgba(245, 160, 32, 0.15);
+      border-color: #F5A020;
+      transform: translateY(-2px);
+    }
+
+    .btn-outline {
+      background: transparent;
+      border: 2px solid #DDD0C0;
+      border-radius: 10px;
+      padding: 12px 24px;
+      color: #7A6050;
+      font-size: 14px;
+      font-weight: 700;
+      font-family: 'Sora', sans-serif;
+      transition: all 0.2s;
+    }
+
+    .btn-outline:hover {
+      border-color: #A91B1B;
+      color: var(--karnataka-red);
+    }
+
+    .btn-dark {
+      background: linear-gradient(135deg, var(--karnataka-red-dark), var(--karnataka-red));
+      border: none;
+      border-radius: 10px;
+      padding: 12px 32px;
+      color: white;
+      font-size: 14px;
+      font-weight: 800;
+      font-family: 'Sora', sans-serif;
+      transition: all 0.25s;
+      box-shadow: 0 6px 18px rgba(169, 27, 27, 0.3);
+    }
+
+    .btn-dark:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 10px 28px rgba(169, 27, 27, 0.45);
+    }
+
+    /* Ripple effect */
+    .ripple-btn {
+      position: relative;
+      overflow: hidden;
+    }
+
+    .ripple-btn .ripple {
+      position: absolute;
+      border-radius: 50%;
+      background: rgba(255, 255, 255, 0.3);
+      transform: scale(0);
+      animation: ripple 0.6s linear;
+      pointer-events: none;
+    }
+
+    /* Service card */
+    .service-card {
+      background: white;
+      border-radius: 20px;
+      padding: 28px;
+      cursor: pointer;
+      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      box-shadow: 0 4px 20px rgba(169, 27, 27, 0.08);
+      border: 2px solid transparent;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .service-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 3px;
+      background: linear-gradient(90deg, #C03020, #E07840);
+      transform: scaleX(0);
+      transform-origin: left;
+      transition: transform 0.3s;
+    }
+
+    .service-card:hover {
+      transform: translateY(-8px);
+      box-shadow: 0 24px 60px rgba(169, 27, 27, 0.2);
+      border-color: rgba(169, 27, 27, 0.15);
+    }
+
+    .service-card:hover::before {
+      transform: scaleX(1);
+    }
+
+    /* Form fields */
+    .form-input,
+    .form-select,
+    .form-textarea {
+      width: 100%;
+      border: 2px solid #E8D5C0;
+      border-radius: 10px;
+      padding: 11px 14px;
+      font-size: 14px;
+      font-family: 'Noto Sans', sans-serif;
+      color: #1a0000;
+      outline: none;
+      transition: all 0.2s;
+      background: white;
+    }
+
+    .form-textarea {
+      resize: vertical;
+    }
+
+    .form-input:focus,
+    .form-select:focus,
+    .form-textarea:focus {
+      border-color: #A91B1B;
+      box-shadow: 0 0 0 3px rgba(169, 27, 27, 0.08);
+    }
+
+    /* Header nav buttons */
+    .nav-btn {
+      background: transparent;
+      border: 1px solid transparent;
+      color: rgba(255, 255, 255, 0.8);
+      padding: 8px 16px;
+      border-radius: 10px;
+      font-size: 13px;
+      font-weight: 700;
+      font-family: 'Sora', sans-serif;
+      transition: all 0.2s;
+    }
+
+    .nav-btn:hover {
+      background: rgba(245, 160, 32, 0.12);
+      color: #F5A020;
+    }
+
+    .nav-btn.active {
+      background: rgba(245, 160, 32, 0.2);
+      border-color: rgba(245, 160, 32, 0.5);
+      color: #F5A020;
+    }
+
+    /* Chat bubbles */
+    .chat-user {
+      background: linear-gradient(135deg, #A91B1B, #C03020);
+      color: white;
+      border-radius: 18px 18px 4px 18px;
+    }
+
+    .chat-bot {
+      background: #FFF8F0;
+      color: #1a0000;
+      border-radius: 4px 18px 18px 18px;
+      border: 1px solid #F0E0D0;
+    }
+
+    /* Step indicator */
+    .step-dot {
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: white;
+      font-size: 13px;
+      font-weight: 800;
+      font-family: 'Sora', sans-serif;
+      transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    .step-dot.done {
+      background: linear-gradient(135deg, #22C55E, #16A34A);
+      box-shadow: 0 4px 12px rgba(34, 197, 94, 0.4);
+    }
+
+    .step-dot.active {
+      background: linear-gradient(135deg, #A91B1B, #C03020);
+      box-shadow: 0 4px 12px rgba(169, 27, 27, 0.4);
+      animation: pulse-glow 2s ease-in-out infinite;
+    }
+
+    .step-dot.pending {
+      background: #F0E0D0;
+      color: #B0906A;
+    }
+
+    /* Spinner */
+    .spinner {
+      border: 3px solid #FFEECC;
+      border-top-color: var(--karnataka-red);
+      border-right-color: #F5A020;
+      border-radius: 50%;
+      animation: spin 0.8s linear infinite;
+    }
+
+    /* OTP box */
+    .otp-box {
+      width: 50px;
+      height: 58px;
+      text-align: center;
+      border-radius: 12px;
+      border: 2px solid #E8D5C0;
+      font-size: 22px;
+      font-weight: 900;
+      color: var(--karnataka-red-dark);
+      background: #FFF8F0;
+      transition: all 0.2s;
+      font-family: 'Sora', sans-serif;
+      outline: none;
+    }
+
+    .otp-box:focus {
+      border-color: #A91B1B;
+      background: white;
+      box-shadow: 0 0 0 3px rgba(169, 27, 27, 0.1);
+      transform: scale(1.05);
+    }
+
+    .otp-box.filled {
+      border-color: #A91B1B;
+      background: #FFF0F0;
+    }
+
+    .otp-box.error {
+      border-color: #EF4444;
+      background: #FFF0F0;
+    }
+
+    /* Filter buttons */
+    .filter-btn {
+      background: white;
+      border: 2px solid #E8D5C0;
+      border-radius: 10px;
+      padding: 8px 20px;
+      color: #7A6050;
+      font-size: 13px;
+      font-weight: 800;
+      font-family: 'Sora', sans-serif;
+      transition: all 0.2s;
+    }
+
+    .filter-btn:hover {
+      border-color: #A91B1B;
+      color: var(--karnataka-red);
+    }
+
+    .filter-btn.active {
+      background: linear-gradient(135deg, #A91B1B, #C03020);
+      border-color: #A91B1B;
+      color: white;
+      box-shadow: 0 4px 14px rgba(169, 27, 27, 0.3);
+    }
+
+    /* Status step */
+    .status-dot {
+      width: 30px;
+      height: 30px;
+      border-radius: 50%;
+      margin: 0 auto 6px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: white;
+      font-size: 12px;
+      font-weight: 800;
+      position: relative;
+      z-index: 1;
+      transition: all 0.3s;
+    }
+
+    /* Quick chips */
+    .quick-chip {
+      background: white;
+      border: 2px solid #E8D5C0;
+      border-radius: 20px;
+      padding: 8px 16px;
+      font-size: 13px;
+      font-weight: 600;
+      color: #5A4030;
+      font-family: 'Sora', sans-serif;
+      transition: all 0.2s;
+    }
+
+    .quick-chip:hover {
+      border-color: #A91B1B;
+      color: var(--karnataka-red);
+      background: #FFF0F0;
+      transform: translateY(-2px);
+      box-shadow: 0 4px 12px rgba(169, 27, 27, 0.15);
+    }
+
+    /* Grid layouts */
+    .services-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+      gap: 22px;
+    }
+
+    .form-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 20px;
+    }
+
+    .service-body {
+      display: grid;
+      grid-template-columns: 1fr 340px;
+      gap: 28px;
+      align-items: start;
+    }
+
+    .steps-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 32px;
+      max-width: 800px;
+      margin: 0 auto;
+    }
+
+    /* Payment Modal */
+    .payment-modal-overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(26, 0, 0, 0.7);
+      z-index: 9999;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+      backdrop-filter: blur(6px);
+      animation: fadeIn 0.3s ease-out;
+    }
+
+    .payment-modal {
+      background: white;
+      border-radius: 28px;
+      width: min(520px, 100%);
+      box-shadow: 0 40px 100px rgba(0, 0, 0, 0.4);
+      animation: modalIn 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+      overflow: hidden;
+    }
+
+    .payment-method-btn {
+      width: 100%;
+      padding: 16px 20px;
+      border-radius: 14px;
+      border: 2px solid #E8D5C0;
+      background: white;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      transition: all 0.2s;
+      margin-bottom: 12px;
+    }
+
+    .payment-method-btn:hover {
+      border-color: #A91B1B;
+      background: #FFF8F8;
+      transform: translateX(4px);
+    }
+
+    .payment-method-btn.selected {
+      border-color: #A91B1B;
+      background: #FFF0F0;
+      box-shadow: 0 0 0 3px rgba(169, 27, 27, 0.1);
+    }
+
+    /* Toast */
+    .toast {
+      position: fixed;
+      bottom: 28px;
+      right: 28px;
+      z-index: 99999;
+      background: linear-gradient(135deg, #22C55E, #16A34A);
+      color: white;
+      padding: 16px 24px;
+      border-radius: 16px;
+      font-family: 'Sora', sans-serif;
+      font-size: 14px;
+      font-weight: 700;
+      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.25);
+      animation: slideIn 0.4s ease-out;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    /* Confetti particle */
+    .confetti-piece {
+      position: fixed;
+      z-index: 99998;
+      border-radius: 4px;
+      animation: confetti 1.5s ease-out forwards;
+      pointer-events: none;
+    }
+
+    @media(max-width:900px) {
+      .service-body {
+        grid-template-columns: 1fr;
+      }
+
+      .steps-grid {
+        grid-template-columns: 1fr;
+        gap: 20px;
+      }
+
+      .form-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .login-layout {
+        flex-direction: column !important;
+      }
+
+      .login-left {
+        display: none !important;
+      }
+
+      .login-right {
+        width: 100% !important;
+        padding: 24px !important;
+      }
+    }
+
+    @media(max-width:600px) {
+      .services-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .hero-btns {
+        flex-direction: column;
+      }
+
+      .hero-btns button {
+        width: 100%;
+      }
+
+      .header-nav {
+        gap: 2px;
+      }
+
+      .nav-btn {
+        padding: 6px 10px;
+        font-size: 12px;
+      }
+
+      .stats-row {
+        gap: 20px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- ══ APP ROOT ══ -->
+  <div id="app">
+
+    <!-- LOGIN PAGE -->
+    <div id="login-page"
+      style="min-height:100vh;display:flex;background:linear-gradient(135deg,#6B0C0C 0%,#9E1A1A 30%,#C03020 60%,#C85020 100%);position:relative;overflow:hidden;">
+      <!-- Animated orbs -->
+      <div
+        style="position:absolute;width:600px;height:600px;border-radius:50%;background:rgba(255,215,0,0.08);top:-15%;left:-10%;filter:blur(80px);animation:float 8s ease-in-out infinite;pointer-events:none;">
+      </div>
+      <div
+        style="position:absolute;width:400px;height:400px;border-radius:50%;background:rgba(255,255,255,0.06);bottom:-10%;right:-8%;filter:blur(60px);animation:float2 10s ease-in-out infinite;pointer-events:none;">
+      </div>
+      <div
+        style="position:absolute;width:300px;height:300px;border-radius:50%;background:rgba(255,215,0,0.06);top:40%;right:5%;filter:blur(60px);animation:float 12s ease-in-out infinite 2s;pointer-events:none;">
+      </div>
+      <!-- Karnataka flag stripe -->
+      <div
+        style="position:absolute;top:0;left:0;right:0;height:5px;background:linear-gradient(90deg,#F5A020,#F5A020 50%,#A91B1B 50%,#A91B1B);">
+      </div>
+      <!-- Grid -->
+      <div
+        style="position:absolute;inset:0;pointer-events:none;background-image:linear-gradient(rgba(255,215,0,0.04) 1px,transparent 1px),linear-gradient(90deg,rgba(255,215,0,0.04) 1px,transparent 1px);background-size:60px 60px;">
+      </div>
+
+      <!-- LEFT PANEL -->
+      <div class="login-left"
+        style="flex:1;min-height:100vh;display:flex;flex-direction:column;justify-content:center;padding:60px 48px;position:relative;">
+        <div style="animation:slideUp 0.6s ease-out;margin-bottom:48px;">
+          <div style="display:flex;align-items:center;gap:16px;margin-bottom:40px;">
+            <div
+              style="width:64px;height:64px;border-radius:18px;background:linear-gradient(135deg,#F5A020,#F5A020);display:flex;align-items:center;justify-content:center;font-size:32px;box-shadow:0 8px 24px rgba(224,120,64,0.5);animation:pulse-gold 3s ease-in-out infinite;">
+              🏛️</div>
+            <div>
+              <div
+                style="font-size:24px;font-weight:900;color:white;letter-spacing:-0.5px;font-family:'Sora',sans-serif;">
+                NAMMA SEVA</div>
+              <div
+                style="font-size:11px;color:rgba(255,255,255,0.5);letter-spacing:2px;font-weight:600;margin-top:2px;">
+                ನಮ್ಮ ಸೇವಾ • BENGALURU CIVIC</div>
+            </div>
+          </div>
+          <h1
+            style="font-size:clamp(28px,3.5vw,42px);font-weight:900;color:white;line-height:1.15;letter-spacing:-1.5px;margin-bottom:20px;font-family:'Sora',sans-serif;">
+            Your government.<br />
+            <span
+              style="background:linear-gradient(90deg,#F5A020,#F7C040);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;">At
+              your fingertips.</span>
+          </h1>
+          <p style="font-size:16px;color:rgba(255,255,255,0.6);line-height:1.7;max-width:380px;">Apply for 12+
+            government services — Khata transfer, scholarships, certificates, licences — without middlemen or queues.
+          </p>
+        </div>
+
+        <div style="display:flex;flex-direction:column;gap:16px;animation:slideUp 0.7s ease-out 0.1s both;">
+          <div style="display:flex;gap:14px;align-items:flex-start;">
+            <div
+              style="width:40px;height:40px;border-radius:10px;flex-shrink:0;background:rgba(255,255,255,0.12);border:1px solid rgba(255,255,255,0.18);display:flex;align-items:center;justify-content:center;font-size:18px;">
+              🔐</div>
+            <div>
+              <div style="font-size:14px;font-weight:700;color:white;margin-bottom:2px;">Aadhaar-Verified Identity
+              </div>
+              <div style="font-size:12px;color:rgba(255,255,255,0.55);">Login securely using DigiLocker or Aadhaar OTP
+              </div>
+            </div>
+          </div>
+          <div style="display:flex;gap:14px;align-items:flex-start;">
+            <div
+              style="width:40px;height:40px;border-radius:10px;flex-shrink:0;background:rgba(255,255,255,0.12);border:1px solid rgba(255,255,255,0.18);display:flex;align-items:center;justify-content:center;font-size:18px;">
+              📋</div>
+            <div>
+              <div style="font-size:14px;font-weight:700;color:white;margin-bottom:2px;">12+ Government Services</div>
+              <div style="font-size:12px;color:rgba(255,255,255,0.55);">BBMP, Seva Sindhu, SSP, Ahara & Sarathi</div>
+            </div>
+          </div>
+          <div style="display:flex;gap:14px;align-items:flex-start;">
+            <div
+              style="width:40px;height:40px;border-radius:10px;flex-shrink:0;background:rgba(255,255,255,0.12);border:1px solid rgba(255,255,255,0.18);display:flex;align-items:center;justify-content:center;font-size:18px;">
+              🤖</div>
+            <div>
+              <div style="font-size:14px;font-weight:700;color:white;margin-bottom:2px;">AI-Powered Guidance</div>
+              <div style="font-size:12px;color:rgba(255,255,255,0.55);">Step-by-step help in plain language, 24/7
+              </div>
+            </div>
+          </div>
+          <div style="display:flex;gap:14px;align-items:flex-start;">
+            <div
+              style="width:40px;height:40px;border-radius:10px;flex-shrink:0;background:rgba(255,255,255,0.12);border:1px solid rgba(255,255,255,0.18);display:flex;align-items:center;justify-content:center;font-size:18px;">
+              📱</div>
+            <div>
+              <div style="font-size:14px;font-weight:700;color:white;margin-bottom:2px;">Real-Time Tracking</div>
+              <div style="font-size:12px;color:rgba(255,255,255,0.55);">Track your applications with reference numbers
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div style="margin-top:48px;display:flex;gap:12px;flex-wrap:wrap;animation:slideUp 0.6s ease-out 0.5s both;">
+          <div
+            style="font-size:11px;color:rgba(255,255,255,0.5);font-weight:600;background:rgba(255,255,255,0.1);border-radius:8px;padding:5px 12px;border:1px solid rgba(255,255,255,0.15);">
+            🏛️ Govt. of Karnataka</div>
+          <div
+            style="font-size:11px;color:rgba(255,255,255,0.5);font-weight:600;background:rgba(255,255,255,0.1);border-radius:8px;padding:5px 12px;border:1px solid rgba(255,255,255,0.15);">
+            🔒 SSL Secured</div>
+          <div
+            style="font-size:11px;color:rgba(255,255,255,0.5);font-weight:600;background:rgba(255,255,255,0.1);border-radius:8px;padding:5px 12px;border:1px solid rgba(255,255,255,0.15);">
+            🆔 Aadhaar Powered</div>
+        </div>
+      </div>
+
+      <!-- RIGHT PANEL — Auth Card -->
+      <div class="login-right"
+        style="width:min(480px,45%);min-height:100vh;display:flex;align-items:center;justify-content:center;padding:40px 40px;position:relative;background:rgba(0,0,0,0.08);">
+        <div
+          style="width:100%;background:rgba(255,255,255,0.97);border-radius:28px;padding:36px 32px;box-shadow:0 32px 80px rgba(0,0,0,0.35),0 0 0 1px rgba(255,255,255,0.15);animation:slideUp 0.5s ease-out 0.2s both;backdrop-filter:blur(20px);max-height:90vh;overflow-y:auto;">
+
+          <!-- SELECT METHOD -->
+          <div id="auth-select">
+            <div style="text-align:center;margin-bottom:32px;">
+              <div
+                style="width:64px;height:64px;border-radius:18px;background:linear-gradient(135deg,#1C2331,#2A3345);margin:0 auto 16px;display:flex;align-items:center;justify-content:center;font-size:28px;box-shadow:0 8px 24px rgba(169,27,27,0.3);">
+                🏛️</div>
+              <h2
+                style="font-size:22px;font-weight:900;color:#6B0C0C;margin:0 0 6px;letter-spacing:-0.5px;font-family:'Sora',sans-serif;">
+                Welcome to NAMMA SEVA</h2>
+              <p style="font-size:14px;color:#7A6050;">Sign in to access government services</p>
+            </div>
+            <button onclick="showAuth('digilocker-redirect')"
+              style="width:100%;padding:16px 20px;border-radius:14px;border:2px solid #1C2331;background:linear-gradient(135deg,#1C2331,#2A3345);color:white;cursor:pointer;margin-bottom:14px;display:flex;align-items:center;gap:14px;box-shadow:0 8px 24px rgba(169,27,27,0.3);transition:all 0.2s;"
+              onmouseover="this.style.transform='translateY(-2px)';this.style.boxShadow='0 14px 36px rgba(28,35,49,0.55)'"
+              onmouseout="this.style.transform='translateY(0)';this.style.boxShadow='0 8px 24px rgba(28,35,49,0.4)'">
+              <div
+                style="width:36px;height:36px;border-radius:8px;background:rgba(255,255,255,0.15);display:flex;align-items:center;justify-content:center;font-size:18px;">
+                🔐</div>
+              <div style="text-align:left;">
+                <div style="font-size:15px;font-weight:800;font-family:'Sora',sans-serif;">Continue with DigiLocker
+                </div>
+                <div style="font-size:11px;color:rgba(255,255,255,0.65);margin-top:1px;">Aadhaar-verified · Govt. of
+                  India</div>
+              </div>
+              <span style="margin-left:auto;font-size:16px;">→</span>
+            </button>
+            <button onclick="loginWithGoogle()"
+              style="width:100%;padding:16px 20px;border-radius:14px;border:2px solid #E8D5C0;background:white;color:#1A0A00;cursor:pointer;margin-bottom:8px;display:flex;align-items:center;gap:14px;transition:all 0.2s;"
+              onmouseover="this.style.borderColor='#4285F4';this.style.background='#F8FAFF'"
+              onmouseout="this.style.borderColor='#E8D5C0';this.style.background='white'">
+              <div
+                style="width:36px;height:36px;border-radius:8px;background:white;display:flex;align-items:center;justify-content:center;font-size:18px;border:1px solid #EDEDED;">
+                <img src="https://upload.wikimedia.org/wikipedia/commons/c/c1/Google_%22G%22_logo.svg"
+                  style="width:18px;height:18px;" />
+              </div>
+              <div style="text-align:left;">
+                <div style="font-size:15px;font-weight:800;color:#1A0A00;font-family:'Sora',sans-serif;">Continue with
+                  Google
+                </div>
+                <div style="font-size:11px;color:#B0906A;margin-top:1px;">Sync your details automatically</div>
+              </div>
+              <span style="margin-left:auto;font-size:16px;color:#B0906A;">→</span>
+            </button>
+            <div style="text-align:center;margin-bottom:14px;">
+              <span onclick="showGoogleHelp()"
+                style="font-size:11px;color:#4285F4;font-weight:700;cursor:pointer;text-decoration:underline;text-underline-offset:2px;">How
+                does Google help here?</span>
+            </div>
+
+            <div style="display:flex;align-items:center;gap:12px;margin:20px 0;">
+              <div style="flex:1;height:1px;background:#E8D5C0;"></div>
+              <span style="font-size:12px;color:#B0906A;font-weight:700;letter-spacing:0.5px;">OR</span>
+              <div style="flex:1;height:1px;background:#E8D5C0;"></div>
+            </div>
+            <button onclick="showAuth('otp-entry')"
+              style="width:100%;padding:16px 20px;border-radius:14px;border:2px solid #E8D5C0;background:white;color:#6B0C0C;cursor:pointer;display:flex;align-items:center;gap:14px;transition:all 0.2s;"
+              onmouseover="this.style.borderColor='#A91B1B';this.style.background='#FFF8F0'"
+              onmouseout="this.style.borderColor='#E8D5C0';this.style.background='white'">
+              <div
+                style="width:36px;height:36px;border-radius:8px;background:#F0F4FF;display:flex;align-items:center;justify-content:center;font-size:18px;">
+                📱</div>
+              <div style="text-align:left;">
+                <div style="font-size:15px;font-weight:800;color:#6B0C0C;font-family:'Sora',sans-serif;">Login with
+                  OTP
+                </div>
+                <div style="font-size:11px;color:#B0906A;margin-top:1px;">Mobile number or Aadhaar</div>
+              </div>
+              <span style="margin-left:auto;font-size:16px;color:#B0906A;">→</span>
+            </button>
+            <div
+              style="margin-top:24px;padding:12px 14px;background:#FFF7ED;border-radius:10px;border:1px solid #FED7AA;">
+              <p style="font-size:12px;color:#92400E;margin:0;line-height:1.6;">🔒 Your data is encrypted and never
+                stored. Authentication is powered by UIDAI's Aadhaar system.</p>
+            </div>
+            <p style="text-align:center;font-size:11px;color:#B0906A;margin-top:20px;line-height:1.6;">By continuing,
+              you agree to our <span style="color:#A91B1B;font-weight:700;cursor:pointer;">Terms of Service</span> and
+              <span style="color:#A91B1B;font-weight:700;cursor:pointer;">Privacy Policy</span>
+            </p>
+          </div>
+
+          <!-- OTP ENTRY -->
+          <div id="auth-otp-entry" style="display:none;animation:slideUp 0.35s ease-out;">
+            <button onclick="showAuth('select')"
+              style="background:none;border:none;color:#7A6050;font-size:13px;cursor:pointer;display:flex;gap:6px;align-items:center;margin-bottom:24px;font-weight:700;padding:0;">←
+              Back</button>
+            <h2 style="font-size:22px;font-weight:900;color:#6B0C0C;margin:0 0 6px;font-family:'Sora',sans-serif;">
+              Enter
+              your details</h2>
+            <p style="font-size:14px;color:#7A6050;margin-bottom:24px;">We'll send a one-time password to verify</p>
+            <!-- Toggle -->
+            <div style="display:flex;background:#FFF8F0;border-radius:10px;padding:4px;margin-bottom:22px;">
+              <button id="tab-mobile" onclick="setInputMode('mobile')"
+                style="flex:1;padding:9px;border-radius:7px;border:none;background:white;color:#6B0C0C;font-size:13px;font-weight:800;box-shadow:0 2px 8px rgba(0,0,0,0.1);transition:all 0.2s;">📱
+                Mobile</button>
+              <button id="tab-aadhaar" onclick="setInputMode('aadhaar')"
+                style="flex:1;padding:9px;border-radius:7px;border:none;background:transparent;color:#B0906A;font-size:13px;font-weight:800;transition:all 0.2s;">🪪
+                Aadhaar</button>
+            </div>
+            <!-- Mobile input -->
+            <div id="input-mobile">
+              <label
+                style="font-size:12px;font-weight:700;color:#374151;display:block;margin-bottom:8px;letter-spacing:0.5px;">MOBILE
+                NUMBER</label>
+              <div id="mob-wrap"
+                style="display:flex;align-items:center;border:2px solid #E8D5C0;border-radius:12px;overflow:hidden;transition:border-color 0.2s;">
+                <div
+                  style="padding:12px 14px;background:#FFF8F0;border-right:2px solid #E8D5C0;font-size:14px;font-weight:700;color:#6B0C0C;white-space:nowrap;">
+                  🇮🇳 +91</div>
+                <input id="mobile-input" type="tel" placeholder="98765 43210" oninput="fmtMobileInput(this)"
+                  onkeydown="if(event.key==='Enter')sendOtp()"
+                  onfocus="document.getElementById('mob-wrap').style.borderColor='#A91B1B'"
+                  onblur="document.getElementById('mob-wrap').style.borderColor='#E8D5C0'"
+                  style="flex:1;border:none;padding:13px 14px;font-size:16px;font-weight:700;color:#6B0C0C;font-family:'Sora',sans-serif;background:transparent;letter-spacing:0.5px;outline:none;" />
+              </div>
+              <p style="font-size:12px;color:#B0906A;margin-top:8px;">Demo: enter any 10-digit number</p>
+            </div>
+            <!-- Aadhaar input -->
+            <div id="input-aadhaar" style="display:none;">
+              <label
+                style="font-size:12px;font-weight:700;color:#374151;display:block;margin-bottom:8px;letter-spacing:0.5px;">AADHAAR
+                NUMBER</label>
+              <input id="aadhaar-input" type="text" placeholder="XXXX XXXX XXXX" maxlength="14"
+                oninput="fmtAadhaarInput(this)" onkeydown="if(event.key==='Enter')sendOtp()"
+                onfocus="this.style.borderColor='#A91B1B'" onblur="this.style.borderColor='#E8D5C0'"
+                style="width:100%;border:2px solid #E8D5C0;border-radius:12px;padding:13px 16px;font-size:18px;font-weight:700;color:#6B0C0C;font-family:'Sora',sans-serif;letter-spacing:2px;outline:none;transition:border-color 0.2s;" />
+              <p style="font-size:12px;color:#B0906A;margin-top:8px;">Demo: enter any 12-digit Aadhaar</p>
+            </div>
+            <!-- Consent -->
+            <div style="display:flex;align-items:flex-start;gap:10px;margin-top:20px;margin-bottom:24px;">
+              <div id="consent-box" onclick="toggleConsent()"
+                style="width:20px;height:20px;border-radius:5px;border:2px solid #CBD5E0;background:white;cursor:pointer;flex-shrink:0;margin-top:1px;display:flex;align-items:center;justify-content:center;transition:all 0.2s;">
+              </div>
+              <p style="font-size:12px;color:#7A6050;line-height:1.6;">I consent to authenticate via UIDAI Aadhaar OTP
+                system and agree to the <span style="color:#A91B1B;font-weight:700;">Terms & Privacy Policy</span></p>
+            </div>
+            <button id="send-otp-btn" onclick="sendOtp()"
+              style="width:100%;padding:15px;border-radius:14px;border:none;background:#E8D5C0;color:white;font-size:15px;font-weight:800;cursor:pointer;transition:all 0.2s;">Send
+              OTP →</button>
+          </div>
+
+          <!-- OTP VERIFY -->
+          <div id="auth-otp-verify" style="display:none;animation:slideUp 0.35s ease-out;">
+            <button onclick="showAuth('otp-entry')"
+              style="background:none;border:none;color:#7A6050;font-size:13px;cursor:pointer;display:flex;gap:6px;align-items:center;margin-bottom:24px;font-weight:700;padding:0;">←
+              Back</button>
+            <div style="text-align:center;margin-bottom:28px;">
+              <div
+                style="width:64px;height:64px;border-radius:50%;background:linear-gradient(135deg,#DBEAFE,#EFF6FF);margin:0 auto 16px;display:flex;align-items:center;justify-content:center;font-size:30px;">
+                📲</div>
+              <h2 style="font-size:22px;font-weight:900;color:#6B0C0C;margin:0 0 8px;font-family:'Sora',sans-serif;">
+                OTP
+                Sent!</h2>
+              <p style="font-size:14px;color:#7A6050;line-height:1.6;">Enter the 6-digit OTP sent to<br /><strong
+                  id="otp-sent-to" style="color:#6B0C0C;"></strong></p>
+              <div
+                style="margin-top:10px;padding:8px 16px;background:#FFF4E8;border:1px solid #F5C080;border-radius:8px;display:inline-block;">
+                <span style="font-size:12px;color:#A05010;font-weight:700;">Demo OTP: <span
+                    style="letter-spacing:2px;font-size:14px;">123456</span></span>
+              </div>
+            </div>
+            <div id="otp-boxes" style="display:flex;gap:10px;justify-content:center;margin-bottom:24px;"></div>
+            <div id="otp-error"
+              style="display:none;text-align:center;color:#EF4444;font-size:13px;font-weight:700;margin-bottom:16px;">
+            </div>
+            <button id="verify-btn" onclick="verifyOtp()"
+              style="width:100%;padding:15px;border-radius:14px;border:none;background:#E8D5C0;color:white;font-size:15px;font-weight:800;cursor:pointer;transition:all 0.2s;margin-bottom:16px;">Verify
+              & Login →</button>
+            <div style="text-align:center;">
+              <p id="timer-msg" style="font-size:13px;color:#B0906A;"></p>
+              <button id="resend-btn" onclick="sendOtp()"
+                style="display:none;background:none;border:none;color:#A91B1B;font-size:13px;font-weight:800;cursor:pointer;">Resend
+                OTP</button>
+            </div>
+          </div>
+
+          <!-- DIGILOCKER REDIRECT -->
+          <div id="auth-digilocker-redirect" style="display:none;animation:slideUp 0.35s ease-out;text-align:center;">
+            <button onclick="showAuth('select')"
+              style="background:none;border:none;color:#7A6050;font-size:13px;cursor:pointer;display:flex;gap:6px;align-items:center;margin-bottom:28px;font-weight:700;padding:0;">←
+              Back</button>
+            <div
+              style="background:#FFF8F0;border:2px solid #BFDBFE;border-radius:16px;padding:24px;margin-bottom:24px;text-align:left;">
+              <div
+                style="display:flex;align-items:center;gap:8px;margin-bottom:16px;padding:8px 12px;background:white;border-radius:8px;border:1px solid #E8D5C0;">
+                <div style="display:flex;gap:5px;">
+                  <div style="width:10px;height:10px;border-radius:50%;background:#EF4444;"></div>
+                  <div style="width:10px;height:10px;border-radius:50%;background:#F59E0B;"></div>
+                  <div style="width:10px;height:10px;border-radius:50%;background:#22C55E;"></div>
+                </div>
+                <div
+                  style="flex:1;background:#FFF8F0;border-radius:6px;padding:4px 10px;font-size:11px;color:#7A6050;font-family:monospace;display:flex;align-items:center;gap:6px;">
+                  <span style="color:#22C55E;">🔒</span> digilocker.gov.in/signin
+                </div>
+              </div>
+              <div style="display:flex;align-items:center;gap:12px;margin-bottom:20px;">
+                <div
+                  style="width:40px;height:40px;border-radius:8px;background:linear-gradient(135deg,#A91B1B,#A91B1B);display:flex;align-items:center;justify-content:center;font-size:20px;">
+                  📁</div>
+                <div>
+                  <div style="font-size:15px;font-weight:800;color:#6B0C0C;font-family:'Sora',sans-serif;">DigiLocker
+                  </div>
+                  <div style="font-size:11px;color:#7A6050;">Ministry of Electronics & IT, Govt. of India</div>
+                </div>
+              </div>
+              <p style="font-size:13px;color:#5A4030;line-height:1.6;margin-bottom:16px;"><strong>NAMMA SEVA</strong>
+                is
+                requesting access to your DigiLocker documents to verify your identity and auto-fill application
+                forms.
+              </p>
+              <div style="background:#EFF6FF;border-radius:10px;padding:14px;margin-bottom:16px;">
+                <div style="font-size:12px;color:#A91B1B;font-weight:700;margin-bottom:8px;">Permissions Requested:
+                </div>
+                <div style="display:flex;gap:8px;align-items:center;margin-bottom:6px;"><span
+                    style="color:#22C55E;font-size:14px;">✓</span><span style="font-size:12px;color:#4A3020;">View
+                    Aadhaar Card</span></div>
+                <div style="display:flex;gap:8px;align-items:center;margin-bottom:6px;"><span
+                    style="color:#22C55E;font-size:14px;">✓</span><span style="font-size:12px;color:#4A3020;">View PAN
+                    Card (if available)</span></div>
+                <div style="display:flex;gap:8px;align-items:center;margin-bottom:6px;"><span
+                    style="color:#22C55E;font-size:14px;">✓</span><span style="font-size:12px;color:#4A3020;">View
+                    Driving Licence (if available)</span></div>
+                <div style="display:flex;gap:8px;align-items:center;"><span
+                    style="color:#22C55E;font-size:14px;">✓</span><span style="font-size:12px;color:#4A3020;">Access
+                    your name & address</span></div>
+              </div>
+              <div style="display:flex;gap:10px;">
+                <button onclick="showAuth('select')"
+                  style="flex:1;padding:11px;border-radius:10px;border:2px solid #E8D5C0;background:white;color:#7A6050;font-size:13px;font-weight:700;cursor:pointer;">Deny</button>
+                <button onclick="simulateDigiLocker()"
+                  style="flex:2;padding:11px;border-radius:10px;border:none;background:linear-gradient(135deg,#A91B1B,#A91B1B);color:white;font-size:13px;font-weight:800;cursor:pointer;box-shadow:0 4px 14px rgba(16,64,160,0.35);">Allow
+                  Access →</button>
+              </div>
+            </div>
+            <p style="font-size:11px;color:#B0906A;">This is a simulated DigiLocker flow for demo purposes</p>
+          </div>
+
+          <!-- DIGILOCKER FETCHING -->
+          <div id="auth-digilocker-fetching" style="display:none;text-align:center;padding:20px 0;">
+            <div style="position:relative;width:80px;height:80px;margin:0 auto 28px;">
+              <div style="width:80px;height:80px;border-radius:50%;border:3px solid #E8D5C0;position:absolute;"></div>
+              <div
+                style="width:80px;height:80px;border-radius:50%;border:3px solid transparent;border-top-color:#A91B1B;border-right-color:#A91B1B;position:absolute;animation:spin 1s linear infinite;">
+              </div>
+              <div
+                style="position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font-size:28px;">
+                📁</div>
+            </div>
+            <h3 style="font-size:18px;font-weight:800;color:#6B0C0C;margin:0 0 8px;font-family:'Sora',sans-serif;">
+              Connecting to DigiLocker</h3>
+            <p id="digi-loader-msg" style="font-size:14px;color:#7A6050;margin-bottom:28px;min-height:20px;"></p>
+            <div id="digi-steps" style="display:flex;flex-direction:column;gap:10px;text-align:left;"></div>
+          </div>
+
+          <!-- DIGILOCKER SUCCESS -->
+          <div id="auth-digilocker-success" style="display:none;text-align:center;animation:slideUp 0.4s ease-out;">
+            <div
+              style="width:80px;height:80px;border-radius:50%;background:linear-gradient(135deg,#22C55E,#16A34A);margin:0 auto 20px;display:flex;align-items:center;justify-content:center;font-size:36px;box-shadow:0 8px 24px rgba(34,197,94,0.35);">
+              ✓</div>
+            <h3 style="font-size:20px;font-weight:900;color:#6B0C0C;margin:0 0 8px;font-family:'Sora',sans-serif;">
+              DigiLocker Verified!</h3>
+            <p style="font-size:14px;color:#7A6050;margin-bottom:24px;">Identity confirmed. Logging you in...</p>
+            <div style="background:#F0FDF4;border:1px solid #86EFAC;border-radius:12px;padding:16px;">
+              <div style="font-size:13px;color:#15803D;font-weight:700;margin-bottom:10px;">✅ Documents Fetched</div>
+              <div style="font-size:13px;color:#166534;margin-bottom:4px;">• Aadhaar Card ✓</div>
+              <div style="font-size:13px;color:#166534;margin-bottom:4px;">• PAN Card ✓</div>
+              <div style="font-size:13px;color:#166534;">• Driving Licence ✓</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div><!-- end login-page wrapper -->
+
+    <!-- MAIN APP (hidden until login) -->
+    <div id="main-app" style="display:none;min-height:100vh;background:#FFF8F0;">
+
+      <!-- Karnataka stripe -->
+      <div class="karnataka-stripe"></div>
+
+      <!-- User bar -->
+      <div id="user-bar"
+        style="background:linear-gradient(90deg,#6B0C0C,#A01818);padding:0 28px;display:flex;align-items:center;justify-content:flex-end;height:34px;">
+        <div style="display:flex;align-items:center;gap:10px;font-size:12px;">
+          <span style="color:rgba(255,255,255,0.6);">Logged in as</span>
+          <span id="user-name-display" style="color:#F5A020;font-weight:800;font-family:'Sora',sans-serif;"></span>
+          <span id="verified-badge"
+            style="display:none;background:#22C55E;color:white;font-size:10px;padding:2px 7px;border-radius:20px;font-weight:800;">✓
+            VERIFIED</span>
+          <span style="color:rgba(255,255,255,0.3);margin:0 4px;">|</span>
+          <span id="user-method-display"
+            style="background:rgba(245,160,32,0.15);color:rgba(245,160,32,0.8);font-size:10px;padding:2px 8px;border-radius:20px;font-weight:700;border:1px solid rgba(245,160,32,0.25);"></span>
+          <span style="color:rgba(255,255,255,0.3);margin:0 4px;">|</span>
+          <button onclick="logout()"
+            style="background:none;border:none;color:#F5A020;font-size:12px;font-weight:700;cursor:pointer;padding:0;">Logout</button>
+        </div>
+      </div>
+
+      <!-- Header -->
+      <header
+        style="background:linear-gradient(135deg,#7B1010 0%,#A91B1B 50%,#9B2020 100%);padding:0 28px;position:sticky;top:0;z-index:200;box-shadow:0 4px 24px rgba(169,27,27,0.5);">
+        <div
+          style="max-width:1100px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;height:70px;">
+          <div onclick="navigate('home')" style="display:flex;align-items:center;gap:14px;cursor:pointer;">
+            <div
+              style="width:44px;height:44px;border-radius:12px;background:linear-gradient(135deg,#F5A020,#F5A020);display:flex;align-items:center;justify-content:center;font-size:22px;box-shadow:0 4px 14px rgba(255,215,0,0.5);animation:pulse-gold 3s ease-in-out infinite;">
+              🏛️</div>
+            <div>
+              <div
+                style="font-family:'Sora',sans-serif;font-weight:900;font-size:18px;color:white;letter-spacing:-0.5px;">
+                NAMMA SEVA</div>
+              <div
+                style="font-size:10px;color:rgba(245,160,32,0.7);letter-spacing:2px;font-weight:700;text-transform:uppercase;">
+                ನಮ್ಮ ಸೇವಾ • Bengaluru Civic</div>
+            </div>
+          </div>
+          <nav class="header-nav" style="display:flex;align-items:center;gap:4px;">
+            <button id="nav-home" class="nav-btn active" onclick="navigate('home')">Home</button>
+            <button id="nav-services" class="nav-btn" onclick="navigate('services')">Services</button>
+            <button id="nav-chat" class="nav-btn" onclick="navigate('chat')">AI Help</button>
+            <button id="nav-track" class="nav-btn" onclick="navigate('track')">Track App.</button>
+            <div id="app-count-badge"
+              style="display:none;margin-left:8px;background:#A91B1B;color:white;border-radius:20px;padding:4px 10px;font-size:12px;font-weight:800;font-family:'Sora',sans-serif;">
+            </div>
+          </nav>
+        </div>
+      </header>
+
+      <!-- Pages -->
+      <div id="page-home" class="page active"></div>
+      <div id="page-services" class="page"></div>
+      <div id="page-service" class="page"></div>
+      <div id="page-apply" class="page"></div>
+      <div id="page-track" class="page"></div>
+      <div id="page-chat" class="page"></div>
+
+      <!-- Modern Footer -->
+      <footer
+        style="background:linear-gradient(135deg,#6B0C0C,#A01818);color:rgba(255,255,255,0.7);padding:40px 28px;margin-top:auto;position:relative;overflow:hidden;">
+        <div
+          style="position:absolute;top:0;left:0;right:0;height:4px;background:linear-gradient(90deg,#F5A020,#F5A020 50%,#A91B1B 50%,#A91B1B);">
+        </div>
+
+        <div style="max-width:1100px;margin:0 auto;display:flex;flex-wrap:wrap;gap:40px;justify-content:space-between;">
+
+          <div style="flex:1;min-width:250px;">
+            <div style="display:flex;align-items:center;gap:10px;margin-bottom:16px;">
+              <div
+                style="width:36px;height:36px;border-radius:10px;background:linear-gradient(135deg,#D32F2F,#FFC107);display:flex;align-items:center;justify-content:center;font-size:18px;">
+                🏛️</div>
+              <div>
+                <div
+                  style="font-family:'Sora',sans-serif;font-weight:800;font-size:15px;color:white;letter-spacing:-0.5px;">
+                  NAMMA SEVA</div>
+                <div
+                  style="font-size:9px;color:rgba(255,255,255,0.55);letter-spacing:1px;font-weight:600;text-transform:uppercase;">
+                  Bengaluru Civic Navigator</div>
+              </div>
+            </div>
+            <p style="font-size:13px;line-height:1.6;margin:0 0 16px;">Empowering citizens with seamless access to 12+
+              government services. Avoid the queues and middlemen.</p>
+            <div
+              style="font-size:11px;font-weight:600;color:#F5A020;padding:6px 12px;background:rgba(245,160,32,0.1);border-radius:6px;display:inline-block;">
+              Not an official government portal.</div>
+          </div>
+
+          <div style="flex:1;min-width:200px;">
+            <h4
+              style="font-family:'Sora',sans-serif;font-size:13px;font-weight:800;color:white;margin:0 0 16px;letter-spacing:1px;">
+              QUICK LINKS</h4>
+            <div style="display:flex;flex-direction:column;gap:10px;">
+              <a href="#" onclick="navigate('home');return false;"
+                style="color:rgba(255,255,255,0.7);text-decoration:none;font-size:13px;transition:color 0.2s;"
+                onmouseover="this.style.color='white'" onmouseout="this.style.color='rgba(255,255,255,0.7)'">Home</a>
+              <a href="#" onclick="navigate('services');return false;"
+                style="color:rgba(255,255,255,0.7);text-decoration:none;font-size:13px;transition:color 0.2s;"
+                onmouseover="this.style.color='white'" onmouseout="this.style.color='rgba(255,255,255,0.7)'">All
+                Services</a>
+              <a href="#" onclick="navigate('track');return false;"
+                style="color:rgba(255,255,255,0.7);text-decoration:none;font-size:13px;transition:color 0.2s;"
+                onmouseover="this.style.color='white'" onmouseout="this.style.color='rgba(255,255,255,0.7)'">Track
+                Application</a>
+              <a href="#" onclick="navigate('chat');return false;"
+                style="color:rgba(255,255,255,0.7);text-decoration:none;font-size:13px;transition:color 0.2s;"
+                onmouseover="this.style.color='white'" onmouseout="this.style.color='rgba(255,255,255,0.7)'">AI
+                Assistant</a>
+            </div>
+          </div>
+
+          <div style="flex:1;min-width:200px;">
+            <h4
+              style="font-family:'Sora',sans-serif;font-size:13px;font-weight:800;color:white;margin:0 0 16px;letter-spacing:1px;">
+              OFFICIAL HELPLINES</h4>
+            <div style="display:flex;flex-direction:column;gap:12px;">
+              <div>
+                <div style="font-size:11px;color:rgba(255,255,255,0.5);">BBMP Citizen Helpline</div>
+                <div style="font-size:14px;font-weight:700;color:white;font-family:'Sora',sans-serif;">080-22221188
+                </div>
+              </div>
+              <div>
+                <div style="font-size:11px;color:rgba(255,255,255,0.5);">Seva Sindhu Support</div>
+                <div style="font-size:14px;font-weight:700;color:white;font-family:'Sora',sans-serif;">080-44554455
+                </div>
+              </div>
+            </div>
+          </div>
+
+        </div>
+
+        <div
+          style="max-width:1100px;margin:32px auto 0;padding-top:20px;border-top:1px solid rgba(255,255,255,0.1);display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:10px;">
+          <div style="font-size:12px;">&copy; 2026 Namma Seva. All rights reserved.</div>
+          <div style="display:flex;gap:16px;">
+            <a href="#" style="color:rgba(255,255,255,0.5);text-decoration:none;font-size:12px;transition:color 0.2s;"
+              onmouseover="this.style.color='white'" onmouseout="this.style.color='rgba(255,255,255,0.5)'">Privacy
+              Policy</a>
+            <a href="#" style="color:rgba(255,255,255,0.5);text-decoration:none;font-size:12px;transition:color 0.2s;"
+              onmouseover="this.style.color='white'" onmouseout="this.style.color='rgba(255,255,255,0.5)'">Terms of
+              Service</a>
+          </div>
+        </div>
+      </footer>
+    </div>
+  </div>
+
+  <script>
+    // ══════════════════════════════════════════════════════════════
+    // DATA
+    // ══════════════════════════════════════════════════════════════
+    const SERVICES = [
+      { id: "khata", icon: "🏠", title: "Khata Transfer", subtitle: "Property ownership transfer", portal: "BBMP", portalColor: "#A91B1B", portalBg: "#EFF6FF", fee: "₹ 125 + 2% of Stamp Duty", time: "15–30 Working Days", desc: "Transfer the Khata (property register entry) to your name after purchasing or inheriting a property in Bengaluru.", longDesc: "The Khata is a legal document issued by BBMP that identifies the owner of a property. You must transfer Khata to your name within 3 months of property registration. Without Khata, you cannot pay property tax, get building plans approved, or obtain trade licenses.", documents: ["Registered Sale Deed / Gift Deed (original + 2 copies)", "Previous Khata Extract (seller's)", "Latest Property Tax Paid Receipt", "Encumbrance Certificate (EC) for last 15 years", "Aadhaar Card of applicant", "2 Passport-size photographs", "No Objection Certificate (if applicable)"], steps: ["Collect all documents listed and make self-attested copies", "Visit BBMP.gov.in → Citizen Services → Khata Transfer", "Fill the online form and upload scanned documents", "Pay ₹125 E-Khata issuing fee + 2% of stamp duty value (min ₹500) + ₹45 Bangalore One service charge", "Track status using your Application Reference Number", "Collect Khata Extract from ward office or download digitally"], commonMistakes: ["Missing EC (Encumbrance Certificate)", "Unregistered sale deed", "Wrong ward office selected"], fields: [{ name: "applicantName", label: "Applicant Full Name", type: "text", required: true, placeholder: "As per Aadhaar" }, { name: "aadhaar", label: "Aadhaar Number", type: "text", required: true, placeholder: "XXXX XXXX XXXX", maxLength: 14 }, { name: "mobile", label: "Mobile Number", type: "tel", required: true, placeholder: "+91 XXXXX XXXXX" }, { name: "email", label: "Email Address", type: "email", required: false, placeholder: "Optional but recommended" }, { name: "propertyAddress", label: "Property Address", type: "textarea", required: true, placeholder: "Full address with ward details" }, { name: "propertySize", label: "Property Size (sq ft)", type: "number", required: true, placeholder: "e.g. 1200" }, { name: "saleValue", label: "Sale / Market Value (₹)", type: "number", required: true, placeholder: "As per sale deed" }, { name: "previousOwner", label: "Previous Owner Name", type: "text", required: true, placeholder: "As per previous Khata" }, { name: "wardName", label: "Ward Name / Number", type: "select", required: true, options: ["Shivajinagar (76)", "Rajajinagar (9)", "Jayanagar (68)", "Koramangala (151)", "Whitefield (198)", "HSR Layout (174)", "Indiranagar (81)", "Malleshwaram (17)"] }] },
+      { id: "birth", icon: "👶", title: "Birth Certificate", subtitle: "Official birth registration", portal: "BBMP", portalColor: "#A91B1B", portalBg: "#EFF6FF", fee: "₹ 58 (₹50 BBMP + ₹8 portal)", time: "3 Working Days", desc: "Apply for a birth certificate or correct errors in an existing one. Required for school admissions, passports, and government schemes.", longDesc: "Every birth in Karnataka must be registered within 21 days. A birth certificate is mandatory for school admission, passport, voter ID, and most government services. Late registration (after 1 year) requires a court order.", documents: ["Hospital Discharge Summary / Delivery Certificate", "Aadhaar Cards of both parents", "Marriage Certificate of parents", "Ration Card or address proof", "Affidavit (if registration delayed beyond 1 year)"], steps: ["Register on BBMP portal (bbmp.gov.in) with your mobile number", "Select 'Birth Certificate' under Citizen Services", "Fill child's details, parents' details, and hospital info", "Upload scanned documents (PDF/JPEG, max 2MB each)", "Pay ₹58 total (₹50 BBMP fee + ₹8 Bangalore One portal charge) — free if hospital-registered within 21 days", "Certificate ready within 7 days — download or collect at ward office"], commonMistakes: ["Name mismatch between hospital record and Aadhaar", "Using wrong date format", "Hospital certificate not on letterhead"], fields: [{ name: "childName", label: "Child's Full Name", type: "text", required: true, placeholder: "As you want it on certificate" }, { name: "dob", label: "Date of Birth", type: "date", required: true }, { name: "gender", label: "Gender", type: "select", required: true, options: ["Male", "Female", "Other"] }, { name: "birthPlace", label: "Place of Birth (Hospital Name)", type: "text", required: true, placeholder: "Hospital / Nursing home name" }, { name: "fatherName", label: "Father's Full Name", type: "text", required: true, placeholder: "As per Aadhaar" }, { name: "motherName", label: "Mother's Full Name", type: "text", required: true, placeholder: "As per Aadhaar" }, { name: "parentAadhaar", label: "Parent's Aadhaar Number", type: "text", required: true, placeholder: "Father's Aadhaar" }, { name: "mobile", label: "Contact Mobile Number", type: "tel", required: true, placeholder: "+91 XXXXX XXXXX" }, { name: "email", label: "Email Address", type: "email", required: false, placeholder: "For certificate delivery" }, { name: "residentialAddress", label: "Residential Address", type: "textarea", required: true, placeholder: "Current address of parents" }] },
+      { id: "income", icon: "📄", title: "Income Certificate", subtitle: "Annual income proof for schemes", portal: "Seva Sindhu", portalColor: "#15803D", portalBg: "#F0FDF4", fee: "₹ 55 (₹25 app + ₹30 service)", time: "15 Working Days", desc: "Officially certify your annual household income for scholarships, reservations, government schemes, and loan applications.", longDesc: "An Income Certificate is issued by the Revenue Department and certifies your annual household income. It is required for educational scholarships, EWS reservations, BPL schemes, government housing, and reduced fee concessions.", documents: ["Aadhaar Card", "Ration Card (BPL / APL)", "Salary Slips (last 3 months) or Form 16", "Bank Passbook / Statement (last 6 months)", "Self-declaration affidavit (notarized)", "Electricity bill for address proof"], steps: ["Visit sevasindhu.karnataka.gov.in and register", "Login → Revenue Department → Income Certificate", "Fill income details and upload all documents", "Pay ₹55 total (₹25 application fee + ₹30 Seva Sindhu service charge) online", "Application forwarded to your local Revenue Inspector", "Inspector may call for physical verification", "Certificate issued in 15 working days"], commonMistakes: ["Income declared doesn't match salary slips", "Ration card address doesn't match current address", "Affidavit not notarized"], fields: [{ name: "applicantName", label: "Applicant Full Name", type: "text", required: true, placeholder: "As per Aadhaar" }, { name: "aadhaar", label: "Aadhaar Number", type: "text", required: true, placeholder: "XXXX XXXX XXXX" }, { name: "mobile", label: "Mobile Number", type: "tel", required: true, placeholder: "+91 XXXXX XXXXX" }, { name: "occupation", label: "Occupation", type: "select", required: true, options: ["Salaried – Government", "Salaried – Private", "Self-employed / Business", "Agriculture", "Daily Wage Worker", "Unemployed"] }, { name: "annualIncome", label: "Annual Household Income (₹)", type: "number", required: true, placeholder: "Total income of all family members" }, { name: "purpose", label: "Purpose of Certificate", type: "select", required: true, options: ["Scholarship Application", "EWS Reservation", "Government Housing Scheme", "Bank Loan", "Fee Concession", "Other"] }, { name: "address", label: "Residential Address", type: "textarea", required: true, placeholder: "As per ration card / Aadhaar" }, { name: "taluk", label: "Taluk", type: "text", required: true, placeholder: "e.g. Bangalore North" }, { name: "district", label: "District", type: "select", required: true, options: ["Bengaluru Urban", "Bengaluru Rural", "Mysuru", "Hubli-Dharwad", "Belagavi", "Mangaluru", "Other"] }] },
+      { id: "caste", icon: "🪪", title: "Caste Certificate", subtitle: "SC / ST / OBC category proof", portal: "Seva Sindhu", portalColor: "#15803D", portalBg: "#F0FDF4", fee: "₹ 55 (₹25 app + ₹30 service)", time: "21 Working Days", desc: "Obtain an official caste certificate for educational reservations, government jobs, scholarships, and welfare schemes.", longDesc: "A Caste Certificate (SC/ST/OBC) is issued by the Revenue Department and is essential for availing reservation benefits in education and jobs, scholarships, welfare scheme applications, and government scheme benefits.", documents: ["Aadhaar Card", "Ration Card", "Parent's / Grandparent's caste certificate (if available)", "School Transfer Certificate (TC) mentioning caste", "Revenue Records / RTC (for agricultural families)", "Self-declaration affidavit"], steps: ["Register on sevasindhu.karnataka.gov.in", "Select 'Caste Certificate' under Revenue Department", "Upload documents and fill family details", "Pay ₹55 total (₹25 application fee + ₹30 Seva Sindhu service charge) and submit", "Revenue Inspector conducts field verification", "Tehsildar issues certificate within 21 working days"], commonMistakes: ["Caste name mismatch with school records", "Missing parent's caste proof", "Wrong category selected (OBC-A vs OBC-B)"], fields: [{ name: "applicantName", label: "Applicant Full Name", type: "text", required: true, placeholder: "As per Aadhaar" }, { name: "aadhaar", label: "Aadhaar Number", type: "text", required: true, placeholder: "XXXX XXXX XXXX" }, { name: "dob", label: "Date of Birth", type: "date", required: true }, { name: "gender", label: "Gender", type: "select", required: true, options: ["Male", "Female", "Other"] }, { name: "mobile", label: "Mobile Number", type: "tel", required: true, placeholder: "+91 XXXXX XXXXX" }, { name: "casteCategory", label: "Caste Category", type: "select", required: true, options: ["SC (Scheduled Caste)", "ST (Scheduled Tribe)", "OBC Category-I", "OBC Category-II", "OBC Category-III", "General"] }, { name: "casteName", label: "Caste / Sub-caste Name", type: "text", required: true, placeholder: "e.g. Vokkaliga, Lingayat, Kuruba" }, { name: "fatherName", label: "Father's Full Name", type: "text", required: true }, { name: "address", label: "Residential Address", type: "textarea", required: true, placeholder: "Full permanent address" }, { name: "purpose", label: "Purpose", type: "select", required: true, options: ["Education / Scholarship", "Government Job Application", "Welfare Scheme", "Court Case", "Other"] }] },
+      { id: "trade", icon: "🏪", title: "Trade License", subtitle: "License for shops & businesses", portal: "BBMP", portalColor: "#A91B1B", portalBg: "#EFF6FF", fee: "₹ 1,000 – ₹ 10,000+", time: "30 Working Days", desc: "Obtain a trade license to legally operate your shop, business, or commercial establishment in Bengaluru.", longDesc: "A Trade License is mandatory for all commercial establishments in Bengaluru. It is issued by BBMP and must be renewed annually. Without a valid trade license, you cannot open a bank account for business, get GST registration, or operate legally.", documents: ["Aadhaar Card of proprietor / partners", "Proof of business address (lease agreement / ownership deed)", "Latest property tax receipt of business premises", "NOC from property owner (if rented)", "Partnership Deed / Incorporation Certificate (if applicable)", "2 Passport-size photographs", "Fire NOC (for restaurants, hotels, factories)", "Proof of nature of business"], steps: ["Register on bbmp.gov.in → Trade License", "Select business category and fill establishment details", "Upload all documents (NOC, address proof, ownership docs)", "BBMP health inspector visits your premises for verification", "Pay fee online (based on business type and area)", "License issued and valid for 1 year — renew annually"], commonMistakes: ["Missing NOC from property owner", "Business type selected incorrectly", "Premises not inspected before applying"], fields: [{ name: "businessName", label: "Business / Shop Name", type: "text", required: true, placeholder: "Name as on signboard" }, { name: "ownerName", label: "Proprietor / Owner Name", type: "text", required: true, placeholder: "As per Aadhaar" }, { name: "aadhaar", label: "Owner Aadhaar Number", type: "text", required: true, placeholder: "XXXX XXXX XXXX" }, { name: "mobile", label: "Mobile Number", type: "tel", required: true, placeholder: "+91 XXXXX XXXXX" }, { name: "email", label: "Email Address", type: "email", required: false }, { name: "businessType", label: "Type of Business", type: "select", required: true, options: ["Retail Shop", "Restaurant / Hotel", "Medical Store / Pharmacy", "Beauty Salon / Spa", "Grocery / Provisions", "Garment / Textile", "Electronics", "Auto Repair Workshop", "Educational Institution", "Other"] }, { name: "businessAddress", label: "Business Address", type: "textarea", required: true, placeholder: "Complete address with pincode" }, { name: "floorArea", label: "Floor Area of Premises (sq ft)", type: "number", required: true }, { name: "employees", label: "Number of Employees", type: "number", required: true, placeholder: "Including owner" }, { name: "ward", label: "Ward", type: "select", required: true, options: ["Shivajinagar (76)", "Rajajinagar (9)", "Jayanagar (68)", "Koramangala (151)", "Whitefield (198)", "HSR Layout (174)", "Indiranagar (81)", "Malleshwaram (17)"] }] },
+      { id: "pension", icon: "👴", title: "Pension Scheme", subtitle: "Old age / widow / disability", portal: "Seva Sindhu", portalColor: "#15803D", portalBg: "#F0FDF4", fee: "Free", time: "45 Working Days", desc: "Apply for Sandhya Suraksha (old age), widow, or disability pension schemes provided by Karnataka government.", longDesc: "Karnataka offers ₹1,000–1,500/month pension under Sandhya Suraksha Yojana for senior citizens above 60 years, widows, and differently-abled persons from Below Poverty Line (BPL) families. Amount is directly credited to bank account.", documents: ["Aadhaar Card", "BPL Ration Card or income proof (below ₹20,000/year)", "Age proof (birth certificate / school TC)", "Bank Passbook (for direct credit)", "Death certificate of husband (for widow pension)", "Disability certificate from CMO (for disability pension)", "Passport-size photograph"], steps: ["Register at sevasindhu.karnataka.gov.in", "Select the correct pension scheme (old age / widow / disability)", "Fill personal and family details accurately", "Upload all required documents", "Application reviewed by Social Welfare Officer", "Field verification conducted at home", "Pension approved and credited monthly to bank account"], commonMistakes: ["Wrong scheme selected", "Bank account not linked to Aadhaar", "Income proof showing income above eligibility limit"], fields: [{ name: "applicantName", label: "Applicant Full Name", type: "text", required: true, placeholder: "As per Aadhaar" }, { name: "aadhaar", label: "Aadhaar Number", type: "text", required: true, placeholder: "XXXX XXXX XXXX" }, { name: "dob", label: "Date of Birth", type: "date", required: true }, { name: "gender", label: "Gender", type: "select", required: true, options: ["Male", "Female", "Other"] }, { name: "mobile", label: "Mobile Number", type: "tel", required: true, placeholder: "+91 XXXXX XXXXX" }, { name: "pensionType", label: "Pension Type", type: "select", required: true, options: ["Old Age Pension (60+ years)", "Widow / Destitute Pension", "Disability Pension (40%+ disability)"] }, { name: "annualIncome", label: "Annual Household Income (₹)", type: "number", required: true, placeholder: "Must be below ₹20,000" }, { name: "bankAccount", label: "Bank Account Number", type: "text", required: true }, { name: "ifsc", label: "IFSC Code", type: "text", required: true, placeholder: "e.g. SBIN0001234" }, { name: "address", label: "Residential Address", type: "textarea", required: true, placeholder: "Current address for verification visit" }] },
+      { id: "ssp", icon: "🎓", title: "SSP Post-Matric Scholarship", subtitle: "State Scholarship Portal for SC/ST/OBC", portal: "SSP Karnataka", portalColor: "#7C3AED", portalBg: "#F5F3FF", fee: "Free", time: "60 Working Days", desc: "Apply for Post-Matric Scholarship for SC/ST/OBC/Minority students pursuing education after Class 10 in Karnataka.", longDesc: "The State Scholarship Portal (SSP) Karnataka provides Post-Matric Scholarships to students belonging to SC, ST, OBC, and Minority communities. The scholarship covers tuition fees, maintenance allowance, and other charges. Students enrolled in government or recognised private colleges are eligible.", documents: ["Aadhaar Card of student", "Caste / Category Certificate (SC/ST/OBC/Minority)", "Income Certificate (below ₹2.5 lakh per year)", "Previous year marks card / Pass certificate", "Current year college fee receipt", "Bank passbook (student's own account, linked to Aadhaar)", "Bonafide / Enrollment Certificate from college", "Domicile / Residence Certificate (Karnataka)", "Passport-size photograph"], steps: ["Visit ssp.postmatric.karnataka.gov.in and register with Aadhaar", "Select scholarship category (SC/ST/OBC/Minority) and course", "Fill student, family, and course details accurately", "Upload all required documents in prescribed format", "Submit and note Application Reference Number", "College principal verifies and forwards application", "District Social Welfare Officer approves", "Scholarship amount credited directly to student's bank account"], commonMistakes: ["Bank account not in student's name (parent's account not accepted)", "Income certificate older than 1 year", "College not listed as recognised institution", "Caste certificate issued by wrong authority", "Applying under wrong category"], fields: [{ name: "studentName", label: "Student Full Name", type: "text", required: true, placeholder: "As per Aadhaar" }, { name: "aadhaar", label: "Aadhaar Number", type: "text", required: true, placeholder: "XXXX XXXX XXXX" }, { name: "dob", label: "Date of Birth", type: "date", required: true }, { name: "gender", label: "Gender", type: "select", required: true, options: ["Male", "Female", "Transgender"] }, { name: "mobile", label: "Mobile Number", type: "tel", required: true, placeholder: "+91 XXXXX XXXXX" }, { name: "email", label: "Email Address", type: "email", required: false }, { name: "category", label: "Scholarship Category", type: "select", required: true, options: ["SC (Scheduled Caste)", "ST (Scheduled Tribe)", "OBC Category-I", "OBC Category-II", "OBC Category-III", "Minority (Muslim/Christian/Sikh/Buddhist/Jain/Parsi)"] }, { name: "courseName", label: "Current Course / Programme", type: "text", required: true, placeholder: "e.g. B.Com, B.Tech, MBBS, Diploma" }, { name: "collegeName", label: "College / Institution Name", type: "text", required: true, placeholder: "Full name as per government records" }, { name: "yearOfStudy", label: "Year of Study", type: "select", required: true, options: ["1st Year", "2nd Year", "3rd Year", "4th Year", "5th Year"] }, { name: "annualIncome", label: "Annual Family Income (₹)", type: "number", required: true, placeholder: "Must be below ₹2,50,000" }, { name: "bankAccount", label: "Bank Account Number (Student's own)", type: "text", required: true }, { name: "ifsc", label: "IFSC Code", type: "text", required: true, placeholder: "e.g. SBIN0001234" }, { name: "fatherName", label: "Father's / Guardian's Name", type: "text", required: true }, { name: "address", label: "Permanent Address (Karnataka)", type: "textarea", required: true }] },
+      { id: "death", icon: "📜", title: "Death Certificate", subtitle: "Official death registration record", portal: "BBMP", portalColor: "#A91B1B", portalBg: "#EFF6FF", fee: "₹ 58 (₹50 BBMP + ₹8 portal)", time: "3 Working Days", desc: "Register a death and obtain an official death certificate required for legal, insurance, and inheritance proceedings.", longDesc: "Every death in Karnataka must be registered within 21 days. A death certificate is essential for property and asset transfers, insurance claim settlement, removal from government records (ration card, voter ID), bank account closure, and pension discontinuation. Late registration attracts penalty fees.", documents: ["Hospital Death Summary / Doctor's Certificate of Death", "Aadhaar Card of deceased", "Aadhaar Card of applicant (family member)", "Proof of relationship with deceased (ration card / family tree)", "Address proof of deceased's last residence", "Affidavit for delayed registration (if beyond 21 days)"], steps: ["Register on BBMP portal (bbmp.gov.in) with your mobile", "Select 'Death Certificate' under Citizen Services", "Fill deceased person's details and applicant's relationship", "Upload hospital death summary and identity documents", "Pay ₹58 total (₹50 BBMP fee + ₹8 Bangalore One portal charge) — free at hospital if registered within 21 days", "Download certificate within 3 days or collect at ward office"], commonMistakes: ["Death not registered within 21 days (attracts fine)", "Cause of death not matching hospital records", "Applicant not a direct family member"], fields: [{ name: "deceasedName", label: "Deceased Person's Full Name", type: "text", required: true, placeholder: "As per Aadhaar" }, { name: "deceasedAadhaar", label: "Deceased's Aadhaar Number", type: "text", required: false, placeholder: "If available" }, { name: "dod", label: "Date of Death", type: "date", required: true }, { name: "gender", label: "Gender of Deceased", type: "select", required: true, options: ["Male", "Female", "Other"] }, { name: "age", label: "Age at Death", type: "number", required: true, placeholder: "In years" }, { name: "placeOfDeath", label: "Place of Death (Hospital / Home)", type: "text", required: true }, { name: "causeOfDeath", label: "Cause of Death", type: "text", required: true, placeholder: "As per doctor's certificate" }, { name: "applicantName", label: "Applicant's Full Name", type: "text", required: true, placeholder: "Person applying for certificate" }, { name: "relationship", label: "Relationship with Deceased", type: "select", required: true, options: ["Spouse", "Son / Daughter", "Father / Mother", "Sibling", "Other"] }, { name: "mobile", label: "Mobile Number", type: "tel", required: true, placeholder: "+91 XXXXX XXXXX" }, { name: "address", label: "Deceased's Last Residential Address", type: "textarea", required: true }] },
+      { id: "residence", icon: "🏡", title: "Residence Certificate", subtitle: "Domicile / address proof for Karnataka", portal: "Seva Sindhu", portalColor: "#15803D", portalBg: "#F0FDF4", fee: "₹ 55 (₹25 app + ₹30 service)", time: "7 Working Days", desc: "Obtain official proof that you are a resident of Karnataka — required for jobs, admissions, and government schemes.", longDesc: "A Residence (Domicile) Certificate issued by the Revenue Department confirms that you are a permanent resident of Karnataka. It is required for state government job applications, local body elections, Karnataka quota admissions in colleges, and state welfare scheme applications. You must have resided in Karnataka for a minimum of 5 years.", documents: ["Aadhaar Card (Karnataka address)", "Ration Card (Karnataka)", "Electricity / Water bill (last 3 months)", "Voter ID Card (Karnataka constituency)", "Property tax receipt or rental agreement (if applicable)", "Self-declaration affidavit (notarized)"], steps: ["Login to sevasindhu.karnataka.gov.in", "Go to Revenue Department → Residence / Domicile Certificate", "Enter your residential details and duration of stay", "Upload address proof documents", "Pay ₹55 total (₹25 application fee + ₹30 Seva Sindhu service charge) and submit", "Revenue Inspector verifies your address physically", "Certificate issued within 15 working days"], commonMistakes: ["Aadhaar address not matching current residence", "Stay duration less than 5 years", "Affidavit not on stamp paper of correct value"], fields: [{ name: "applicantName", label: "Applicant Full Name", type: "text", required: true, placeholder: "As per Aadhaar" }, { name: "aadhaar", label: "Aadhaar Number", type: "text", required: true, placeholder: "XXXX XXXX XXXX" }, { name: "dob", label: "Date of Birth", type: "date", required: true }, { name: "gender", label: "Gender", type: "select", required: true, options: ["Male", "Female", "Other"] }, { name: "mobile", label: "Mobile Number", type: "tel", required: true, placeholder: "+91 XXXXX XXXXX" }, { name: "residenceSince", label: "Residing in Karnataka Since (Year)", type: "number", required: true, placeholder: "e.g. 2010" }, { name: "purpose", label: "Purpose of Certificate", type: "select", required: true, options: ["Government Job Application", "College Admission (Karnataka Quota)", "Voter Registration", "Welfare Scheme", "Passport / Visa", "Other"] }, { name: "address", label: "Current Residential Address", type: "textarea", required: true, placeholder: "Full address as on Aadhaar" }, { name: "taluk", label: "Taluk", type: "text", required: true, placeholder: "e.g. Bangalore North" }, { name: "district", label: "District", type: "select", required: true, options: ["Bengaluru Urban", "Bengaluru Rural", "Mysuru", "Hubli-Dharwad", "Belagavi", "Mangaluru", "Other"] }] },
+      { id: "ration", icon: "🛒", title: "Ration Card", subtitle: "New application or updation", portal: "Ahara Karnataka", portalColor: "#B45309", portalBg: "#FFFBEB", fee: "Free (BPL/AAY) / ₹ 17 (APL)", time: "30 Working Days", desc: "Apply for a new ration card or update existing card details — add/remove members, change address, or upgrade category.", longDesc: "A Ration Card is a government-issued document entitling families to subsidised food grains through the Public Distribution System (PDS). In Karnataka, it is managed by the Food, Civil Supplies & Consumer Affairs Department via the Ahara portal. It is also widely used as an address proof for other government services.", documents: ["Aadhaar Card of all family members", "Proof of current residence (electricity bill / rental agreement)", "Surrender certificate (if previously had ration card elsewhere)", "Passport-size photo of head of family", "Income proof (for BPL/APL category determination)", "Mobile number linked to Aadhaar"], steps: ["Visit ahara.karnataka.gov.in and register", "Select 'New Ration Card Application' or 'Modification'", "Add all family member details with Aadhaar numbers", "Select card category (BPL/APL/AAY) based on income", "Upload documents and submit online", "Field officer verifies household details", "Ration card issued and linked to nearest Fair Price Shop"], commonMistakes: ["Duplicate application (already have card in another state)", "Family member Aadhaar not linked", "Wrong category selected — BPL/APL threshold mismatch"], fields: [{ name: "headName", label: "Head of Family (Full Name)", type: "text", required: true, placeholder: "As per Aadhaar" }, { name: "aadhaar", label: "Head of Family Aadhaar", type: "text", required: true, placeholder: "XXXX XXXX XXXX" }, { name: "mobile", label: "Mobile Number", type: "tel", required: true, placeholder: "+91 XXXXX XXXXX" }, { name: "gender", label: "Gender", type: "select", required: true, options: ["Male", "Female", "Other"] }, { name: "cardType", label: "Application Type", type: "select", required: true, options: ["New Ration Card", "Add Family Member", "Remove Family Member", "Address Change", "Lost Card – Duplicate", "Category Change"] }, { name: "category", label: "Card Category", type: "select", required: true, options: ["APL (Above Poverty Line)", "BPL (Below Poverty Line)", "AAY (Antyodaya Anna Yojana – Poorest)"] }, { name: "familySize", label: "Total Family Members", type: "number", required: true, placeholder: "Including head of family" }, { name: "annualIncome", label: "Annual Family Income (₹)", type: "number", required: true }, { name: "address", label: "Current Residential Address", type: "textarea", required: true, placeholder: "Full address with pincode" }, { name: "taluk", label: "Taluk / Hobli", type: "text", required: true }, { name: "district", label: "District", type: "select", required: true, options: ["Bengaluru Urban", "Bengaluru Rural", "Mysuru", "Hubli-Dharwad", "Belagavi", "Mangaluru", "Other"] }] },
+      { id: "marriage", icon: "💍", title: "Marriage Certificate", subtitle: "Official registration of marriage", portal: "Seva Sindhu", portalColor: "#15803D", portalBg: "#F0FDF4", fee: "Free (Hindu) / ₹ 10–25 (Special Act)", time: "6–15 Working Days", desc: "Register your marriage under the Hindu Marriage Act or Special Marriage Act and obtain an official marriage certificate.", longDesc: "A Marriage Certificate is a legal proof of marriage issued by the Sub-Registrar's office. It is essential for passport name change, spouse visa applications, bank account joint holding, property succession, and insurance nominee change. In Karnataka, marriages can be registered under the Hindu Marriage Act 1955 or the Special Marriage Act 1954.", documents: ["Aadhaar Cards of both bride and groom", "Age proof of bride (minimum 18 years) and groom (minimum 21 years)", "Address proof of both parties", "Wedding invitation card or photographs", "Aadhaar Cards of 2 witnesses", "Marriage registration fee (₹150–500 depending on act)", "Priest certificate or declaration (for Hindu Marriage Act)", "Affidavit declaring single/unmarried status"], steps: ["Register on sevasindhu.karnataka.gov.in", "Choose applicable act: Hindu Marriage Act or Special Marriage Act", "Fill bride and groom details, marriage date and venue", "Pay fee: Free under Hindu Marriage Act (only ₹5 application + ₹10 for certified copy); ₹10 under Special Marriage Act", "Book appointment at Sub-Registrar's office", "Both parties and 2 witnesses appear in person on appointment date", "Sub-Registrar verifies and issues certificate"], commonMistakes: ["Age proof shows bride below 18 or groom below 21", "Witnesses not carrying original Aadhaar", "Wrong act selected (Hindu vs Special Marriage Act)", "Marriage date not matching documents"], fields: [{ name: "groomName", label: "Groom's Full Name", type: "text", required: true, placeholder: "As per Aadhaar" }, { name: "groomAadhaar", label: "Groom's Aadhaar Number", type: "text", required: true, placeholder: "XXXX XXXX XXXX" }, { name: "groomDob", label: "Groom's Date of Birth", type: "date", required: true }, { name: "brideName", label: "Bride's Full Name", type: "text", required: true, placeholder: "As per Aadhaar" }, { name: "brideAadhaar", label: "Bride's Aadhaar Number", type: "text", required: true, placeholder: "XXXX XXXX XXXX" }, { name: "brideDob", label: "Bride's Date of Birth", type: "date", required: true }, { name: "marriageDate", label: "Date of Marriage", type: "date", required: true }, { name: "marriageVenue", label: "Place / Venue of Marriage", type: "text", required: true, placeholder: "Name and address of venue" }, { name: "marriageAct", label: "Act Under Which to Register", type: "select", required: true, options: ["Hindu Marriage Act 1955", "Special Marriage Act 1954"] }, { name: "mobile", label: "Contact Mobile Number", type: "tel", required: true, placeholder: "+91 XXXXX XXXXX" }, { name: "subRegistrar", label: "Sub-Registrar Office", type: "select", required: true, options: ["Bangalore North", "Bangalore South", "Bangalore East", "Bangalore West", "Whitefield", "Yelahanka", "Jayanagar", "Rajajinagar"] }] },
+      { id: "learner", icon: "🚗", title: "Learner's Driving License", subtitle: "First step to get a driving licence", portal: "Sarathi Parivahan", portalColor: "#0F766E", portalBg: "#F0FDFA", fee: "₹ 200 per vehicle class", time: "1–7 Working Days", desc: "Apply online for a Learner's Licence (LL) for two-wheelers, four-wheelers, or commercial vehicles through Sarathi portal.", longDesc: "A Learner's Licence is the first step to getting a permanent driving licence in India. You must hold a valid LL for at least 30 days before applying for a permanent licence. The test is conducted online or at the RTO. The Sarathi Parivahan portal allows fully online application with slot booking at your nearest RTO.", documents: ["Aadhaar Card (for address and identity proof)", "Date of birth proof (Aadhaar / PAN / birth certificate)", "Passport-size photograph (recent, white background)", "Medical Certificate Form 1A (for transport vehicle only)", "Existing licence (if applying for additional class)"], steps: ["Visit sarathi.parivahan.gov.in → Apply for Learner's Licence", "Select Karnataka RTO and fill personal details", "Upload Aadhaar and photo, pay ₹200 per vehicle class online (₹150 issuance + ₹50 test fee)", "Book slot for online LL test at your nearest RTO", "Appear for the computer-based test (30 MCQ, 60% to pass)", "Learner's Licence issued instantly on passing — valid for 6 months"], commonMistakes: ["Age below 16 (MCWG without gear) or below 18 (LMV)", "Photo background not white or photo not recent", "Wrong RTO jurisdiction selected", "Failing the online test — study traffic signs before appearing"], fields: [{ name: "applicantName", label: "Applicant Full Name", type: "text", required: true, placeholder: "As per Aadhaar" }, { name: "aadhaar", label: "Aadhaar Number", type: "text", required: true, placeholder: "XXXX XXXX XXXX" }, { name: "dob", label: "Date of Birth", type: "date", required: true }, { name: "gender", label: "Gender", type: "select", required: true, options: ["Male", "Female", "Other"] }, { name: "mobile", label: "Mobile Number", type: "tel", required: true, placeholder: "+91 XXXXX XXXXX" }, { name: "email", label: "Email Address", type: "email", required: false }, { name: "vehicleClass", label: "Vehicle Class Applying For", type: "select", required: true, options: ["MCWOG – Motorcycle Without Gear (Moped/Scooter)", "MCWG – Motorcycle With Gear (Bike)", "LMV – Light Motor Vehicle (Car/Jeep)", "LMV + MCWG (Both)", "Transport Vehicle (Commercial)"] }, { name: "rto", label: "Preferred RTO (Bengaluru)", type: "select", required: true, options: ["RTO Koramangala (KA-04)", "RTO Rajajinagar (KA-03)", "RTO Indiranagar (KA-01)", "RTO Yeshwanthpur (KA-05)", "RTO Whitefield (KA-53)", "RTO Jayanagar (KA-41)", "RTO Yelahanka (KA-13)"] }, { name: "bloodGroup", label: "Blood Group", type: "select", required: true, options: ["A+", "A-", "B+", "B-", "O+", "O-", "AB+", "AB-"] }, { name: "address", label: "Residential Address", type: "textarea", required: true, placeholder: "As per Aadhaar" }] }
+    ];
+
+    const SYSTEM_PROMPT = `You are "NAMMA SEVA" (Citizen's Friend), a warm, patient Digital Navigator for Bangalore citizens. You help people navigate Karnataka government portals like Seva Sindhu and BBMP's e-Khata — in simple, plain language as if explaining to a 65-year-old.
+
+You know:
+- BBMP services: Khata transfer, birth/death certificates, trade licenses, property tax
+- Seva Sindhu services: Income/caste/residence certificates, pension schemes, scholarships
+- Common document requirements, ward office locations, fee structures
+- How to avoid common rejection reasons
+
+RULES:
+1. Always speak warmly, never use jargon without explaining it
+2. Break steps into numbered lists — maximum 5 steps per response
+3. Always mention exact documents needed upfront
+4. Warn about common rejection pitfalls
+5. If unsure, say so honestly and suggest the helpline: 080-22221188
+6. Keep responses concise — under 200 words unless the user asks for more detail
+7. Offer to help with the NEXT step after each answer
+8. Never ask for personal sensitive data`;
+
+    // ══════════════════════════════════════════════════════════════
+    // STATE
+    // ══════════════════════════════════════════════════════════════
+    let currentUser = null;
+    let currentPage = 'home';
+    let selectedService = null;
+    let applications = [];
+    let chatMessages = [{ role: 'assistant', content: "ನಮಸ್ಕಾರ! 🙏 Welcome! I'm NAMMA SEVA, your personal guide for Bengaluru government services.\n\nI know all about BBMP and Seva Sindhu — tell me what you need help with. I'll guide you step by step, in simple language.\n\nWhat would you like help with today?" }];
+    let selectedPaymentMethod = '';
+
+    // Auth state
+    let authMode = 'select';
+    let inputMode = 'mobile';
+    let consentGiven = false;
+    let otpDigits = ['', '', '', '', '', ''];
+    let otpTimer = 0;
+    let timerInterval = null;
+    let digiStep = 0;
+
+    // App form state
+    let appStep = 1;
+    let formData = {};
+    let uploadedDocs = {};
+    let refNumber = '';
+    let activeDocUpload = null;
+    let serviceFilter = 'All';
+
+    // ══════════════════════════════════════════════════════════════
+    // AUTH
+    // ══════════════════════════════════════════════════════════════
+    function showAuth(mode) {
+      authMode = mode;
+      ['select', 'otp-entry', 'otp-verify', 'digilocker-redirect', 'digilocker-fetching', 'digilocker-success'].forEach(m => {
+        const el = document.getElementById('auth-' + m);
+        if (el) el.style.display = m === mode ? '' : 'none';
+      });
+    }
+
+    function loginWithGoogle() {
+      // Real Google Login Redirect
+      window.location.href = '/auth/google';
+    }
+
+    function showGoogleHelp() {
+      const helpModal = document.createElement('div');
+      helpModal.className = 'payment-modal-overlay';
+      helpModal.style.zIndex = '100000';
+      helpModal.innerHTML = `
+        <div class="payment-modal" style="width:min(440px,95%);padding:32px;text-align:center;">
+          <div style="width:60px;height:60px;border-radius:50%;background:#F8FAFF;display:flex;align-items:center;justify-content:center;margin:0 auto 20px;border:1px solid #EDEDED;">
+             <img src="https://upload.wikimedia.org/wikipedia/commons/c/c1/Google_%22G%22_logo.svg" style="width:30px;height:30px;"/>
+          </div>
+          <h2 style="font-family:'Sora',sans-serif;font-size:20px;font-weight:900;color:#1A0A00;margin-bottom:12px;">Google Sync Help</h2>
+          <p style="font-size:14px;color:#7A6050;line-height:1.6;margin-bottom:24px;">By connecting your Google account, <strong>NAMMA SEVA</strong> can automatically fill in your name, email, and contact details in any government application form. This saves you time and prevents typing errors!</p>
+          <button onclick="this.closest('.payment-modal-overlay').remove()" style="width:100%;padding:14px;border-radius:12px;border:none;background:#A91B1B;color:white;font-weight:800;cursor:pointer;font-family:'Sora',sans-serif;">Got it, thanks!</button>
+        </div>
+      `;
+      document.body.appendChild(helpModal);
+    }
+
+    function setInputMode(mode) {
+      inputMode = mode;
+      document.getElementById('input-mobile').style.display = mode === 'mobile' ? '' : 'none';
+      document.getElementById('input-aadhaar').style.display = mode === 'aadhaar' ? '' : 'none';
+      const tabM = document.getElementById('tab-mobile');
+      const tabA = document.getElementById('tab-aadhaar');
+      tabM.style.background = mode === 'mobile' ? 'white' : 'transparent';
+      tabM.style.color = mode === 'mobile' ? '#6B0C0C' : '#B0906A';
+      tabM.style.boxShadow = mode === 'mobile' ? '0 2px 8px rgba(0,0,0,0.1)' : 'none';
+      tabA.style.background = mode === 'aadhaar' ? 'white' : 'transparent';
+      tabA.style.color = mode === 'aadhaar' ? '#6B0C0C' : '#B0906A';
+      tabA.style.boxShadow = mode === 'aadhaar' ? '0 2px 8px rgba(0,0,0,0.1)' : 'none';
+      checkSendOtpBtn();
+    }
+
+    function toggleConsent() {
+      consentGiven = !consentGiven;
+      const box = document.getElementById('consent-box');
+      box.style.background = consentGiven ? '#A91B1B' : 'white';
+      box.style.borderColor = consentGiven ? '#A91B1B' : '#CBD5E0';
+      box.innerHTML = consentGiven ? '<span style="color:white;font-size:12px;font-weight:900;">✓</span>' : '';
+      checkSendOtpBtn();
+    }
+
+    function fmtMobileInput(el) {
+      let d = el.value.replace(/\D/g, '').slice(0, 10);
+      el.value = d.length <= 5 ? d : d.slice(0, 5) + ' ' + d.slice(5);
+      checkSendOtpBtn();
+    }
+
+    function fmtAadhaarInput(el) {
+      let d = el.value.replace(/\D/g, '').slice(0, 12);
+      el.value = d.replace(/(\d{4})(?=\d)/g, '$1 ').trim();
+      checkSendOtpBtn();
+    }
+
+    function checkSendOtpBtn() {
+      const btn = document.getElementById('send-otp-btn');
+      if (!btn) return;
+      const mobileOk = inputMode === 'mobile' && (document.getElementById('mobile-input')?.value || '').replace(/\s/g, '').length >= 10;
+      const aadhaarOk = inputMode === 'aadhaar' && (document.getElementById('aadhaar-input')?.value || '').replace(/\s/g, '').length >= 12;
+      const ok = consentGiven && (mobileOk || aadhaarOk);
+      btn.style.background = ok ? 'linear-gradient(135deg,#A91B1B,#C03020)' : '#E8D5C0';
+      btn.style.boxShadow = ok ? '0 8px 20px rgba(169,27,27,0.35)' : 'none';
+    }
+
+    function sendOtp() {
+      const mobileVal = (document.getElementById('mobile-input')?.value || '').replace(/\s/g, '');
+      const aadhaarVal = (document.getElementById('aadhaar-input')?.value || '').replace(/\s/g, '');
+      if (inputMode === 'mobile' && mobileVal.length < 10) return;
+      if (inputMode === 'aadhaar' && aadhaarVal.length < 12) return;
+
+      showAuth('otp-verify');
+      otpDigits = ['', '', '', '', '', ''];
+      renderOtpBoxes();
+
+      const sentTo = document.getElementById('otp-sent-to');
+      if (sentTo) {
+        sentTo.textContent = inputMode === 'mobile' ? `+91 ${document.getElementById('mobile-input').value}` : `Aadhaar ending ${aadhaarVal.slice(-4)}`;
+      }
+      document.getElementById('otp-error').style.display = 'none';
+      startOtpTimer();
+      setTimeout(() => document.querySelector('.otp-box')?.focus(), 100);
+    }
+
+    function renderOtpBoxes() {
+      const container = document.getElementById('otp-boxes');
+      if (!container) return;
+      container.innerHTML = '';
+      for (let i = 0; i < 6; i++) {
+        const inp = document.createElement('input');
+        inp.type = 'text'; inp.inputMode = 'numeric'; inp.maxLength = 1;
+        inp.className = 'otp-box'; inp.value = otpDigits[i];
+        inp.dataset.idx = i;
+        inp.oninput = (e) => handleOtpInput(i, e);
+        inp.onpaste = handleOtpPaste;
+        container.appendChild(inp);
+      }
+      updateVerifyBtn();
+    }
+
+    function handleOtpInput(i, e) {
+      const val = e.target.value.replace(/\D/g, '');
+      if (!val) { otpDigits[i] = ''; } else { otpDigits[i] = val[0]; }
+      e.target.value = otpDigits[i];
+      e.target.classList.toggle('filled', !!otpDigits[i]);
+      if (otpDigits[i] && i < 5) {
+        document.querySelectorAll('.otp-box')[i + 1]?.focus();
+      }
+      document.getElementById('otp-error').style.display = 'none';
+      updateVerifyBtn();
+    }
+
+    function handleOtpPaste(e) {
+      const pasted = e.clipboardData.getData('text').replace(/\D/g, '').slice(0, 6);
+      if (pasted.length === 6) {
+        otpDigits = pasted.split('');
+        renderOtpBoxes();
+        document.querySelectorAll('.otp-box')[5]?.focus();
+      }
+    }
+
+    function updateVerifyBtn() {
+      const btn = document.getElementById('verify-btn');
+      if (!btn) return;
+      const done = otpDigits.join('').length === 6;
+      btn.style.background = done ? 'linear-gradient(135deg,#A91B1B,#C03020)' : '#E8D5C0';
+      btn.style.boxShadow = done ? '0 8px 20px rgba(169,27,27,0.35)' : 'none';
+    }
+
+    function verifyOtp() {
+      const entered = otpDigits.join('');
+      if (entered === '123456') {
+        const mobileVal = (document.getElementById('mobile-input')?.value || '');
+        const user = {
+          name: inputMode === 'mobile' ? 'Rajesh Kumar' : 'Priya Sharma',
+          mobile: inputMode === 'mobile' ? mobileVal : '+91 98765 43210',
+          method: 'OTP',
+          avatar: inputMode === 'mobile' ? '👨' : '👩',
+          verified: false,
+        };
+        loginUser(user);
+      } else {
+        const errEl = document.getElementById('otp-error');
+        errEl.textContent = 'Incorrect OTP. Try 123456 for demo.';
+        errEl.style.display = 'block';
+        const container = document.getElementById('otp-boxes');
+        container.style.animation = 'shake 0.5s ease-in-out';
+        setTimeout(() => { container.style.animation = ''; }, 600);
+        document.querySelectorAll('.otp-box').forEach(b => b.classList.add('error'));
+      }
+    }
+
+    function startOtpTimer() {
+      otpTimer = 30;
+      clearInterval(timerInterval);
+      updateTimerDisplay();
+      timerInterval = setInterval(() => {
+        otpTimer--;
+        updateTimerDisplay();
+        if (otpTimer <= 0) clearInterval(timerInterval);
+      }, 1000);
+    }
+
+    function updateTimerDisplay() {
+      const timerMsg = document.getElementById('timer-msg');
+      const resendBtn = document.getElementById('resend-btn');
+      if (!timerMsg || !resendBtn) return;
+      if (otpTimer > 0) {
+        timerMsg.innerHTML = `Resend OTP in <span style="color:#A91B1B;font-weight:800;animation:ticker 1s ease-in-out infinite;">${otpTimer}s</span>`;
+        timerMsg.style.display = '';
+        resendBtn.style.display = 'none';
+      } else {
+        timerMsg.style.display = 'none';
+        resendBtn.style.display = '';
+      }
+    }
+
+    function simulateDigiLocker() {
+      showAuth('digilocker-fetching');
+      const steps = ["Connect to DigiLocker", "Verify Aadhaar identity", "Fetch documents", "Load profile", "Secure session"];
+      const msgs = ["Connecting to DigiLocker servers...", "Authenticating your Aadhaar identity...", "Fetching your verified documents...", "Retrieving profile information...", "Securing your session..."];
+      digiStep = 0;
+      document.getElementById('digi-loader-msg').textContent = msgs[0];
+      renderDigiSteps(steps, 0);
+
+      let i = 0;
+      const iv = setInterval(() => {
+        i++;
+        if (i < msgs.length) {
+          digiStep = i;
+          document.getElementById('digi-loader-msg').textContent = msgs[i];
+          renderDigiSteps(steps, i);
+        } else {
+          clearInterval(iv);
+          showAuth('digilocker-success');
+          setTimeout(() => {
+            loginUser({ name: 'Suresh Nagaraj', mobile: '+91 98765 43210', method: 'DigiLocker', avatar: '🧑', verified: true });
+          }, 1800);
+        }
+      }, 900);
+    }
+
+    function renderDigiSteps(steps, current) {
+      const container = document.getElementById('digi-steps');
+      if (!container) return;
+      container.innerHTML = steps.map((s, i) => `
+    <div style="display:flex;gap:12px;align-items:center;opacity:${i <= current ? 1 : 0.3};transition:opacity 0.4s;">
+      <div style="width:24px;height:24px;border-radius:50%;flex-shrink:0;background:${i < current ? '#22C55E' : i === current ? '#A91B1B' : '#E8D5C0'};display:flex;align-items:center;justify-content:center;color:white;font-size:12px;font-weight:800;transition:background 0.4s;">
+        ${i < current ? '✓' : i + 1}
+      </div>
+      <span style="font-size:13px;color:${i === current ? '#6B0C0C' : '#7A6050'};font-weight:${i === current ? 700 : 500};">${s}</span>
+      ${i === current ? '<div style="margin-left:auto;width:16px;height:16px;border-radius:50%;border:2px solid #A91B1B;border-top-color:transparent;animation:spin 0.8s linear infinite;"></div>' : ''}
+    </div>
+  `).join('');
+    }
+
+    async function loginUser(user) {
+      currentUser = user;
+      // 1. Switch UI immediately and reset scroll
+      document.getElementById('login-page').style.display = 'none';
+      document.getElementById('main-app').style.display = '';
+      window.scrollTo(0, 0);
+      navigate('home');
+
+      // 2. Update profile elements
+      document.getElementById('user-name-display').innerHTML = user.avatar + ' ' + user.name;
+      if (user.verified) document.getElementById('verified-badge').style.display = '';
+      document.getElementById('user-method-display').textContent = user.method;
+
+      // 3. Fetch data in the background (no await here to keep UI snappy)
+      fetch('/api/applications')
+        .then(response => response.ok ? response.json() : [])
+        .then(data => {
+          applications = data;
+          const badge = document.getElementById('app-count-badge');
+          if (badge && applications.length > 0) {
+            badge.style.display = '';
+            badge.textContent = applications.length + ' Active';
+          }
+        })
+        .catch(e => console.error('Failed to load applications', e));
+    }
+
+    function logout() {
+      showToast("Logging you out safely...");
+      setTimeout(() => {
+        window.location.href = '/auth/logout';
+      }, 500);
+    }
+
+    // ══════════════════════════════════════════════════════════════
+    // NAVIGATION
+    // ══════════════════════════════════════════════════════════════
+    function navigate(page, serviceData) {
+      if (serviceData) selectedService = serviceData;
+      currentPage = page;
+
+      document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+      document.getElementById('page-' + page).classList.add('active');
+
+      document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
+      const navBtn = document.getElementById('nav-' + page);
+      if (navBtn) navBtn.classList.add('active');
+
+      renderPage(page);
+      // Using 'auto' for instant jump, and calling after render to ensure top of new content
+      window.scrollTo(0, 0);
+    }
+
+    function renderPage(page) {
+      const el = document.getElementById('page-' + page);
+      if (!el) return;
+      if (page === 'home') el.innerHTML = renderHome();
+      else if (page === 'services') el.innerHTML = renderServices();
+      else if (page === 'service') el.innerHTML = renderServiceDetail();
+      else if (page === 'apply') {
+        appStep = 1;
+        formData = currentUser ? { applicantName: currentUser.name, studentName: currentUser.name, deceasedName: currentUser.name, mobile: currentUser.mobile } : {};
+        uploadedDocs = {};
+        refNumber = 'NM' + Date.now().toString().slice(-8);
+        el.innerHTML = renderApply();
+      }
+      else if (page === 'track') el.innerHTML = renderTrack();
+      else if (page === 'chat') el.innerHTML = renderChat();
+    }
+
+    // ══════════════════════════════════════════════════════════════
+    // HOME PAGE
+    // ══════════════════════════════════════════════════════════════
+    function renderHome() {
+      const featuredServices = SERVICES.slice(0, 6);
+      return `
+    <!-- Hero -->
+    <div style="background:#6B0C0C;padding:72px 28px 80px;position:relative;overflow:hidden;text-align:center;">
+      <!-- Background Video -->
+      <video autoplay muted loop playsinline
+        style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:0.55;pointer-events:none;z-index:0;">
+        <source src="Vidhana_soudha_facade_and_wings_delpmaspu_.mp4" type="video/mp4" />
+      </video>
+      <!-- Red gradient overlay — keeps Karnataka theme vivid -->
+      <div style="position:absolute;inset:0;background:linear-gradient(135deg,rgba(107,12,12,0.60) 0%,rgba(160,24,24,0.55) 40%,rgba(192,48,32,0.52) 70%,rgba(200,80,32,0.50) 100%);pointer-events:none;z-index:1;"></div>
+      <!-- Subtle radial accents -->
+      <div style="position:absolute;inset:0;background-image:radial-gradient(ellipse at 20% 60%,rgba(245,160,32,0.14) 0%,transparent 50%),radial-gradient(ellipse at 80% 40%,rgba(255,255,255,0.06) 0%,transparent 50%);pointer-events:none;z-index:2;"></div>
+      <div style="position:relative;z-index:3;max-width:720px;margin:0 auto;">
+        <h1 style="font-family:'Sora',sans-serif;font-size:clamp(32px,5vw,52px);font-weight:900;color:#FFFFFF;margin:0 0 20px;line-height:1.1;letter-spacing:-1.5px;animation:slideUp 0.6s ease-out 0.1s both;text-shadow:0 2px 20px rgba(0,0,0,0.7),0 4px 40px rgba(0,0,0,0.4);">
+          Government Services,<br/>
+          <span style="color:#F5A020;">Without the Confusion</span>
+        </h1>
+        <p style="font-size:18px;color:rgba(255,255,255,0.8);line-height:1.7;margin:0 0 36px;animation:slideUp 0.6s ease-out 0.2s both;">ನಮ್ಮ ಸೇವಾ — Apply for Khata transfers, certificates & licenses online — no middlemen, no queue, no rejections.</p>
+        <div class="hero-btns" style="display:flex;gap:14px;justify-content:center;flex-wrap:wrap;animation:slideUp 0.6s ease-out 0.3s both;">
+          <button class="btn-primary ripple-btn" onclick="navigate('services');addRipple(event,this)">Browse All Services →</button>
+          <button class="btn-ghost" onclick="navigate('chat')">💬 Ask AI Guide</button>
+        </div>
+        <div class="stats-row" style="display:flex;gap:40px;justify-content:center;margin-top:52px;flex-wrap:wrap;animation:slideUp 0.6s ease-out 0.4s both;">
+          ${[["12+", "Services Available"], ["3 Weeks", "Avg. Processing Time"], ["₹0", "No Hidden Fees"], ["24/7", "AI Assistance"]].map(([num, label]) => `
+            <div style="text-align:center;">
+              <div style="font-family:'Sora',sans-serif;font-size:28px;font-weight:900;color:#F5A020;text-shadow:0 2px 8px rgba(245,160,32,0.3);">${num}</div>
+              <div style="font-size:12px;color:rgba(255,255,255,0.9);font-weight:700;letter-spacing:0.5px;text-shadow:0 1px 6px rgba(0,0,0,0.5);">${label}</div>
+            </div>
+          `).join('')}
+        </div>
+      </div>
+    </div>
+
+    <!-- Services Grid -->
+    <div style="background:#FFF8F0;padding:64px 28px;">
+      <div style="max-width:1100px;margin:0 auto;">
+        <div style="text-align:center;margin-bottom:48px;">
+          <div style="font-size:12px;color:#A01818;font-weight:800;letter-spacing:2px;font-family:'Sora',sans-serif;margin-bottom:10px;">OUR SERVICES</div>
+          <h2 style="font-family:'Sora',sans-serif;font-size:34px;font-weight:900;color:#6B0C0C;margin:0;letter-spacing:-1px;">What can we help you with?</h2>
+        </div>
+        <div class="services-grid">
+          ${featuredServices.map(s => `
+            <div class="service-card" onclick="navigate('service',SERVICES.find(x=>x.id==='${s.id}'))"
+              onmouseover="this.style.borderColor='${s.portalColor}'"
+              onmouseout="this.style.borderColor='transparent'">
+              <div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:16px;">
+                <div style="width:54px;height:54px;border-radius:14px;background:${s.portalBg};display:flex;align-items:center;justify-content:center;font-size:26px;">${s.icon}</div>
+                <span style="background:${s.portalBg};color:${s.portalColor};border-radius:8px;padding:4px 10px;font-size:11px;font-weight:800;font-family:'Sora',sans-serif;">${s.portal}</span>
+              </div>
+              <h3 style="font-family:'Sora',sans-serif;font-size:19px;font-weight:800;color:#6B0C0C;margin:0 0 6px;">${s.title}</h3>
+              <p style="font-size:13px;color:#7A6050;margin:0 0 20px;line-height:1.6;">${s.desc}</p>
+              <div style="display:flex;gap:16px;margin-bottom:20px;">
+                <div><div style="font-size:10px;color:#B0906A;font-weight:700;letter-spacing:0.5px;margin-bottom:2px;">FEE</div><div style="font-size:14px;color:#6B0C0C;font-weight:800;font-family:'Sora',sans-serif;">${s.fee}</div></div>
+                <div style="width:1px;background:#E8D5C0;"></div>
+                <div><div style="font-size:10px;color:#B0906A;font-weight:700;letter-spacing:0.5px;margin-bottom:2px;">TIME</div><div style="font-size:14px;color:#6B0C0C;font-weight:800;font-family:'Sora',sans-serif;">${s.time}</div></div>
+                <div style="width:1px;background:#E8D5C0;"></div>
+                <div><div style="font-size:10px;color:#B0906A;font-weight:700;letter-spacing:0.5px;margin-bottom:2px;">DOCS</div><div style="font-size:14px;color:#6B0C0C;font-weight:800;font-family:'Sora',sans-serif;">${s.documents.length} req.</div></div>
+              </div>
+              <div style="display:flex;align-items:center;gap:8px;color:#B0906A;font-size:13px;font-weight:700;font-family:'Sora',sans-serif;">
+                View Details & Apply <span>→</span>
+              </div>
+            </div>
+          `).join('')}
+        </div>
+      </div>
+    </div>
+
+    <!-- How it works -->
+    <div style="background:white;padding:64px 28px;">
+      <div style="max-width:1100px;margin:0 auto;text-align:center;">
+        <div style="font-size:12px;color:#A01818;font-weight:800;letter-spacing:2px;font-family:'Sora',sans-serif;margin-bottom:10px;">HOW IT WORKS</div>
+        <h2 style="font-family:'Sora',sans-serif;font-size:34px;font-weight:900;color:#6B0C0C;margin:0 0 48px;letter-spacing:-1px;">3 Simple Steps</h2>
+        <div class="steps-grid">
+          ${[{ num: "01", icon: "🔍", title: "Choose Service", desc: "Pick from 12+ government services — BBMP or Seva Sindhu" }, { num: "02", icon: "📝", title: "Fill Application", desc: "Complete the guided form — we tell you exactly what to submit" }, { num: "03", icon: "📱", title: "Track & Collect", desc: "Get SMS updates. Download or collect your certificate when ready" }].map(step => `
+            <div style="text-align:center;">
+              <div style="width:72px;height:72px;border-radius:50%;margin:0 auto 20px;background:linear-gradient(135deg,#6B0C0C,#A01818);display:flex;align-items:center;justify-content:center;font-size:28px;box-shadow:0 8px 24px rgba(169,27,27,0.25);">${step.icon}</div>
+              <div style="font-family:'Sora',sans-serif;font-size:11px;color:#A01818;font-weight:800;letter-spacing:2px;margin-bottom:8px;">STEP ${step.num}</div>
+              <h3 style="font-family:'Sora',sans-serif;font-size:18px;font-weight:800;color:#6B0C0C;margin:0 0 10px;">${step.title}</h3>
+              <p style="font-size:14px;color:#7A6050;line-height:1.6;margin:0;">${step.desc}</p>
+            </div>
+          `).join('')}
+        </div>
+      </div>
+    </div>
+  `;
+    }
+
+    // ══════════════════════════════════════════════════════════════
+    // SERVICES LIST PAGE
+    // ══════════════════════════════════════════════════════════════
+    function renderServices() {
+      const portals = ["All", "BBMP", "Seva Sindhu", "SSP Karnataka", "Ahara Karnataka", "Sarathi Parivahan"];
+      const filtered = serviceFilter === 'All' ? SERVICES : SERVICES.filter(s => s.portal === serviceFilter);
+      return `
+    <div style="background:#FFF8F0;min-height:80vh;padding:40px 28px;">
+      <div style="max-width:1100px;margin:0 auto;">
+        <h1 style="font-family:'Sora',sans-serif;font-size:30px;font-weight:900;color:#6B0C0C;margin:0 0 6px;">All Services</h1>
+        <p style="color:#7A6050;margin:0 0 28px;">Select a service to view details and start your application</p>
+        <div style="display:flex;gap:10px;flex-wrap:wrap;margin-bottom:32px;">
+          ${portals.map(p => `<button class="filter-btn ${serviceFilter === p ? 'active' : ''}" onclick="setServiceFilter('${p}')">${p}</button>`).join('')}
+        </div>
+        <div class="services-grid">
+          ${filtered.map(s => `
+            <div class="service-card" onclick="navigate('service',SERVICES.find(x=>x.id==='${s.id}'))"
+              onmouseover="this.style.transform='translateY(-4px)';this.style.borderColor='${s.portalColor}';this.style.boxShadow='0 20px 40px rgba(0,0,0,0.12)'"
+              onmouseout="this.style.transform='translateY(0)';this.style.borderColor='transparent';this.style.boxShadow='0 4px 15px rgba(0,0,0,0.06)'">
+              <div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:16px;">
+                <span style="font-size:40px;">${s.icon}</span>
+                <span style="background:${s.portalBg};color:${s.portalColor};border-radius:8px;padding:4px 10px;font-size:11px;font-weight:800;font-family:'Sora',sans-serif;">${s.portal}</span>
+              </div>
+              <h3 style="font-family:'Sora',sans-serif;font-size:18px;font-weight:800;color:#6B0C0C;margin:0 0 8px;">${s.title}</h3>
+              <p style="font-size:13px;color:#7A6050;margin:0 0 20px;line-height:1.6;">${s.desc}</p>
+              <div style="display:flex;gap:20px;">
+                <div><div style="font-size:10px;color:#B0906A;font-weight:700;">FEE</div><div style="font-weight:800;font-size:13px;color:#6B0C0C;font-family:'Sora',sans-serif;">${s.fee}</div></div>
+                <div><div style="font-size:10px;color:#B0906A;font-weight:700;">TIME</div><div style="font-weight:800;font-size:13px;color:#6B0C0C;font-family:'Sora',sans-serif;">${s.time}</div></div>
+              </div>
+            </div>
+          `).join('')}
+        </div>
+      </div>
+    </div>
+  `;
+    }
+
+    function setServiceFilter(filter) {
+      serviceFilter = filter;
+      document.getElementById('page-services').innerHTML = renderServices();
+    }
+
+    // ══════════════════════════════════════════════════════════════
+    // SERVICE DETAIL PAGE
+    // ══════════════════════════════════════════════════════════════
+    function renderServiceDetail() {
+      const s = selectedService;
+      if (!s) return '';
+      return `
+    <div style="background:#FFF8F0;min-height:80vh;">
+      <!-- Banner -->
+      <div style="background:linear-gradient(135deg,#6B0C0C 0%,#A01818 40%,${s.portalColor} 100%);padding:48px 28px;position:relative;overflow:hidden;">
+        <div style="position:absolute;top:-60px;right:-60px;width:300px;height:300px;border-radius:50%;background:rgba(255,255,255,0.04);"></div>
+        <div style="max-width:1100px;margin:0 auto;">
+          <button onclick="navigate('services')" style="background:rgba(255,255,255,0.12);border:1px solid rgba(255,255,255,0.2);border-radius:8px;padding:7px 14px;color:rgba(255,255,255,0.8);font-size:13px;cursor:pointer;font-family:'Sora',sans-serif;font-weight:600;margin-bottom:24px;display:inline-flex;align-items:center;gap:6px;">← Back to Services</button>
+          <div style="display:flex;align-items:center;gap:20px;flex-wrap:wrap;">
+            <div style="width:72px;height:72px;border-radius:18px;font-size:36px;background:rgba(255,255,255,0.15);display:flex;align-items:center;justify-content:center;backdrop-filter:blur(10px);border:2px solid rgba(255,255,255,0.2);">${s.icon}</div>
+            <div>
+              <div style="display:flex;align-items:center;gap:10px;margin-bottom:8px;">
+                <span style="background:${s.portalBg};color:${s.portalColor};padding:4px 12px;border-radius:8px;font-size:11px;font-weight:800;font-family:'Sora',sans-serif;">${s.portal}</span>
+              </div>
+              <h1 style="font-family:'Sora',sans-serif;font-size:34px;font-weight:900;color:white;margin:0 0 6px;letter-spacing:-1px;">${s.title}</h1>
+              <p style="font-size:16px;color:rgba(255,255,255,0.7);margin:0;">${s.subtitle}</p>
+            </div>
+            <div style="margin-left:auto;display:flex;gap:14px;flex-wrap:wrap;">
+              <button class="btn-primary" onclick="navigate('apply',selectedService)">Apply Now →</button>
+              <button class="btn-ghost" onclick="navigate('chat')">💬 Get Help</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Body -->
+      <div style="max-width:1100px;margin:0 auto;padding:40px 28px;">
+        <div class="service-body">
+          <!-- Main -->
+          <div style="display:flex;flex-direction:column;gap:24px;">
+            <div style="background:white;border-radius:16px;padding:28px;box-shadow:0 4px 15px rgba(0,0,0,0.06);">
+              <h2 style="font-family:'Sora',sans-serif;font-size:18px;font-weight:800;color:#6B0C0C;margin:0 0 14px;">About This Service</h2>
+              <p style="color:#5A4030;line-height:1.8;margin:0;font-size:15px;">${s.longDesc}</p>
+            </div>
+            <div style="background:white;border-radius:16px;padding:28px;box-shadow:0 4px 15px rgba(0,0,0,0.06);">
+              <h2 style="font-family:'Sora',sans-serif;font-size:18px;font-weight:800;color:#6B0C0C;margin:0 0 20px;">Step-by-Step Process</h2>
+              <div style="display:flex;flex-direction:column;gap:0;">
+                ${s.steps.map((step, i) => `
+                  <div style="display:flex;gap:16px;padding-bottom:${i < s.steps.length - 1 ? 20 : 0}px;position:relative;">
+                    ${i < s.steps.length - 1 ? `<div style="position:absolute;left:16px;top:34px;bottom:0;width:2px;background:#E8D5C0;"></div>` : ''}
+                    <div style="width:34px;height:34px;border-radius:50%;flex-shrink:0;background:linear-gradient(135deg,${s.portalColor},${s.portalColor}cc);display:flex;align-items:center;justify-content:center;color:white;font-size:13px;font-weight:800;font-family:'Sora',sans-serif;z-index:1;">${i + 1}</div>
+                    <div style="padding-top:6px;"><p style="margin:0;font-size:14px;color:#4A3020;line-height:1.6;">${step}</p></div>
+                  </div>
+                `).join('')}
+              </div>
+            </div>
+            <div style="background:#FFF7ED;border:2px solid #FED7AA;border-radius:16px;padding:24px;">
+              <h2 style="font-family:'Sora',sans-serif;font-size:16px;font-weight:800;color:#92400E;margin:0 0 14px;display:flex;gap:8px;align-items:center;">⚠️ Common Rejection Reasons</h2>
+              <div style="display:flex;flex-direction:column;gap:10px;">
+                ${s.commonMistakes.map(m => `
+                  <div style="display:flex;gap:10px;align-items:flex-start;">
+                    <span style="color:#EF4444;font-size:16px;line-height:1.4;">✗</span>
+                    <span style="font-size:14px;color:#7C2D12;line-height:1.5;">${m}</span>
+                  </div>
+                `).join('')}
+              </div>
+            </div>
+          </div>
+          <!-- Sidebar -->
+          <div style="display:flex;flex-direction:column;gap:20px;">
+            <div style="background:white;border-radius:16px;padding:24px;box-shadow:0 4px 15px rgba(0,0,0,0.06);">
+              <h3 style="font-family:'Sora',sans-serif;font-size:14px;font-weight:800;color:#6B0C0C;margin:0 0 16px;letter-spacing:0.5px;">QUICK INFO</h3>
+              ${[{ label: "Government Fee", value: s.fee, icon: "💰" }, { label: "Processing Time", value: s.time, icon: "⏱️" }, { label: "Documents Required", value: `${s.documents.length} documents`, icon: "📋" }, { label: "Portal", value: s.portal, icon: "🌐" }].map(info => `
+                <div style="display:flex;align-items:center;gap:12px;padding:12px 0;border-bottom:1px solid #FFF8F0;">
+                  <span style="font-size:18px;">${info.icon}</span>
+                  <div>
+                    <div style="font-size:11px;color:#B0906A;font-weight:600;letter-spacing:0.5px;">${info.label}</div>
+                    <div style="font-size:15px;color:#6B0C0C;font-weight:800;font-family:'Sora',sans-serif;margin-top:2px;">${info.value}</div>
+                  </div>
+                </div>
+              `).join('')}
+            </div>
+            <div style="background:white;border-radius:16px;padding:24px;box-shadow:0 4px 15px rgba(0,0,0,0.06);">
+              <h3 style="font-family:'Sora',sans-serif;font-size:14px;font-weight:800;color:#6B0C0C;margin:0 0 16px;letter-spacing:0.5px;">REQUIRED DOCUMENTS</h3>
+              <div style="display:flex;flex-direction:column;gap:10px;">
+                ${s.documents.map(doc => `
+                  <div style="display:flex;gap:10px;align-items:flex-start;">
+                    <div style="width:20px;height:20px;border-radius:4px;flex-shrink:0;margin-top:1px;background:${s.portalBg};border:2px solid ${s.portalColor};display:flex;align-items:center;justify-content:center;">
+                      <div style="width:8px;height:8px;border-radius:1px;background:${s.portalColor};"></div>
+                    </div>
+                    <span style="font-size:13px;color:#5A4030;line-height:1.5;">${doc}</span>
+                  </div>
+                `).join('')}
+              </div>
+            </div>
+            <button class="btn-primary" onclick="navigate('apply',selectedService)" style="width:100%;padding:16px;border-radius:14px;font-size:15px;">Start Application →</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  `;
+    }
+
+    // ══════════════════════════════════════════════════════════════
+    // APPLICATION FORM
+    // ══════════════════════════════════════════════════════════════
+    function renderApply() {
+      const s = selectedService;
+      if (!s) return '';
+      const steps = ["Application Details", "Upload Documents", "Review & Submit"];
+
+      if (appStep === 4) return renderAppSuccess();
+
+      const stepperHtml = `
+    <div style="background:white;border-radius:16px;padding:20px 28px;margin-bottom:28px;box-shadow:0 4px 15px rgba(0,0,0,0.06);">
+      <div style="display:flex;align-items:center;">
+        ${steps.map((st, i) => `
+          <div style="display:flex;align-items:center;gap:10px;">
+            <div class="step-dot ${appStep > i + 1 ? 'done' : appStep === i + 1 ? 'active' : 'pending'}">${appStep > i + 1 ? '✓' : i + 1}</div>
+          </div>
+          ${i < steps.length - 1 ? `<div style="flex:1;height:2px;margin:0 10px;background:${appStep > i + 1 ? '#22C55E' : '#E8D5C0'};transition:background 0.3s;"></div>` : ''}`
+      ).join('')}
+      </div>
+      <div style="display:flex;justify-content:space-between;margin-top:8px;">
+        ${steps.map((st, i) => `<span style="font-size:11px;font-weight:700;color:${appStep === i + 1 ? '#6B0C0C' : '#B0906A'};font-family:'Sora',sans-serif;">${st}</span>`).join('')}
+      </div>
+    </div>
+  `;
+
+      let content = '';
+      if (appStep === 1) content = renderAppStep1(s);
+      else if (appStep === 2) content = renderAppStep2(s);
+      else if (appStep === 3) content = renderAppStep3(s);
+
+      return `
+    <div style="background:#FFF8F0;min-height:80vh;padding:40px 28px;">
+      <div style="max-width:800px;margin:0 auto;">
+        <div style="margin-bottom:32px;">
+          <button onclick="navigate('service',selectedService)" style="background:transparent;border:none;color:#7A6050;font-size:14px;cursor:pointer;display:flex;gap:6px;align-items:center;font-family:'Sora',sans-serif;font-weight:600;margin-bottom:16px;padding:0;">← Back to ${s.title}</button>
+          <div style="display:flex;align-items:center;gap:14px;">
+            <div style="width:48px;height:48px;border-radius:12px;font-size:24px;background:${s.portalBg};display:flex;align-items:center;justify-content:center;">${s.icon}</div>
+            <div>
+              <h1 style="font-family:'Sora',sans-serif;font-size:24px;font-weight:900;color:#6B0C0C;margin:0;">Apply: ${s.title}</h1>
+              <p style="margin:0;font-size:13px;color:#7A6050;">Ref: <strong>${refNumber}</strong> • ${s.portal}</p>
+            </div>
+          </div>
+        </div>
+        ${stepperHtml}
+        ${content}
+      </div>
+    </div>
+  `;
+    }
+
+    function renderAppStep1(s) {
+      const totalReq = s.fields.filter(f => f.required).length;
+      const filledReq = s.fields.filter(f => f.required && formData[f.name]).length;
+      const progress = Math.round((filledReq / totalReq) * 100);
+      return `
+    <div style="background:white;border-radius:20px;padding:36px;box-shadow:0 4px 15px rgba(0,0,0,0.06);">
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:28px;">
+        <h2 style="font-family:'Sora',sans-serif;font-size:20px;font-weight:800;color:#6B0C0C;margin:0;">Application Details</h2>
+        <div style="text-align:right;">
+          <div style="font-size:12px;color:#7A6050;font-weight:600;margin-bottom:6px;">${filledReq}/${totalReq} required filled</div>
+          <div style="width:100px;height:6px;background:#E8D5C0;border-radius:3px;overflow:hidden;">
+            <div style="width:${progress}%;height:100%;background:#22C55E;transition:width 0.3s;border-radius:3px;"></div>
+          </div>
+        </div>
+      </div>
+      <div class="form-grid">
+        ${s.fields.map(field => `
+          <div style="grid-column:${field.type === 'textarea' ? 'span 2' : 'span 1'};">
+            <label style="display:block;font-size:13px;font-weight:700;color:#374151;margin-bottom:7px;font-family:'Sora',sans-serif;">
+              ${field.label} ${field.required ? '<span style="color:#EF4444;">*</span>' : ''}
+            </label>
+            ${field.type === 'textarea'
+          ? `<textarea class="form-textarea" rows="3" placeholder="${field.placeholder || ''}" onchange="formData['${field.name}']=this.value;refreshApplyProgress()">${formData[field.name] || ''}</textarea>`
+          : field.type === 'select'
+            ? `<select class="form-select" onchange="formData['${field.name}']=this.value;refreshApplyProgress()">
+                  <option value="">Select...</option>
+                  ${field.options.map(opt => `<option value="${opt}" ${formData[field.name] === opt ? 'selected' : ''}>${opt}</option>`).join('')}
+                </select>`
+            : `<input type="${field.type}" class="form-input" value="${formData[field.name] || ''}" placeholder="${field.placeholder || ''}" ${field.maxLength ? `maxlength="${field.maxLength}"` : ''}
+                  onchange="formData['${field.name}']=this.value;refreshApplyProgress()" />`
+        }
+          </div>
+        `).join('')}
+      </div>
+      <div style="margin-top:32px;display:flex;justify-content:flex-end;gap:14px;">
+        <button class="btn-outline" onclick="navigate('service',selectedService)">Cancel</button>
+        <button class="btn-dark" onclick="goToAppStep(2)">Save & Continue →</button>
+      </div>
+    </div>
+  `;
+    }
+
+    function renderAppStep2(s) {
+      return `
+    <div style="background:white;border-radius:20px;padding:36px;box-shadow:0 4px 15px rgba(0,0,0,0.06);">
+      <h2 style="font-family:'Sora',sans-serif;font-size:20px;font-weight:800;color:#6B0C0C;margin:0 0 8px;">Upload Documents</h2>
+      <p style="color:#7A6050;font-size:14px;margin:0 0 28px;">Upload scanned copies (JPG/PNG/PDF). Max 2MB per file.</p>
+      <input type="file" id="file-upload-input" accept=".jpg,.jpeg,.png,.pdf" style="display:none;" onchange="handleFileUpload(this)"/>
+      <div style="display:flex;flex-direction:column;gap:12px;">
+        ${s.documents.map((doc, i) => `
+          <div id="doc-row-${i}" style="display:flex;align-items:center;justify-content:space-between;padding:16px 20px;border-radius:12px;background:${uploadedDocs[doc] ? '#F0FDF4' : '#FFF8F0'};border:2px solid ${uploadedDocs[doc] ? '#86EFAC' : '#E8D5C0'};transition:all 0.2s;">
+            <div style="display:flex;align-items:center;gap:12px;">
+              <div style="width:38px;height:38px;border-radius:10px;font-size:18px;background:${uploadedDocs[doc] ? '#DCFCE7' : '#EFF6FF'};display:flex;align-items:center;justify-content:center;">${uploadedDocs[doc] ? '✅' : '📄'}</div>
+              <div>
+                <div style="font-size:14px;font-weight:700;color:#1a0000;">${doc}</div>
+                ${uploadedDocs[doc] ? `<div style="font-size:12px;color:#16A34A;font-weight:500;margin-top:2px;">${uploadedDocs[doc]}</div>` : ''}
+              </div>
+            </div>
+            <button onclick="triggerDocUpload('${doc.replace(/'/g, "\\'")}')" style="background:${uploadedDocs[doc] ? 'transparent' : 'linear-gradient(135deg,#6B0C0C,#A91B1B)'};border:${uploadedDocs[doc] ? '2px solid #22C55E' : 'none'};border-radius:8px;padding:8px 16px;color:${uploadedDocs[doc] ? '#16A34A' : 'white'};font-size:12px;font-weight:700;cursor:pointer;font-family:'Sora',sans-serif;">
+              ${uploadedDocs[doc] ? '✓ Replace' : '+ Upload'}
+            </button>
+          </div>
+        `).join('')}
+      </div>
+      <div style="margin-top:12px;padding:12px 16px;background:#FFF7ED;border-radius:10px;border:1px solid #FED7AA;">
+        <p style="margin:0;font-size:12px;color:#92400E;">💡 <strong>Tip:</strong> Ensure all scanned copies are clear and legible. Blurry documents are the #1 reason for rejection.</p>
+      </div>
+      <div style="margin-top:28px;display:flex;justify-content:space-between;">
+        <button class="btn-outline" onclick="goToAppStep(1)">← Back</button>
+        <button class="btn-dark" onclick="goToAppStep(3)">Review Application →</button>
+      </div>
+    </div>
+  `;
+    }
+
+    function renderAppStep3(s) {
+      return `
+    <div style="background:white;border-radius:20px;padding:36px;box-shadow:0 4px 15px rgba(0,0,0,0.06);">
+      <h2 style="font-family:'Sora',sans-serif;font-size:20px;font-weight:800;color:#6B0C0C;margin:0 0 24px;">Review & Confirm</h2>
+      <div style="background:#FFF8F0;border-radius:14px;padding:20px;margin-bottom:20px;">
+        <div style="font-size:12px;color:#7A6050;font-weight:700;letter-spacing:1px;font-family:'Sora',sans-serif;margin-bottom:14px;">APPLICATION DETAILS</div>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px;">
+          ${s.fields.slice(0, 6).filter(f => formData[f.name]).map(f => `
+            <div>
+              <div style="font-size:11px;color:#B0906A;font-weight:600;margin-bottom:3px;">${f.label}</div>
+              <div style="font-size:14px;color:#1a0000;font-weight:700;">${formData[f.name]}</div>
+            </div>
+          `).join('')}
+        </div>
+      </div>
+      <div style="background:#F0FDF4;border-radius:14px;padding:20px;margin-bottom:20px;">
+        <div style="font-size:12px;color:#A05010;font-weight:700;letter-spacing:1px;font-family:'Sora',sans-serif;margin-bottom:14px;">
+          UPLOADED DOCUMENTS (${Object.keys(uploadedDocs).length}/${s.documents.length})
+        </div>
+        ${s.documents.map(doc => `
+          <div style="display:flex;gap:10px;align-items:center;margin-bottom:8px;">
+            <span style="color:${uploadedDocs[doc] ? '#22C55E' : '#F59E0B'};">${uploadedDocs[doc] ? '✓' : '⚠'}</span>
+            <span style="font-size:13px;color:#4A3020;">${doc}</span>
+            ${uploadedDocs[doc] ? `<span style="font-size:12px;color:#7A6050;margin-left:auto;">✅ Uploaded</span>` : ''}
+          </div>
+        `).join('')}
+      </div>
+      <div style="background:${s.fee.toLowerCase().includes('free') ? '#F0FDF4' : '#FFF0F0'};border:2px solid ${s.fee.toLowerCase().includes('free') ? '#BBF7D0' : '#FFCCCC'};border-radius:14px;padding:20px;margin-bottom:28px;">
+        <div style="display:flex;justify-content:space-between;align-items:center;">
+          <div>
+            <div style="font-family:'Sora',sans-serif;font-weight:800;color:${s.fee.toLowerCase().includes('free') ? '#15803D' : '#6B0C0C'};">Government Processing Fee</div>
+            <div style="font-size:12px;color:${s.fee.toLowerCase().includes('free') ? '#166534' : '#A91B1B'};margin-top:4px;">${s.fee.toLowerCase().includes('free') ? 'This service is provided free of charge.' : 'Paid via RazorPay Government Gateway after submission'}</div>
+          </div>
+          <span style="font-family:'Sora',sans-serif;font-size:24px;font-weight:900;color:${s.fee.toLowerCase().includes('free') ? '#15803D' : '#A91B1B'};">${s.fee}</span>
+        </div>
+        ${!s.fee.toLowerCase().includes('free') ? `
+        <div style="margin-top:12px;display:flex;gap:8px;flex-wrap:wrap;">
+          ${['🔷 UPI', '💳 Card', '🏦 NetBanking', '👛 Wallet'].map(m => `<span style="font-size:11px;color:#6B0C0C;background:#FFEEEE;border:1px solid #FFCCCC;border-radius:20px;padding:3px 10px;font-weight:700;">${m}</span>`).join('')}
+        </div>
+        ` : ''}
+      </div>
+      <div style="display:flex;justify-content:space-between;">
+        <button class="btn-outline" onclick="goToAppStep(2)">← Back</button>
+        <button style="background:linear-gradient(135deg,${s.fee.toLowerCase().includes('free') ? '#15803D,#16A34A' : '#A91B1B,#C03020'});border:none;border-radius:14px;padding:15px 40px;color:white;font-size:15px;font-weight:800;cursor:pointer;font-family:'Sora',sans-serif;box-shadow:0 8px 24px ${s.fee.toLowerCase().includes('free') ? 'rgba(21,128,61,0.3)' : 'rgba(169,27,27,0.4)'};transition:all 0.2s;display:flex;align-items:center;gap:8px;" onclick="submitApplication()" onmouseover="this.style.transform='translateY(-2px)'" onmouseout="this.style.transform='translateY(0)'">
+          ${s.fee.toLowerCase().includes('free') ? '🚀 Confirm & Submit' : '🔒 Pay & Submit'}
+        </button>
+      </div>
+    </div>
+  `;
+    }
+
+    function renderAppSuccess() {
+      const s = selectedService;
+      return `
+    <div style="background:white;border-radius:24px;padding:56px 36px;box-shadow:0 8px 40px rgba(169,27,27,0.12);text-align:center;position:relative;overflow:hidden;">
+      <!-- Karnataka stripe at top -->
+      <div style="position:absolute;top:0;left:0;right:0;height:5px;background:linear-gradient(90deg,#A91B1B,#A91B1B 50%,#F5A020 50%,#F5A020);"></div>
+      <div style="width:96px;height:96px;border-radius:50%;background:linear-gradient(135deg,#22C55E,#16A34A);margin:0 auto 28px;display:flex;align-items:center;justify-content:center;font-size:44px;box-shadow:0 16px 40px rgba(34,197,94,0.4);animation:popIn 0.6s cubic-bezier(0.34,1.56,0.64,1);">✓</div>
+      <h2 style="font-family:'Sora',sans-serif;font-size:30px;font-weight:900;color:#6B0C0C;margin:0 0 12px;">Application Submitted!</h2>
+      <p style="color:#7A6050;font-size:16px;margin:0 0 36px;">Your ${s.title} application has been received & payment confirmed.</p>
+      <div style="background:linear-gradient(135deg,#FFF0F0,#FFFDE0);border:2px solid rgba(169,27,27,0.15);border-radius:20px;padding:28px;margin-bottom:32px;display:inline-block;min-width:320px;">
+        <div style="font-size:11px;color:#B0906A;font-weight:700;letter-spacing:1.5px;font-family:'Sora',sans-serif;margin-bottom:12px;">YOUR REFERENCE NUMBER</div>
+        <div style="font-family:'Sora',sans-serif;font-size:30px;font-weight:900;color:#A91B1B;letter-spacing:3px;">${refNumber}</div>
+        <p style="margin:10px 0 0;font-size:12px;color:#B0906A;">Save this number to track your application</p>
+      </div>
+      <div style="background:#FFFDE0;border:1px solid #F5A020;border-radius:14px;padding:18px;margin-bottom:36px;text-align:left;">
+        <p style="margin:0;font-size:14px;color:#8B6914;line-height:1.6;">📱 <strong>What's Next?</strong> You'll receive an SMS on your registered mobile. Expected processing time: <strong>${s.time}</strong>. Track your status using reference <strong style="color:#A91B1B;">${refNumber}</strong>.</p>
+      </div>
+      <div style="display:flex;gap:14px;justify-content:center;">
+        <button class="btn-dark" onclick="navigate('track')" style="border-radius:12px;padding:14px 28px;">Track Application</button>
+        <button class="btn-outline" onclick="navigate('home')" style="border-radius:12px;padding:14px 28px;">Back to Home</button>
+      </div>
+    </div>
+  `;
+    }
+
+    function goToAppStep(step) {
+      appStep = step;
+      document.getElementById('page-apply').innerHTML = renderApply();
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    function refreshApplyProgress() {
+      // Re-render to update progress bar
+      const s = selectedService;
+      if (!s) return;
+      const totalReq = s.fields.filter(f => f.required).length;
+      const filledReq = s.fields.filter(f => f.required && formData[f.name]).length;
+      const progress = Math.round((filledReq / totalReq) * 100);
+      const bar = document.querySelector('#page-apply .form-grid + * .step-dot');
+      const progressBar = document.querySelector('#page-apply [style*="width:0%"]') || document.querySelector('#page-apply div[style*="background:#22C55E"]');
+      if (progressBar) progressBar.style.width = progress + '%';
+    }
+
+    function triggerDocUpload(docName) {
+      activeDocUpload = docName;
+      document.getElementById('file-upload-input').click();
+    }
+
+    function handleFileUpload(input) {
+      if (input.files[0] && activeDocUpload) {
+        uploadedDocs[activeDocUpload] = input.files[0].name;
+        goToAppStep(2);
+      }
+      input.value = '';
+    }
+
+    function submitApplication() {
+      // Show payment modal
+      showPaymentModal();
+    }
+
+    function showPaymentModal() {
+      const s = selectedService;
+      const feeText = s.fee;
+      const isFree = feeText.toLowerCase().includes('free');
+      const modal = document.createElement('div');
+      modal.className = 'payment-modal-overlay';
+      modal.id = 'payment-modal';
+      modal.innerHTML = `
+    <div class="payment-modal">
+      <!-- Header -->
+      <div style="background:linear-gradient(135deg,#7B1010,#A91B1B);padding:28px 32px;position:relative;overflow:hidden;">
+        <div style="position:absolute;top:-30px;right:-30px;width:120px;height:120px;border-radius:50%;background:rgba(245,160,32,0.1);"></div>
+        <div style="display:flex;justify-content:space-between;align-items:flex-start;position:relative;">
+          <div>
+            <div style="font-size:11px;color:rgba(245,160,32,0.8);font-weight:700;letter-spacing:2px;font-family:'Sora',sans-serif;margin-bottom:6px;">SECURE ${isFree ? 'SUBMISSION' : 'PAYMENT'} GATEWAY</div>
+            <h2 style="font-family:'Sora',sans-serif;font-size:22px;font-weight:900;color:white;margin:0;">${isFree ? 'Confirm Submission' : 'Complete Payment'}</h2>
+            <p style="font-size:13px;color:rgba(255,255,255,0.7);margin:4px 0 0;">${s.title}</p>
+          </div>
+          <button onclick="document.getElementById('payment-modal').remove()" style="background:rgba(255,255,255,0.15);border:none;border-radius:50%;width:36px;height:36px;color:white;font-size:18px;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:all 0.2s;" onmouseover="this.style.background='rgba(255,255,255,0.25)'" onmouseout="this.style.background='rgba(255,255,255,0.15)'">✕</button>
+        </div>
+        <!-- Fee display -->
+        <div style="margin-top:20px;background:rgba(245,160,32,0.15);border:1px solid rgba(255,215,0,0.3);border-radius:12px;padding:14px 18px;display:flex;justify-content:space-between;align-items:center;">
+          <div>
+            <div style="font-size:11px;color:rgba(245,160,32,0.7);font-weight:700;letter-spacing:1px;">TOTAL AMOUNT DUE</div>
+            <div style="font-family:'Sora',sans-serif;font-size:26px;font-weight:900;color:#F5A020;">${feeText}</div>
+          </div>
+          <div style="text-align:right;">
+            <div style="font-size:11px;color:rgba(255,255,255,0.5);">Ref: <strong style="color:rgba(245,160,32,0.8);">${refNumber}</strong></div>
+            <div style="font-size:11px;color:rgba(255,255,255,0.5);margin-top:2px;">🔒 256-bit SSL Secured</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Body -->
+      <div style="padding:28px 32px;">
+        ${!isFree ? `
+        <div style="font-size:12px;font-weight:800;color:#6B0C0C;letter-spacing:1.5px;font-family:'Sora',sans-serif;margin-bottom:16px;">SELECT PAYMENT METHOD</div>
+
+        <button class="payment-method-btn" id="pm-upi" onclick="selectPayment('upi')">
+          <div style="width:44px;height:44px;border-radius:10px;background:linear-gradient(135deg,#5C2D91,#7C3AED);display:flex;align-items:center;justify-content:center;font-size:20px;">🔷</div>
+          <div style="flex:1;text-align:left;">
+            <div style="font-size:14px;font-weight:800;color:#1a0000;font-family:'Sora',sans-serif;">UPI Payment</div>
+            <div style="font-size:12px;color:#7A6050;margin-top:2px;">Google Pay · PhonePe · BHIM · Paytm</div>
+          </div>
+          <div id="pm-upi-check" style="width:22px;height:22px;border-radius:50%;border:2px solid #E8D5C0;display:flex;align-items:center;justify-content:center;transition:all 0.2s;"></div>
+        </button>
+
+        <button class="payment-method-btn" id="pm-card" onclick="selectPayment('card')">
+          <div style="width:44px;height:44px;border-radius:10px;background:linear-gradient(135deg,#1a5276,#2980B9);display:flex;align-items:center;justify-content:center;font-size:20px;">💳</div>
+          <div style="flex:1;text-align:left;">
+            <div style="font-size:14px;font-weight:800;color:#1a0000;font-family:'Sora',sans-serif;">Debit / Credit Card</div>
+            <div style="font-size:12px;color:#7A6050;margin-top:2px;">Visa · Mastercard · RuPay · Amex</div>
+          </div>
+          <div id="pm-card-check" style="width:22px;height:22px;border-radius:50%;border:2px solid #E8D5C0;display:flex;align-items:center;justify-content:center;transition:all 0.2s;"></div>
+        </button>
+
+        <button class="payment-method-btn" id="pm-netbanking" onclick="selectPayment('netbanking')">
+          <div style="width:44px;height:44px;border-radius:10px;background:linear-gradient(135deg,#1B6F00,#28A745);display:flex;align-items:center;justify-content:center;font-size:20px;">🏦</div>
+          <div style="flex:1;text-align:left;">
+            <div style="font-size:14px;font-weight:800;color:#1a0000;font-family:'Sora',sans-serif;">Net Banking</div>
+            <div style="font-size:12px;color:#7A6050;margin-top:2px;">SBI · HDFC · ICICI · Axis · Canara · KGB</div>
+          </div>
+          <div id="pm-netbanking-check" style="width:22px;height:22px;border-radius:50%;border:2px solid #E8D5C0;display:flex;align-items:center;justify-content:center;transition:all 0.2s;"></div>
+        </button>
+
+        <button class="payment-method-btn" id="pm-wallet" onclick="selectPayment('wallet')">
+          <div style="width:44px;height:44px;border-radius:10px;background:linear-gradient(135deg,#CC5500,#A91B1B);display:flex;align-items:center;justify-content:center;font-size:20px;">👛</div>
+          <div style="flex:1;text-align:left;">
+            <div style="font-size:14px;font-weight:800;color:#1a0000;font-family:'Sora',sans-serif;">Mobile Wallet</div>
+            <div style="font-size:12px;color:#7A6050;margin-top:2px;">Paytm · Amazon Pay · Mobikwik · Freecharge</div>
+          </div>
+          <div id="pm-wallet-check" style="width:22px;height:22px;border-radius:50%;border:2px solid #E8D5C0;display:flex;align-items:center;justify-content:center;transition:all 0.2s;"></div>
+        </button>
+        ` : `
+        <div style="background:#F0FDF4;border:2px solid #BBF7D0;border-radius:16px;padding:24px;text-align:center;margin-bottom:24px;">
+          <div style="font-size:48px;margin-bottom:12px;">✅</div>
+          <h3 style="font-family:'Sora',sans-serif;font-weight:800;color:#15803D;margin:0 0 8px;">Zero Fee Application</h3>
+          <p style="font-size:14px;color:#166534;margin:0;line-height:1.5;">This scholarship program is provided free of cost by the Department of Social Welfare. No payment is required.</p>
+        </div>
+        `}
+
+        <!-- Dynamic payment input area -->
+        <div id="payment-input-area" style="margin-bottom:18px;"></div>
+
+        <!-- Pay button -->
+        <button id="pay-now-btn" onclick="processPayment()" style="width:100%;padding:16px;border-radius:14px;border:none;background:${isFree ? 'linear-gradient(135deg,#15803D,#16A34A)' : '#E8D5C0'};color:${isFree ? 'white' : '#B0906A'};font-size:16px;font-weight:900;cursor:pointer;transition:all 0.3s;font-family:'Sora',sans-serif;display:flex;align-items:center;justify-content:center;gap:10px;box-shadow:${isFree ? '0 8px 20px rgba(21,128,61,0.3)' : 'none'}" ${isFree ? '' : 'disabled'}>
+          <span>${isFree ? '🚀' : '🔒'}</span> ${isFree ? 'Submit Application Now' : 'Pay & Submit Application'}
+        </button>
+
+        <div style="display:flex;justify-content:center;gap:12px;margin-top:20px;flex-wrap:wrap;align-items:center;">
+          <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/53/Google_Pay_%28GPay%29_Logo.svg/200px-Google_Pay_%28GPay%29_Logo.svg.png" style="height:16px;opacity:0.6;filter:grayscale(0.3);" onerror="this.style.display='none'" />
+          <span style="font-size:10px;color:#B0906A;font-weight:700;background:#F5EAD8;padding:4px 10px;border-radius:20px;white-space:nowrap;">PhonePe</span>
+          <span style="font-size:10px;color:#B0906A;font-weight:700;background:#F5EAD8;padding:4px 10px;border-radius:20px;white-space:nowrap;">BHIM UPI</span>
+          <span style="font-size:10px;color:#B0906A;font-weight:700;background:#F5EAD8;padding:4px 10px;border-radius:20px;white-space:nowrap;">RuPay</span>
+          <span style="font-size:10px;color:#B0906A;font-weight:700;background:#F5EAD8;padding:4px 10px;border-radius:20px;white-space:nowrap;">Visa</span>
+        </div>
+        <p style="text-align:center;font-size:11px;color:#B0906A;margin-top:14px;opacity:0.8;">🔒 Secured by RazorPay Government Gateway</p>
+      </div>
+    </div>
+  `;
+      document.body.appendChild(modal);
+      if (isFree) {
+        selectedPaymentMethod = 'free'; // Ensure it's not empty string so ready check passes
+      } else {
+        selectedPaymentMethod = '';
+      }
+    }
+
+    function selectPayment(method) {
+      selectedPaymentMethod = method;
+      ['upi', 'card', 'netbanking', 'wallet'].forEach(m => {
+        const btn = document.getElementById('pm-' + m);
+        const check = document.getElementById('pm-' + m + '-check');
+        if (btn) { btn.classList.toggle('selected', m === method); }
+        if (check) {
+          check.style.background = m === method ? '#A91B1B' : '';
+          check.style.borderColor = m === method ? '#A91B1B' : '#E8D5C0';
+          check.innerHTML = m === method ? '<span style="color:white;font-size:12px;font-weight:900;">✓</span>' : '';
+        }
+      });
+
+      const area = document.getElementById('payment-input-area');
+      if (method === 'upi') {
+        area.innerHTML = `
+      <div style="background:#F5EAD8;border-radius:12px;padding:16px;border:2px solid #E8D5C0;">
+        <label style="font-size:12px;font-weight:700;color:#6B0C0C;display:block;margin-bottom:8px;font-family:'Sora',sans-serif;">UPI ID</label>
+        <input type="text" placeholder="yourname@okaxis / phone@paytm" style="width:100%;border:2px solid #E8D5C0;border-radius:10px;padding:12px 14px;font-size:14px;outline:none;font-family:'Noto Sans',sans-serif;background:white;color:#1a0000;transition:border-color 0.2s;" onfocus="this.style.borderColor='#A91B1B'" onblur="this.style.borderColor='#E8D5C0'" oninput="checkPayReady()" id="upi-input" />
+        <p style="font-size:11px;color:#B0906A;margin-top:6px;">Demo: enter any text like <strong>demo@upi</strong></p>
+      </div>`;
+      } else if (method === 'card') {
+        area.innerHTML = `
+      <div style="background:#F5EAD8;border-radius:12px;padding:16px;border:2px solid #E8D5C0;">
+        <label style="font-size:12px;font-weight:700;color:#6B0C0C;display:block;margin-bottom:8px;font-family:'Sora',sans-serif;">CARD NUMBER</label>
+        <input type="text" placeholder="4111 1111 1111 1111" maxlength="19" style="width:100%;border:2px solid #E8D5C0;border-radius:10px;padding:12px 14px;font-size:16px;outline:none;letter-spacing:2px;font-family:'Sora',sans-serif;background:white;color:#1a0000;margin-bottom:10px;" onfocus="this.style.borderColor='#A91B1B'" onblur="this.style.borderColor='#E8D5C0'" oninput="this.value=this.value.replace(/\D/g,'').replace(/(\d{4})/g,'$1 ').trim();checkPayReady()" id="card-input" />
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;">
+          <div><label style="font-size:11px;font-weight:700;color:#6B0C0C;display:block;margin-bottom:6px;">EXPIRY</label><input type="text" placeholder="MM/YY" maxlength="5" style="width:100%;border:2px solid #E8D5C0;border-radius:8px;padding:10px 12px;font-size:14px;outline:none;font-family:'Sora',sans-serif;background:white;" onfocus="this.style.borderColor='#A91B1B'" onblur="this.style.borderColor='#E8D5C0'" /></div>
+          <div><label style="font-size:11px;font-weight:700;color:#6B0C0C;display:block;margin-bottom:6px;">CVV</label><input type="password" placeholder="•••" maxlength="3" style="width:100%;border:2px solid #E8D5C0;border-radius:8px;padding:10px 12px;font-size:14px;outline:none;font-family:'Sora',sans-serif;background:white;" onfocus="this.style.borderColor='#A91B1B'" onblur="this.style.borderColor='#E8D5C0'" /></div>
+        </div>
+        <p style="font-size:11px;color:#B0906A;margin-top:8px;">Demo: use any 16-digit card number</p>
+      </div>`;
+      } else if (method === 'netbanking') {
+        area.innerHTML = `
+      <div style="background:#F5EAD8;border-radius:12px;padding:16px;border:2px solid #E8D5C0;">
+        <label style="font-size:12px;font-weight:700;color:#6B0C0C;display:block;margin-bottom:8px;font-family:'Sora',sans-serif;">SELECT YOUR BANK</label>
+        <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-bottom:10px;" id="bank-grid">
+          ${["SBI", "HDFC", "ICICI", "Axis", "Canara", "KGB"].map(b => `<button onclick="document.querySelectorAll('#bank-grid button').forEach(x=>x.style.background='white');this.style.background='#FFE8E8';this.style.borderColor='#A91B1B';checkPayReady()" style="padding:8px;border:2px solid #E8D5C0;border-radius:8px;font-size:12px;font-weight:700;cursor:pointer;background:white;color:#5A4030;font-family:'Sora',sans-serif;transition:all 0.2s;">${b}</button>`).join('')}
+        </div>
+        <p style="font-size:11px;color:#B0906A;">Demo: click any bank to proceed</p>
+      </div>`;
+      } else if (method === 'wallet') {
+        area.innerHTML = `
+      <div style="background:#F5EAD8;border-radius:12px;padding:16px;border:2px solid #E8D5C0;">
+        <label style="font-size:12px;font-weight:700;color:#6B0C0C;display:block;margin-bottom:8px;font-family:'Sora',sans-serif;">REGISTERED MOBILE NUMBER</label>
+        <input type="tel" placeholder="+91 98765 43210" style="width:100%;border:2px solid #E8D5C0;border-radius:10px;padding:12px 14px;font-size:16px;outline:none;font-family:'Sora',sans-serif;background:white;color:#1a0000;" onfocus="this.style.borderColor='#A91B1B'" onblur="this.style.borderColor='#E8D5C0'" oninput="checkPayReady()" id="wallet-input" />
+        <p style="font-size:11px;color:#B0906A;margin-top:6px;">A wallet prompt will be sent to this number</p>
+      </div>`;
+      }
+
+      checkPayReady();
+    }
+
+    function checkPayReady() {
+      const btn = document.getElementById('pay-now-btn');
+      if (!btn) return;
+      const ready = selectedPaymentMethod.length > 0;
+      btn.disabled = !ready;
+      btn.style.background = ready ? 'linear-gradient(135deg,#A91B1B,#C03020)' : '#E8D5C0';
+      btn.style.color = ready ? 'white' : '#B0906A';
+      btn.style.boxShadow = ready ? '0 8px 24px rgba(169,27,27,0.4)' : 'none';
+      btn.style.transform = ready ? '' : '';
+    }
+
+    async function processPayment() {
+      const btn = document.getElementById('pay-now-btn');
+      if (!btn || btn.disabled) return;
+
+      // Simulate payment processing
+      btn.innerHTML = `<div class="spinner" style="width:22px;height:22px;"></div> Processing...`;
+      btn.disabled = true;
+      btn.style.background = 'linear-gradient(135deg,#C08020,#F5A020)';
+
+      const applicationData = { service: selectedService, formData: { ...formData }, refNumber, uploadedDocs: { ...uploadedDocs } };
+
+      try {
+        const response = await fetch('http://localhost:3000/api/applications', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(applicationData)
+        });
+        const result = await response.json();
+        if (result.success) {
+          applications.push(result.application);
+          document.getElementById('payment-modal')?.remove();
+          const badge = document.getElementById('app-count-badge');
+          if (badge) { badge.style.display = ''; badge.textContent = applications.length + ' Active'; }
+          appStep = 4;
+          document.getElementById('page-apply').innerHTML = `<div style="background:#FFF8F0;min-height:80vh;padding:40px 28px;"><div style="max-width:800px;margin:0 auto;">${renderAppSuccess()}</div></div>`;
+          launchConfetti();
+        } else {
+          alert('Failed to submit application: ' + result.error);
+          document.getElementById('payment-modal')?.remove();
+        }
+      } catch (e) {
+        console.error('Error submitting application:', e);
+        document.getElementById('payment-modal')?.remove();
+        alert('Server connection error. Please try again.');
+        btn.disabled = false;
+        checkPayReady();
+      }
+    }
+
+    function showToast(msg) {
+      const toast = document.createElement('div');
+      toast.className = 'toast';
+      toast.innerHTML = (msg.includes('✅') || msg.includes('❌')) ? msg : `✨ ${msg}`;
+      document.body.appendChild(toast);
+      setTimeout(() => {
+        toast.style.opacity = '0';
+        toast.style.transition = 'opacity 0.5s';
+        setTimeout(() => toast.remove(), 500);
+      }, 4000);
+    }
+
+    function launchConfetti() {
+      const colors = ['#A91B1B', '#F5A020', '#A91B1B', '#22C55E', '#FFFFFF', '#FF69B4'];
+      for (let i = 0; i < 60; i++) {
+        setTimeout(() => {
+          const el = document.createElement('div');
+          el.className = 'confetti-piece';
+          el.style.cssText = `
+        left:${Math.random() * 100}vw; top:${Math.random() * 30 - 10}vh;
+        width:${6 + Math.random() * 8}px; height:${6 + Math.random() * 8}px;
+        background:${colors[Math.floor(Math.random() * colors.length)]};
+        animation-delay:${Math.random() * 0.5}s; animation-duration:${1 + Math.random()}s;
+        transform:rotate(${Math.random() * 360}deg);
+      `;
+          document.body.appendChild(el);
+          setTimeout(() => el.remove(), 2000);
+        }, i * 30);
+      }
+
+      // Toast notification
+      showToast(`✅ Application submitted! Ref: <strong>${refNumber}</strong>`);
+    }
+
+    function addRipple(e, btn) {
+      const rect = btn.getBoundingClientRect();
+      const ripple = document.createElement('span');
+      ripple.className = 'ripple';
+      const size = Math.max(rect.width, rect.height);
+      ripple.style.cssText = `width:${size}px;height:${size}px;left:${e.clientX - rect.left - size / 2}px;top:${e.clientY - rect.top - size / 2}px;`;
+      btn.appendChild(ripple);
+      setTimeout(() => ripple.remove(), 600);
+    }
+
+    // ══════════════════════════════════════════════════════════════
+    // TRACK PAGE
+    // ══════════════════════════════════════════════════════════════
+    function renderTrack() {
+      const statusSteps = ["Submitted", "Under Review", "Verification", "Approved", "Ready to Collect"];
+      const currentStatus = 1;
+      return `
+    <div style="background:#FFF8F0;min-height:80vh;padding:40px 28px;">
+      <div style="max-width:900px;margin:0 auto;">
+        <h1 style="font-family:'Sora',sans-serif;font-size:30px;font-weight:900;color:#6B0C0C;margin:0 0 6px;">Track Applications</h1>
+        <p style="color:#7A6050;margin:0 0 32px;">Monitor the status of your submitted applications</p>
+        <div style="background:white;border-radius:14px;padding:16px 20px;margin-bottom:28px;display:flex;gap:14px;align-items:center;box-shadow:0 4px 15px rgba(0,0,0,0.06);">
+          <span style="font-size:18px;">🔍</span>
+          <input id="track-search" placeholder="Search by reference number (e.g. NM12345678)" oninput="filterTrack(this.value)" style="flex:1;border:none;outline:none;font-size:15px;font-family:'Noto Sans',sans-serif;color:#1a0000;background:transparent;" />
+        </div>
+        <div id="track-results">
+          ${renderTrackResults('')}
+        </div>
+      </div>
+    </div>
+  `;
+    }
+
+    function renderTrackResults(query) {
+      const statusSteps = ["Submitted", "Under Review", "Verification", "Approved", "Ready to Collect"];
+      const currentStatus = 1;
+      const filtered = query ? applications.filter(a => a.refNumber.toLowerCase().includes(query.toLowerCase())) : applications;
+
+      if (filtered.length === 0) {
+        return `
+      <div style="background:white;border-radius:20px;padding:60px;text-align:center;box-shadow:0 4px 15px rgba(0,0,0,0.06);">
+        <div style="font-size:56px;margin-bottom:20px;">📋</div>
+        <h3 style="font-family:'Sora',sans-serif;font-size:20px;color:#6B0C0C;margin:0 0 10px;">No Applications Yet</h3>
+        <p style="color:#7A6050;margin:0;">Applications you submit will appear here with real-time status updates.</p>
+      </div>
+    `;
+      }
+
+      return filtered.map(app => `
+    <div style="background:white;border-radius:20px;padding:28px;box-shadow:0 4px 15px rgba(0,0,0,0.06);margin-bottom:20px;">
+      <div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:24px;">
+        <div style="display:flex;gap:14px;align-items:center;">
+          <div style="width:48px;height:48px;border-radius:12px;font-size:24px;background:#FFF8F0;display:flex;align-items:center;justify-content:center;">${app.service.icon}</div>
+          <div>
+            <h3 style="font-family:'Sora',sans-serif;font-size:18px;font-weight:800;color:#6B0C0C;margin:0 0 4px;">${app.service.title}</h3>
+            <div style="font-size:13px;color:#7A6050;">Ref: <strong style="color:#A91B1B;">${app.refNumber}</strong> • ${app.service.portal}</div>
+          </div>
+        </div>
+        <div style="background:#FFF7ED;border:1px solid #FED7AA;border-radius:8px;padding:6px 14px;font-size:12px;font-weight:800;color:#B45309;font-family:'Sora',sans-serif;">Under Review</div>
+      </div>
+      <div style="position:relative;">
+        <div style="display:flex;justify-content:space-between;margin-bottom:6px;">
+          ${statusSteps.map((s, i) => `
+            <div style="text-align:center;flex:1;">
+              <div class="status-dot" style="background:${i <= currentStatus ? '#6B0C0C' : '#E8D5C0'};">${i < currentStatus ? '✓' : i + 1}</div>
+              <div style="font-size:10px;color:${i <= currentStatus ? '#6B0C0C' : '#B0906A'};font-weight:700;font-family:'Sora',sans-serif;line-height:1.3;">${s}</div>
+            </div>
+          `).join('')}
+        </div>
+        <div style="position:absolute;top:14px;left:10%;right:10%;height:2px;background:#E8D5C0;z-index:0;">
+          <div style="width:${(currentStatus / (statusSteps.length - 1)) * 100}%;height:100%;background:#6B0C0C;border-radius:1px;"></div>
+        </div>
+      </div>
+      <div style="margin-top:20px;padding:12px 16px;background:#FFF8F0;border-radius:10px;font-size:13px;color:#7A6050;">
+        📅 Submitted today • Expected by: <strong>${app.service.time}</strong> from submission
+      </div>
+    </div>
+  `).join('');
+    }
+
+    function filterTrack(query) {
+      document.getElementById('track-results').innerHTML = renderTrackResults(query);
+    }
+
+    // ══════════════════════════════════════════════════════════════
+    // CHAT PAGE
+    // ══════════════════════════════════════════════════════════════
+    function renderChat() {
+      return `
+    <div style="background:#FFF8F0;min-height:80vh;padding:40px 28px;">
+      <div style="max-width:800px;margin:0 auto;">
+        <div style="display:flex;align-items:center;gap:16px;margin-bottom:28px;">
+          <div style="width:56px;height:56px;border-radius:14px;background:linear-gradient(135deg,#6B0C0C,#A01818);display:flex;align-items:center;justify-content:center;font-size:26px;box-shadow:0 8px 20px rgba(169,27,27,0.3);">🏛️</div>
+          <div>
+            <h1 style="font-family:'Sora',sans-serif;font-size:24px;font-weight:900;color:#6B0C0C;margin:0;">NAMMA SEVA AI</h1>
+            <div style="display:flex;align-items:center;gap:6px;margin-top:4px;">
+              <div style="width:8px;height:8px;border-radius:50%;background:#22C55E;"></div>
+              <span style="font-size:13px;color:#7A6050;font-weight:600;">Online — Responds instantly</span>
+            </div>
+          </div>
+        </div>
+        <div style="display:flex;gap:8px;flex-wrap:wrap;margin-bottom:20px;">
+          ${["How to apply for Khata transfer?", "What docs for income certificate?", "Birth certificate for newborn", "Trade license process"].map(q => `
+            <button class="quick-chip" onclick="sendChat('${q}')">${q}</button>
+          `).join('')}
+        </div>
+        <div style="background:white;border-radius:20px;overflow:hidden;box-shadow:0 8px 40px rgba(0,0,0,0.1);">
+          <div id="chat-messages" style="height:460px;overflow-y:auto;padding:24px 20px;">
+            ${renderChatMessages()}
+          </div>
+          <div style="padding:14px 16px;border-top:2px solid #FFF8F0;display:flex;gap:10px;align-items:flex-end;">
+            <textarea id="chat-input" placeholder="Ask anything about government services..." rows="2"
+              onkeydown="if(event.key==='Enter'&&!event.shiftKey){event.preventDefault();sendChat()}"
+              onfocus="this.style.borderColor='#A91B1B'" onblur="this.style.borderColor='#E8D5C0'"
+              style="flex:1;border:2px solid #E8D5C0;border-radius:12px;padding:10px 14px;font-size:14px;resize:none;outline:none;background:#FFF8F0;font-family:'Noto Sans',sans-serif;"></textarea>
+            <button id="chat-send-btn" onclick="sendChat()" style="width:46px;height:46px;border-radius:50%;border:none;cursor:pointer;background:#E8D5C0;font-size:20px;display:flex;align-items:center;justify-content:center;transition:all 0.2s;flex-shrink:0;">➤</button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <style>@keyframes bounce{0%,60%,100%{transform:translateY(0);opacity:.4}30%{transform:translateY(-6px);opacity:1}}</style>
+  `;
+    }
+
+    function renderChatMessages() {
+      return chatMessages.map(m => `
+    <div style="display:flex;justify-content:${m.role === 'user' ? 'flex-end' : 'flex-start'};margin-bottom:18px;align-items:flex-end;gap:10px;">
+      ${m.role !== 'user' ? '<div style="width:34px;height:34px;border-radius:50%;background:linear-gradient(135deg,#6B0C0C,#A01818);display:flex;align-items:center;justify-content:center;font-size:16px;flex-shrink:0;">🏛️</div>' : ''}
+      <div class="${m.role === 'user' ? 'chat-user' : 'chat-bot'}" style="max-width:72%;padding:13px 17px;font-size:14.5px;line-height:1.65;font-family:'Noto Sans',sans-serif;box-shadow:${m.role === 'user' ? '0 4px 15px rgba(169,27,27,0.3)' : '0 2px 8px rgba(0,0,0,0.06)'};white-space:pre-wrap;">${escapeHtml(m.content)}</div>
+      ${m.role === 'user' ? '<div style="width:34px;height:34px;border-radius:50%;background:linear-gradient(135deg,#A91B1B,#C03020);display:flex;align-items:center;justify-content:center;font-size:16px;flex-shrink:0;">👤</div>' : ''}
+    </div>
+  `).join('');
+    }
+
+    function escapeHtml(str) {
+      return str.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
+    }
+
+    let chatLoading = false;
+
+    async function sendChat(text) {
+      const input = document.getElementById('chat-input');
+      const msg = text || (input ? input.value.trim() : '');
+      if (!msg || chatLoading) return;
+      if (input) input.value = '';
+
+      chatMessages.push({ role: 'user', content: msg });
+      chatLoading = true;
+
+      const chatEl = document.getElementById('chat-messages');
+      if (chatEl) {
+        chatEl.innerHTML = renderChatMessages() + `
+      <div style="display:flex;align-items:flex-end;gap:10px;">
+        <div style="width:34px;height:34px;border-radius:50%;background:linear-gradient(135deg,#6B0C0C,#A01818);display:flex;align-items:center;justify-content:center;font-size:16px;">🏛️</div>
+        <div style="background:#FFF8F0;border-radius:4px 18px 18px 18px;padding:12px 16px;display:flex;gap:5px;">
+          ${[0, 1, 2].map(i => `<span style="width:8px;height:8px;border-radius:50%;background:#A91B1B;display:inline-block;animation:bounce 1.2s ease-in-out ${i * 0.2}s infinite;"></span>`).join('')}
+        </div>
+      </div>
+    `;
+        chatEl.scrollTop = chatEl.scrollHeight;
+      }
+
+      const sendBtn = document.getElementById('chat-send-btn');
+      if (sendBtn) sendBtn.style.background = '#E8D5C0';
+
+      try {
+        // Simulated mock AI response for the demo
+        await new Promise(r => setTimeout(r, 1500));
+
+        let reply = "I can definitely help you with that! Which specific service from BBMP or Seva Sindhu are you looking for today?";
+        const lowerMsg = msg.toLowerCase();
+
+        if (lowerMsg.includes("khata")) {
+          reply = "For a Khata transfer, you'll need your Registered Sale Deed, Previous Khata Extract, Latest Property Tax Receipt, and EC for the last 15 years. The fee is ₹125 + 2% stamp duty. Would you like me to guide you to the application?";
+        } else if (lowerMsg.includes("income")) {
+          reply = "To get an Income Certificate via Seva Sindhu, you need your Aadhaar, Ration Card, recent Salary Slips (or Form 16), and an Address Proof. It costs ₹55. Should we begin applying?";
+        } else if (lowerMsg.includes("birth")) {
+          reply = "For a Birth Certificate from BBMP, the registration must be done within 21 days. You'll need the Hospital Discharge Summary and both parents' Aadhaar cards. Shall I pull up the form?";
+        } else if (lowerMsg.includes("trade")) {
+          reply = "A Trade License requires your business address proof, latest property tax receipt, and an NOC from the property owner if rented. Do you want to start the application now?";
+        } else if (lowerMsg.includes("status") || lowerMsg.includes("track")) {
+          reply = "You can track your applications by clicking the 'Track App.' link in the top menu and entering your reference number (e.g. NM12345678).";
+        }
+
+        chatMessages.push({ role: 'assistant', content: reply });
+      } catch (e) {
+        chatMessages.push({ role: 'assistant', content: "Connection error. Please try again or call 080-22221188." });
+      }
+      chatLoading = false;
+
+      if (chatEl) {
+        chatEl.innerHTML = renderChatMessages();
+        chatEl.scrollTop = chatEl.scrollHeight;
+      }
+    }
+
+    async function checkUserSession() {
+      try {
+        const response = await fetch('/api/user');
+        const data = await response.json();
+        if (data.authenticated) {
+          loginUser({
+            name: data.user.name,
+            mobile: data.user.mobile || '+91 99000 12345',
+            method: data.user.provider,
+            avatar: data.user.avatar ? `<img src="${data.user.avatar}" style="width:24px;height:24px;border-radius:50%;" />` : '👨‍💼',
+            verified: true
+          });
+          // Clean up URL query params
+          if (window.location.search.includes('auth=')) {
+            window.history.replaceState({}, document.title, window.location.pathname);
+            showToast(`Welcome back, ${data.user.name.split(' ')[0]}!`);
+          }
+          // Ensure we're at the top
+          window.scrollTo(0, 0);
+        }
+      } catch (e) {
+        console.error('Session check failed', e);
+      }
+    }
+
+    // ══════════════════════════════════════════════════════════════
+    // INIT
+    // ══════════════════════════════════════════════════════════════
+    // Disable automatic browser scroll restoration to prevent footer jump on reload
+    if ('scrollRestoration' in history) {
+      history.scrollRestoration = 'manual';
+    }
+
+    // Force scroll to top immediately on load/reload
+    window.scrollTo(0, 0);
+
+    showAuth('select');
+    checkUserSession();
+  </script>
+</body>
+
+</html>
