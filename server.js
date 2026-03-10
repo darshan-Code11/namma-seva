@@ -73,7 +73,7 @@ app.use(session({
     secret: process.env.SESSION_SECRET || 'namma_seva_secret',
     resave: false,
     saveUninitialized: false,
-    store: MongoStore.create({
+    store: new MongoStore({
         mongoUrl: mongoURI,
         collectionName: 'sessions',
         ttl: 14 * 24 * 60 * 60 // 14 days
