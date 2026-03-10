@@ -14,6 +14,7 @@ const MongoStore = MongoStoreRaw.default || MongoStoreRaw;
 dns.setServers(['8.8.8.8', '8.8.4.4']);
 
 const app = express();
+app.set('trust proxy', 1); // Trust first proxy (Render) for secure cookies
 
 app.use(cors());
 app.use(express.json());
@@ -22,9 +23,7 @@ app.use(express.static(__dirname));
 // ═══════════════════════════════════════════════════════════
 // DATABASE CONNECTION
 // ═══════════════════════════════════════════════════════════
-// Explicitly target the 'namaseva' database
-const baseUri = process.env.MONGODB_URI || 'mongodb://localhost:27017';
-const mongoURI = baseUri.replace(/\/+$/, '') + '/namaseva';
+const mongoURI = process.env.MONGODB_URI || 'mongodb://localhost:27017/namaseva';
 
 if (!process.env.MONGODB_URI) {
     console.warn("⚠️  WARNING: MONGODB_URI environment variable is missing!");
@@ -226,6 +225,13 @@ app.post('/api/chat', async (req, res) => {
 // Serve main HTML
 app.get('/', (req, res) => {
     res.sendFile(path.join(__dirname, 'namma-seva.html'));
+});
+
+// Global Error Handler — catches all unhandled errors and logs them
+app.use((err, req, res, next) => {
+    console.error('🔥 Global Error:', err.message);
+    console.error(err.stack);
+    res.status(500).send(`Internal Server Error: ${err.message}`);
 });
 
 const PORT = process.env.PORT || 3000;
