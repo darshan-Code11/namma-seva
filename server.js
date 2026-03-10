@@ -226,4 +226,18 @@ app.get('/', (req, res) => {
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
     console.log(`🚀 Server is running on http://localhost:${PORT}`);
+
+    // KEEP-ALIVE: Ping the server every 14 minutes to prevent Render free tier from sleeping
+    const RENDER_EXTERNAL_URL = process.env.RENDER_EXTERNAL_URL;
+    if (RENDER_EXTERNAL_URL) {
+        const https = require('https');
+        console.log(`📡 Keep-alive initialized for: ${RENDER_EXTERNAL_URL}`);
+        setInterval(() => {
+            https.get(RENDER_EXTERNAL_URL, (res) => {
+                console.log(`🔁 Keep-alive ping sent. Status: ${res.statusCode}`);
+            }).on('error', (err) => {
+                console.error('❌ Keep-alive error:', err.message);
+            });
+        }, 14 * 60 * 1000); // 14 mins (Render sleeps after 15 mins of inactivity)
+    }
 });
